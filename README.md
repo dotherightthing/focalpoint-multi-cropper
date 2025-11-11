@@ -33,6 +33,8 @@
 npm install
 ```
 
+Then [create a macOS app](https://github.com/dotherightthing/focalpoint-multi-cropper/issues/98) to launch focalpoint-multi-cropper via Spotlight.
+
 ### Run (Electron App)
 
 ```js
