@@ -33,6 +33,13 @@ ExifTool is used to read and write metadata.
 
 * download [ExifTool](https://exiftool.org/index.html)
 
+ImageMagick is used to crop and resize images.
+
+```sh
+brew install imagemagick
+brew install ghostscript
+```
+
 ```js
 npm install
 ```
