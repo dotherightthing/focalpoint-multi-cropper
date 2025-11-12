@@ -3,7 +3,7 @@
  */
 
 const commandExists = require('command-exists');
-const ExifReader = require('exifreader');
+const { exiftool } = require('exiftool-vendored');
 const fs = require('fs');
 const gm = require('gm').subClass({ imageMagick: '7+' });
 const path = require('path');
@@ -13,8 +13,6 @@ const FmcStore = require('./FmcStore.cjs');
 const { clipboard, dialog, shell } = require('electron');
 const { promises: Fs } = require('fs');
 const { spawn } = require('child_process');
-
-const { filesize } = require('filesize');
 
 module.exports = class FmcFile {
   /**
@@ -486,45 +484,34 @@ module.exports = class FmcFile {
       const image = imageFiles[i];
 
       let imageData = {};
+      let tags = {};
 
       try {
-        const tags = await ExifReader.load(image);
+        tags = await exiftool.read(image);
 
         const {
           DateTimeOriginal = {},
+          FileName = '',
+          FileSize = '',
           GPSLatitude = '',
-          GPSLongitude = ''
-        } = tags; // object: { id: number, value: Array of strings, description: string }
+          GPSLongitude = '',
+          Title = ''
+        } = tags;
 
         const {
-          description: dateTimeOriginalDescription = ''
+          rawValue: dateTimeOriginalRawValue = ''
         } = DateTimeOriginal;
-
-        const {
-          description: latitudeDescription = ''
-        } = GPSLatitude;
-
-        const {
-          description: longitudeDescription = ''
-        } = GPSLongitude;
 
         imageData = {
           src: image,
-          dateTimeOriginal: dateTimeOriginalDescription,
-          latitude: latitudeDescription,
-          longitude: longitudeDescription
+          dateTimeOriginal: dateTimeOriginalRawValue,
+          filesize: FileSize,
+          latitude: GPSLatitude,
+          longitude: GPSLongitude,
+          writeTitle: (Title === FileName)
         };
       } catch (error) {
-        console.log(`ExifReader could not load ${image}`, error);
-      }
-
-      try {
-        const stats = await Fs.stat(image);
-        const fileSizeInBytes = stats.size;
-
-        imageData.filesize = filesize(fileSizeInBytes, { base: 10, standard: 'jedec' });
-      } catch (error) {
-        console.log(`Fs could not get ${image} stats`, error);
+        console.log(`exiftool could not load ${image}`, error);
       }
 
       imagesData.push(imageData);

@@ -29,6 +29,10 @@
 
 ### Install
 
+ExifTool is used to read and write metadata.
+
+* download [ExifTool](https://exiftool.org/index.html)
+
 ```js
 npm install
 ```
