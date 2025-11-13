@@ -95,6 +95,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       focalpointProportionsRadios: document.getElementsByName(focalpointProportionsRadiosName),
       focalpointResetButton: document.getElementById('reset-focalpoint'),
       focalpointSaveButton: document.getElementById('save-focalpoint'),
+      focalpointWriteRadios: document.getElementsByName('focalpoint-write'),
       focalpointXInput: document.getElementById(focalpointXInputId),
       focalpointYInput: document.getElementById(focalpointYInputId),
       folderInButton: document.getElementById('folder-in-button'),
@@ -166,6 +167,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       focalpointProportionsRadios,
       focalpointResetButton,
       focalpointSaveButton,
+      focalpointWriteRadios,
       focalpointXInput,
       focalpointYInput,
       folderInButton,
@@ -222,6 +224,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       .addEventListener('click', _this.handleFocalpointReset.bind(_this));
     focalpointSaveButton
       .addEventListener('click', _this.handleFocalpointSave.bind(_this));
+    focalpointWriteRadios.forEach(el => el
+      .addEventListener('change', _this.handleWriteRadioChange.bind(_this)));
     focalpointXInput
       .addEventListener('change', handleFocalpointInputDebounced.bind(_this));
     focalpointYInput

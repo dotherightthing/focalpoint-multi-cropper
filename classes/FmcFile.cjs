@@ -491,11 +491,11 @@ module.exports = class FmcFile {
 
         const {
           DateTimeOriginal = {},
-          FileName = '',
+          // FileName = '', // TODO: display in UI
           FileSize = '',
           GPSLatitude = '',
-          GPSLongitude = '',
-          Title = ''
+          GPSLongitude = ''
+          // Title = '' // TODO: display in UI
         } = tags;
 
         const {
@@ -507,8 +507,7 @@ module.exports = class FmcFile {
           dateTimeOriginal: dateTimeOriginalRawValue,
           filesize: FileSize,
           latitude: GPSLatitude,
-          longitude: GPSLongitude,
-          writeTitle: (Title === FileName)
+          longitude: GPSLongitude
         };
       } catch (error) {
         console.log(`exiftool could not load ${image}`, error);
@@ -763,6 +762,7 @@ module.exports = class FmcFile {
    * @param {string} data.imageFlags - Image flags
    * @param {number} data.imagePercentX - Image percent X
    * @param {number} data.imagePercentY - Image percent Y
+   * @param {string} data.writeMode - Write mode
    * @returns {string} newFileName
    * @memberof FmcFile
    * @static
@@ -774,7 +774,8 @@ module.exports = class FmcFile {
       fileName,
       imageFlags,
       imagePercentY,
-      imagePercentX
+      imagePercentX,
+      writeMode
     } = data;
 
     const {
@@ -790,15 +791,24 @@ module.exports = class FmcFile {
 
     const imageFlagsPrefix = imageFlags.length ? ',' : '';
 
-    const oldFileName = `${folderPath}/${fileNameAndExtClean}`;
-    const newFileName = `${folderPath}/${fileNameOnlyCleanNoRegex}__[${imagePercentX}%,${imagePercentY}%${imageFlagsPrefix}${imageFlags}]${extName}`;
+    const oldFileName = fileNameAndExtClean;
+    const oldFileNameWithPath = `${folderPath}/${oldFileName}`;
+    const newFileName = `${fileNameOnlyCleanNoRegex}__[${imagePercentX}%,${imagePercentY}%${imageFlagsPrefix}${imageFlags}]${extName}`;
+    const newFileNameWithPath = `${folderPath}/${newFileName}${extName}`;
 
     if (newFileName !== oldFileName) {
-      fs.rename(oldFileName, newFileName, (error) => {
-        if (error) {
-          console.log(error);
-        }
-      });
+      // TODO update UI
+      if (writeMode === 'title') {
+        await exiftool.write(oldFileNameWithPath, {
+          Title: newFileName
+        });
+      } else {
+        fs.rename(oldFileNameWithPath, newFileNameWithPath, (error) => {
+          if (error) {
+            console.log(error);
+          }
+        });
+      }
     }
 
     return newFileName;
