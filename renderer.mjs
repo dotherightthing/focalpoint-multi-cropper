@@ -3,6 +3,7 @@
 import { FmcUi } from './classes/FmcUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
 import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
+import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
 
 // listeners
 
@@ -68,6 +69,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     thumbsId: 'thumbs'
   });
 
+  const focalpointAutoSaveRadios = new FmcRadiosUi({
+    selector: 'input[name="focalpoint-autosave"]',
+    storeKey: 'focalpointAutoSave'
+  });
+
   const fmcUi = new FmcUi({
     debounceDelay: 500,
     elements: {
@@ -90,7 +96,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       filter: document.getElementById('thumb-filename-filter'),
       filterClearButton: document.getElementById('thumb-filename-filter-clear'),
       filterSubmitButton: document.getElementById('thumb-filename-filter-submit'),
-      focalpointAutoSaveRadios: document.getElementsByName('focalpoint-autosave'),
       focalpointDeleteButton: document.getElementById('delete-focalpoint'),
       focalpointProportionsRadios: document.getElementsByName(focalpointProportionsRadiosName),
       focalpointResetButton: document.getElementById('reset-focalpoint'),
@@ -128,6 +133,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     exportDelay: 750,
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
+    focalpointAutoSaveRadios,
     selectors: {
       controlHintClass,
       thumbButtonClass,
@@ -146,7 +152,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const {
       debounceDelay,
-      elements
+      elements,
+      focalpointAutoSaveRadios
     } = _this;
 
     const {
@@ -162,7 +169,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       fileWebpageButton,
       filterClearButton,
       filterSubmitButton,
-      focalpointAutoSaveRadios,
       focalpointDeleteButton,
       focalpointProportionsRadios,
       focalpointResetButton,
@@ -214,7 +220,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       .addEventListener('click', _this.handleFilterClear.bind(_this));
     filterSubmitButton
       .addEventListener('click', _this.handleFilterSubmit.bind(_this));
-    focalpointAutoSaveRadios.forEach(el => el
+    focalpointAutoSaveRadios.elements.forEach(el => el
       .addEventListener('change', _this.handleAutosaveRadioChange.bind(_this)));
     focalpointDeleteButton
       .addEventListener('click', _this.handleFocalpointDelete.bind(_this));

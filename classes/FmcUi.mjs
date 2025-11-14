@@ -19,6 +19,7 @@ export class FmcUi {
       exportDelay,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
+      focalpointAutoSaveRadios,
       selectors
     } = config;
 
@@ -28,6 +29,7 @@ export class FmcUi {
       exportDelay,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
+      focalpointAutoSaveRadios,
       selectors
     });
   }
@@ -98,6 +100,19 @@ export class FmcUi {
 
   set fmcThumbsUiInstance(fmcThumbsUiInstance) {
     this._fmcThumbsUiInstance = dtrtValidate.validate(fmcThumbsUiInstance, 'object', 'FmcUi.fmcThumbsUiInstance');
+  }
+
+  /**
+   * focalpointAutoSaveRadios
+   * @type {object}
+   * @memberof FmcUi
+   */
+  get focalpointAutoSaveRadios() {
+    return this._focalpointAutoSaveRadios;
+  }
+
+  set focalpointAutoSaveRadios(focalpointAutoSaveRadios) {
+    this._focalpointAutoSaveRadios = dtrtValidate.validate(focalpointAutoSaveRadios, 'object', 'FmcUi.focalpointAutoSaveRadios');
   }
 
   /**
@@ -278,7 +293,8 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance
+      fmcThumbsUiInstance,
+      focalpointAutoSaveRadios
     } = this;
 
     const {
@@ -287,18 +303,13 @@ export class FmcUi {
       focalpointYInput
     } = elements;
 
-    await window.electronAPI.setKeys({
-      keyValuePairs: [
-        {
-          focalpointAutoSave: event.target.value === 'on'
-        }
-      ]
-    });
+    const autosaveState = event.target.value;
 
-    const autosaveOn = event.target.value;
+    await focalpointAutoSaveRadios.setStoredState(autosaveState);
+
     const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
-    await this.autosaveFocalpoint(autosaveOn === 'on');
+    await this.autosaveFocalpoint(autosaveState === 'on');
 
     fmcCroppersUiInstance.setFocalpointSaveState({
       thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
@@ -619,11 +630,11 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance
+      fmcThumbsUiInstance,
+      focalpointAutoSaveRadios
     } = this;
 
     const {
-      focalpointAutoSaveRadios,
       focalpointProportionsRadios,
       // focalpointWriteRadios,
       focalpointXInput,
@@ -645,10 +656,9 @@ export class FmcUi {
     });
 
     if ((event.isTrusted) || (event.target === focalpointYInput)) {
-      const autosaveOn = [ ...focalpointAutoSaveRadios ].filter(radio => radio.checked)[0].value;
       const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
-      await this.autosaveFocalpoint(autosaveOn === 'on');
+      await this.autosaveFocalpoint(focalpointAutoSaveRadios.getState() === 'on');
 
       fmcCroppersUiInstance.setFocalpointSaveState({
         focalpointReset,
@@ -997,7 +1007,8 @@ export class FmcUi {
   async handleSettingsLoad() {
     const {
       elements,
-      fmcThumbsUiInstance
+      fmcThumbsUiInstance,
+      focalpointAutoSaveRadios
     } = this;
 
     const {
@@ -1062,10 +1073,6 @@ export class FmcUi {
       await this.handleFolderWebsiteBrowse(null, restore);
       await this.handleFileWebpageBrowse(null, restore);
 
-      const { focalpointAutoSave: storedFocalpointAutoSave } = await window.electronAPI.getKeys({
-        keys: [ 'focalpointAutoSave' ]
-      });
-
       const { thumbsAutoSelectFiltered: storedThumbsAutoSelectFiltered } = await window.electronAPI.getKeys({
         keys: [ 'thumbsAutoSelectFiltered' ]
       });
@@ -1074,7 +1081,8 @@ export class FmcUi {
         keys: [ 'focalpointWrite' ]
       });
 
-      this.setAutoSave(storedFocalpointAutoSave);
+      await focalpointAutoSaveRadios.restoreStoredState();
+
       this.setAutoSelectFiltered(storedThumbsAutoSelectFiltered);
       this.setFilterUncropped(false);
       this.setWriteMode(storedFocalpointWrite);
@@ -1461,28 +1469,6 @@ export class FmcUi {
 
       FmcUi.emitElementEvent(window, 'message', msgObj);
     }
-  }
-
-  /**
-   * @function setAutoSave
-   * @summary Turn auto save on or off
-   * @param {boolean} enabled - On
-   * @memberof FmcUi
-   */
-  setAutoSave(enabled) {
-    const {
-      elements
-    } = this;
-
-    const {
-      focalpointAutoSaveRadios
-    } = elements;
-
-    const autoSaveSetting = enabled ? 'on' : 'off';
-
-    focalpointAutoSaveRadios.forEach(radio => {
-      radio.checked = (radio.value === autoSaveSetting);
-    });
   }
 
   /**
