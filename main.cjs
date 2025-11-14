@@ -56,9 +56,9 @@ const createWindow = () => {
   });
 
   if (maximiseWindow) {
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.maximize();
-  });
+    mainWindow.once('ready-to-show', () => {
+      mainWindow.maximize();
+    });
   }
 
   myWindow = mainWindow;
@@ -95,7 +95,7 @@ const createWindow = () => {
   // Devtools need to be running from launch to enable console.log
   if (showDevTools) {
     mainWindow.webContents.openDevTools({
-      mode: 'right'
+      mode: 'detach'
     });
   }
 
