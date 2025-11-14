@@ -31,6 +31,7 @@ if (!gotTheLock) {
 // args[2] = -- separating npm arguments from app's arguments
 const args = process.argv.slice(3);
 const showDevTools = args.indexOf('devtools') !== -1;
+const maximiseWindow = args.indexOf('maximise') !== -1;
 
 const FmcFile = require('./classes/FmcFile.cjs');
 const FmcStore = require('./classes/FmcStore.cjs');
@@ -54,9 +55,11 @@ const createWindow = () => {
     title: appName
   });
 
+  if (maximiseWindow) {
   mainWindow.once('ready-to-show', () => {
     mainWindow.maximize();
   });
+  }
 
   myWindow = mainWindow;
 
