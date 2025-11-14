@@ -14,6 +14,8 @@ const { clipboard, dialog, shell } = require('electron');
 const { promises: Fs } = require('fs');
 const { spawn } = require('child_process');
 
+const osascript = require('node-osascript');
+
 module.exports = class FmcFile {
   /**
    * @class FmcFile
@@ -470,6 +472,26 @@ module.exports = class FmcFile {
   }
 
   /**
+   * @function setTitleInPhotosApp
+   * @summary Get the path to an image stored in the Photos app
+   * @param {string} imageName - Image name
+   * @param {string} title - EXIF/IPTC title
+   * @returns {string} imagePath
+   * @memberof FmcFile
+   * @static
+   */
+  static async setTitleInPhotosApp(imageName, title) {
+    osascript.execute(`tell application "Photos"
+  set searchList to search folder "library" for "${imageName}"
+  set imageSel to item 1 of searchList
+  spotlight imageSel
+  tell imageSel
+    set its name to "${title}"
+  end tell
+end tell`);
+  }
+
+  /**
    * @function getImagesData
    * @summary Get the path to a folder and the supported images within it
    * @param {Array} imageFiles - Supported file types contained within the folder
@@ -802,6 +824,8 @@ module.exports = class FmcFile {
         await exiftool.write(oldFileNameWithPath, {
           Title: newFileName
         });
+
+        this.setTitleInPhotosApp(fileNameOnlyCleanNoRegex, newFileName);
       } else {
         fs.rename(oldFileNameWithPath, newFileNameWithPath, (error) => {
           if (error) {

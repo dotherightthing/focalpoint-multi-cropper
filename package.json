@@ -34,6 +34,7 @@
     "electron-context-menu": "^3.6.1",
     "exiftool-vendored": "^31.3.0",
     "gm": "^1.25.0",
+    "node-osascript": "^2.1.0",
     "stylelint": "^15.6.0",
     "stylelint-order": "^6.0.3"
   },
