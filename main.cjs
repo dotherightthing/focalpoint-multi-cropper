@@ -120,6 +120,7 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:selectFile', FmcFile.selectFile);
   ipcMain.handle('FmcFile:selectFolder', FmcFile.selectFolder);
   ipcMain.handle('FmcFile:deleteImagePercentXYFromImage', FmcFile.deleteImagePercentXYFromImage);
+  ipcMain.handle('FmcFile:getImageTitle', FmcFile.getImageTitle);
   ipcMain.handle('FmcFile:saveImagePercentXYToImage', FmcFile.saveImagePercentXYToImage);
   ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
   ipcMain.handle('FmcStore:setKeys', FmcStore.setKeys);

@@ -354,7 +354,9 @@ export class FmcUi {
       elements,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
-      focalpointAutoSaveRadios
+      focalpointAutoSaveRadios,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios
     } = this;
 
     const {
@@ -371,12 +373,14 @@ export class FmcUi {
 
     await this.autosaveFocalpoint(autosaveState === 'on');
 
-    fmcCroppersUiInstance.setFocalpointSaveState({
+    await fmcCroppersUiInstance.setFocalpointSaveState({
       thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
       thumbIndex,
       imagePercentXUi: focalpointXInput.value,
       imagePercentYUi: focalpointYInput.value,
-      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
+      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value,
+      writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
+      writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
     });
   }
 
@@ -716,7 +720,9 @@ export class FmcUi {
       elements,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
-      focalpointAutoSaveRadios
+      focalpointAutoSaveRadios,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios
     } = this;
 
     const {
@@ -744,13 +750,15 @@ export class FmcUi {
 
       await this.autosaveFocalpoint(focalpointAutoSaveRadios.getState() === 'on');
 
-      fmcCroppersUiInstance.setFocalpointSaveState({
+      await fmcCroppersUiInstance.setFocalpointSaveState({
         focalpointReset,
         thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
         thumbIndex,
         imagePercentXUi: focalpointXInput.value,
         imagePercentYUi: focalpointYInput.value,
-        imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
+        imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value,
+        writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
+        writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
       });
 
       focalpointXInput.dataset.thumbIndexPrevious = thumbIndex;
@@ -780,7 +788,9 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance
+      fmcThumbsUiInstance,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios
     } = this;
 
     const {
@@ -793,12 +803,14 @@ export class FmcUi {
 
     await this.saveFocalpoint();
 
-    fmcCroppersUiInstance.setFocalpointSaveState({
+    await fmcCroppersUiInstance.setFocalpointSaveState({
       thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
       thumbIndex,
       imagePercentXUi: focalpointXInput.value,
       imagePercentYUi: focalpointYInput.value,
-      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
+      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value,
+      writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
+      writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
     });
   }
 

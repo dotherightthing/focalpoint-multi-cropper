@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   selectFolder: (data) => ipcRenderer.invoke('FmcFile:selectFolder', data),
   deleteImagePercentXYFromImage: (data) => ipcRenderer.invoke('FmcFile:deleteImagePercentXYFromImage', data),
   saveImagePercentXYToImage: (data) => ipcRenderer.invoke('FmcFile:saveImagePercentXYToImage', data),
+  getImageTitle: (data) => ipcRenderer.invoke('FmcFile:getImageTitle', data),
   resizeImage: (data) => ipcRenderer.invoke('FmcFile:resizeImage', data),
   resizeAndCropImage: (data) => ipcRenderer.invoke('FmcFile:resizeAndCropImage', data),
   getActivePreset: (data) => ipcRenderer.invoke('FmcStore:getActivePreset', data),

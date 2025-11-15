@@ -67,6 +67,33 @@ module.exports = class FmcFile {
   }
 
   /**
+   * @function getImageTitle
+   * @param {event} event - FmcFile:getImageTitle event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {string} data.imagePath - Image path
+   * @returns {object} { Title }
+   * @memberof FmcFile
+   * @static
+   */
+  static async getImageTitle(event, data) {
+    const {
+      imagePath
+    } = data;
+
+    const { relativeFilePath } = await FmcFile.getFileNameParts(null, { fileName: imagePath });
+
+    const tags = await exiftool.read(relativeFilePath);
+
+    const {
+      Title = ''
+    } = tags;
+
+    return {
+      Title
+    };
+  }
+
+  /**
    * @function resizeAndCropImage
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
@@ -489,16 +516,20 @@ module.exports = class FmcFile {
    * @memberof FmcFile
    * @static
    */
-  static async setTitleInPhotosApp(imageName, title) {
+  static async setTitleInPhotosApp(imageName, title) { // eslint-disable-line no-unused-vars
     osascript.execute(`tell application "Photos"
   set searchList to search folder "library" for "${imageName}"
+  spotlight searchList
+end tell`);
+  }
+
+  /*
   set imageSel to item 1 of searchList
   spotlight imageSel
   tell imageSel
     set its name to "${title}"
   end tell
-end tell`);
-  }
+  */
 
   /**
    * @function getImagesData
@@ -793,8 +824,8 @@ end tell`);
    * @param {string} data.imageFlags - Image flags
    * @param {number} data.imagePercentX - Image percent X
    * @param {number} data.imagePercentY - Image percent Y
-   * @param {boolean} data.writeFilename - Write filename
-   * @param {boolean} data.writeTitle - Write title
+   * @param {boolean} data.writeFilename - Whether to write focalpoint data to filename
+   * @param {boolean} data.writeTitle - Whether to write focalpoint data to title metadata
    * @returns {string} newFileName
    * @memberof FmcFile
    * @static

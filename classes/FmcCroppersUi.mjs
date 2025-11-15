@@ -650,35 +650,66 @@ export class FmcCroppersUi {
    * @param {string} args.imagePercentXUi - Image Percent X as shown in the UI controls
    * @param {string} args.imagePercentYUi - Image Percent Y as shown in the UI controls
    * @param {string} args.imageProportionsUi - Image Proportions setting as shown in the UI controls
+   * @param {boolean} args.writeFilename - Whether to write focalpoint data to filename
+   * @param {boolean} args.writeTitle - Whether to write focalpoint data to title metadata
    * @returns {string} state
    * @memberof FmcCroppersUi
    */
-  setFocalpointSaveState({
+  async setFocalpointSaveState({
     focalpointReset,
     thumbIndexPrevious,
     thumbIndex,
     imagePercentXUi,
     imagePercentYUi,
-    imageProportionsUi
+    imageProportionsUi,
+    writeFilename,
+    writeTitle
   }) {
     const {
       masterCropper
     } = this;
 
-    const { src } = masterCropper.cropperInstance.element;
-
     let msg;
     let state;
     let type;
 
+    const msgTarget = (() => {
+      switch (true) {
+      case writeFilename && writeTitle:
+        return 'filename and title';
+      case writeFilename:
+        return 'filename';
+      case writeTitle:
+        return 'title';
+      default:
+        return '';
+      }
+    })();
+
+    const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
+
+    const image = masterCropper.cropperInstance.element;
+    let { src: imagePath } = image;
+
+    // TODO currently possible to enable both writeFilename and writeTitle
+    if (writeTitle) {
+      const { fileNameClean } = await window.electronAPI.getFileNameParts({ fileName: imagePath });
+
+      const { Title } = await window.electronAPI.getImageTitle({
+        imagePath: fileNameClean
+      });
+
+      imagePath = Title;
+    }
+
     const {
       imagePercentX: savedImagePercentX, // string
       imagePercentY: savedImagePercentY // string
-    } = this.getImagePercentXYFromImage(src);
+    } = this.getImagePercentXYFromImage(imagePath);
 
     const {
       panorama: savedPanorama = false
-    } = this.getFlagsFromImage(src);
+    } = this.getFlagsFromImage(imagePath);
 
     const isDefaultFocalpoint = this.isDefaultFocalpoint({
       imagePercentX: imagePercentXUi,
@@ -705,11 +736,11 @@ export class FmcCroppersUi {
         msg = 'Focalpoint reloaded';
         type = 'success';
       } else {
-        msg = 'Focalpoint saved';
+        msg = 'Focalpoint saved' + msgSavedTo;
         type = 'success';
       }
     } else {
-      msg = 'Focalpoint changed but not saved';
+      msg = 'Focalpoint changed but not saved' + msgSavedTo;
       state = 'dirty';
       type = 'warning';
     }
@@ -1447,8 +1478,8 @@ export class FmcCroppersUi {
    * @param {string} args.imageFlags - Image flags (comma separated)
    * @param {string} args.imagePercentX - Image percentage X
    * @param {string} args.imagePercentY - Image percentage Y
-   * @param {boolean} args.writeFilename - Write filename
-   * @param {boolean} args.writeTitle - Write title
+   * @param {boolean} args.writeFilename - Whether to write focalpoint data to filename
+   * @param {boolean} args.writeTitle - Whether to write focalpoint data to title metadata
    * @returns {Promise<string>} { msg, type }
    * @memberof FmcCroppersUi
    */
