@@ -29,6 +29,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     storeKey: 'thumbsFilterUncropped'
   });
 
+  const thumbsAutoSelectFilteredRadios = new FmcRadiosUi({
+    selector: 'input[name="thumbs-autoselect-filtered"]',
+    storeKey: 'thumbsAutoSelectFiltered'
+  });
+
   const fmcCroppersUiInstance = new FmcCroppersUi({
     Cropper: window.Cropper,
     cropperCanvasClass: 'cropper-canvas',
@@ -68,7 +73,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   const fmcThumbsUiInstance = new FmcThumbsUi({
     hideClass,
     selectedClass: 'btn-selected',
-    thumbsAutoSelectFilteredName: 'thumbs-autoselect-filtered',
     thumbButtonClass,
     thumbClass,
     thumbImgClass,
@@ -76,6 +80,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     thumbMetaClass: 'thumb-meta',
     thumbsCountId: 'thumb-count',
     thumbsId: 'thumbs',
+    thumbsAutoSelectFilteredRadios,
     thumbsFilterUncroppedRadios
   });
 
@@ -130,7 +135,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       presetNameInput: document.getElementById('settings-preset-name'),
       thumbsContainer: document.getElementById('thumbs'),
       thumbsContainerOuter: document.getElementById('thumbs-container'),
-      thumbsAutoSelectFilteredRadios: document.getElementsByName('thumbs-autoselect-filtered'),
       thumbFileName: document.getElementById('thumb-filename'),
       window: window
     },
@@ -138,6 +142,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
     focalpointAutoSaveRadios,
+    thumbsAutoSelectFilteredRadios,
     thumbsFilterUncroppedRadios,
     selectors: {
       controlHintClass,
@@ -193,7 +198,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       settingsLoadButton,
       settingsOpenButton,
       settingsSaveButton,
-      thumbsAutoSelectFilteredRadios,
       thumbsContainer,
       window
     } = elements;
@@ -264,7 +268,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       .addEventListener('click', _this.handleLinkToPath.bind(_this));
     pathOutLink
       .addEventListener('click', _this.handleLinkToPath.bind(_this));
-    thumbsAutoSelectFilteredRadios.forEach(el => el
+    thumbsAutoSelectFilteredRadios.elements.forEach(el => el
       .addEventListener('change', _this.handleAutoSelectFilteredRadioChange.bind(_this)));
     thumbsContainer
       .addEventListener('click', _this.handleThumbClick.bind(_this));

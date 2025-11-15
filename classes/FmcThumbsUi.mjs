@@ -22,7 +22,7 @@ export class FmcThumbsUi {
       thumbImgClass,
       thumbImgWrapperClass,
       thumbMetaClass,
-      thumbsAutoSelectFilteredName,
+      thumbsAutoSelectFilteredRadios,
       thumbsCountId,
       thumbsFilterUncroppedRadios,
       thumbsId
@@ -36,7 +36,7 @@ export class FmcThumbsUi {
       thumbImgClass,
       thumbImgWrapperClass,
       thumbMetaClass,
-      thumbsAutoSelectFilteredName,
+      thumbsAutoSelectFilteredRadios,
       thumbsCountId,
       thumbsFilterUncroppedRadios,
       thumbsId
@@ -137,16 +137,16 @@ export class FmcThumbsUi {
   }
 
   /**
-   * thumbsAutoSelectFilteredName
-   * @type {string}
+   * thumbsAutoSelectFilteredRadios
+   * @type {object} Instance of FmcRadiosUi
    * @memberof FmcThumbsUi
    */
-  get thumbsAutoSelectFilteredName() {
-    return this._thumbsAutoSelectFilteredName;
+  get thumbsAutoSelectFilteredRadios() {
+    return this._thumbsAutoSelectFilteredRadios;
   }
 
-  set thumbsAutoSelectFilteredName(thumbsAutoSelectFilteredName) {
-    this._thumbsAutoSelectFilteredName = dtrtValidate.validate(thumbsAutoSelectFilteredName, 'string', 'FmcThumbsUi.thumbsAutoSelectFilteredName');
+  set thumbsAutoSelectFilteredRadios(thumbsAutoSelectFilteredRadios) {
+    this._thumbsAutoSelectFilteredRadios = dtrtValidate.validate(thumbsAutoSelectFilteredRadios, 'object', 'FmcThumbsUi.thumbsAutoSelectFilteredRadios');
   }
 
   /**
@@ -164,7 +164,7 @@ export class FmcThumbsUi {
 
   /**
    * thumbsFilterUncroppedRadios
-   * @type {object}
+   * @type {object} Instance of FmcRadiosUi
    * @memberof FmcThumbsUi
    */
   get thumbsFilterUncroppedRadios() {
@@ -281,7 +281,7 @@ export class FmcThumbsUi {
   filterByFilenameAndCropped(searchStr) {
     const {
       hideClass,
-      thumbsAutoSelectFilteredName,
+      thumbsAutoSelectFilteredRadios,
       thumbClass,
       thumbButtonClass,
       thumbImgClass,
@@ -289,6 +289,7 @@ export class FmcThumbsUi {
       thumbsId
     } = this;
 
+    const autoSelectFiltered = thumbsAutoSelectFilteredRadios.getState() === 'on';
     const hideUncropped = thumbsFilterUncroppedRadios.getState() === 'on';
     const thumbButtons = document.querySelectorAll(`#${thumbsId} .${thumbButtonClass}`);
     const thumbImages = document.querySelectorAll(`#${thumbsId} .${thumbImgClass}`);
@@ -328,10 +329,7 @@ export class FmcThumbsUi {
       thumb.classList.remove(hideClass);
     });
 
-    const thumbsAutoSelectFilteredRadios = document.getElementsByName(thumbsAutoSelectFilteredName);
-    const autoSelectFiltered = [ ...thumbsAutoSelectFilteredRadios ].filter(radio => radio.checked)[0].value;
-
-    if (thumbsShown.length && (autoSelectFiltered === 'on')) {
+    if (thumbsShown.length && autoSelectFiltered) {
       const target = thumbsShown[0].querySelector(`.${thumbButtonClass}`);
 
       target.focus();

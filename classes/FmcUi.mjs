@@ -20,6 +20,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios,
       selectors
     } = config;
@@ -31,6 +32,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios,
       selectors
     });
@@ -115,6 +117,19 @@ export class FmcUi {
 
   set focalpointAutoSaveRadios(focalpointAutoSaveRadios) {
     this._focalpointAutoSaveRadios = dtrtValidate.validate(focalpointAutoSaveRadios, 'object', 'FmcUi.focalpointAutoSaveRadios');
+  }
+
+  /**
+   * thumbsAutoSelectFilteredRadios
+   * @type {object}
+   * @memberof FmcUi
+   */
+  get thumbsAutoSelectFilteredRadios() {
+    return this._thumbsAutoSelectFilteredRadios;
+  }
+
+  set thumbsAutoSelectFilteredRadios(thumbsAutoSelectFilteredRadios) {
+    this._thumbsAutoSelectFilteredRadios = dtrtValidate.validate(thumbsAutoSelectFilteredRadios, 'object', 'FmcUi.thumbsAutoSelectFilteredRadios');
   }
 
   /**
@@ -342,22 +357,14 @@ export class FmcUi {
    */
   async handleAutoSelectFilteredRadioChange(event) {
     const {
-      elements
+      thumbsAutoSelectFilteredRadios
     } = this;
 
-    const {
-      filterSubmitButton
-    } = elements;
+    const state = event.target.value;
 
-    await window.electronAPI.setKeys({
-      keyValuePairs: [
-        {
-          thumbsAutoSelectFiltered: event.target.value === 'on'
-        }
-      ]
-    });
+    await thumbsAutoSelectFilteredRadios.setStoredState(state);
 
-    FmcUi.emitElementEvent(filterSubmitButton, 'click', {});
+    await this.handleFilterSubmit();
   }
 
   /**
@@ -1041,6 +1048,7 @@ export class FmcUi {
       elements,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios
     } = this;
 
@@ -1106,18 +1114,14 @@ export class FmcUi {
       await this.handleFolderWebsiteBrowse(null, restore);
       await this.handleFileWebpageBrowse(null, restore);
 
-      const { thumbsAutoSelectFiltered: storedThumbsAutoSelectFiltered } = await window.electronAPI.getKeys({
-        keys: [ 'thumbsAutoSelectFiltered' ]
-      });
-
       const { focalpointWrite: storedFocalpointWrite } = await window.electronAPI.getKeys({
         keys: [ 'focalpointWrite' ]
       });
 
       await focalpointAutoSaveRadios.restoreStoredState();
+      await thumbsAutoSelectFilteredRadios.restoreStoredState();
       await thumbsFilterUncroppedRadios.restoreStoredState();
 
-      this.setAutoSelectFiltered(storedThumbsAutoSelectFiltered);
       this.setWriteMode(storedFocalpointWrite);
 
       fmcThumbsUiInstance.clickSelectedThumb(1);
@@ -1502,28 +1506,6 @@ export class FmcUi {
 
       FmcUi.emitElementEvent(window, 'message', msgObj);
     }
-  }
-
-  /**
-   * @function setAutoSelectFiltered
-   * @summary Turn auto save on or off
-   * @param {boolean} enabled - On
-   * @memberof FmcUi
-   */
-  setAutoSelectFiltered(enabled) {
-    const {
-      elements
-    } = this;
-
-    const {
-      thumbsAutoSelectFilteredRadios
-    } = elements;
-
-    const autoSaveSetting = enabled ? 'on' : 'off';
-
-    thumbsAutoSelectFilteredRadios.forEach(radio => {
-      radio.checked = (radio.value === autoSaveSetting);
-    });
   }
 
   /**
