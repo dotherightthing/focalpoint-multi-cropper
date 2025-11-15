@@ -818,10 +818,9 @@ end tell`);
     const oldFileName = fileNameAndExtClean;
     const oldFileNameWithPath = `${folderPath}/${oldFileName}`;
     const newFileName = `${fileNameOnlyCleanNoRegex}__[${imagePercentX}%,${imagePercentY}%${imageFlagsPrefix}${imageFlags}]${extName}`;
-    const newFileNameWithPath = `${folderPath}/${newFileName}${extName}`;
+    const newFileNameWithPath = `${folderPath}/${newFileName}`;
 
     if (newFileName !== oldFileName) {
-      // TODO update UI
       if (writeTitle) {
         await exiftool.write(oldFileNameWithPath, {
           Title: newFileName
@@ -839,7 +838,7 @@ end tell`);
       }
     }
 
-    return newFileName;
+    return writeFilename ? newFileNameWithPath : oldFileNameWithPath;
   }
 
   /**
