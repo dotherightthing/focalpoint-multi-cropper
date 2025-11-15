@@ -20,6 +20,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      focalpointWriteFilenameRadios,
       focalpointWriteTitleRadios,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios,
@@ -33,6 +34,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      focalpointWriteFilenameRadios,
       focalpointWriteTitleRadios,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios,
@@ -119,6 +121,19 @@ export class FmcUi {
 
   set focalpointAutoSaveRadios(focalpointAutoSaveRadios) {
     this._focalpointAutoSaveRadios = dtrtValidate.validate(focalpointAutoSaveRadios, 'object', 'FmcUi.focalpointAutoSaveRadios');
+  }
+
+  /**
+   * focalpointWriteFilenameRadios
+   * @type {object} Instance of FmcRadiosUi
+   * @memberof FmcUi
+   */
+  get focalpointWriteFilenameRadios() {
+    return this._focalpointWriteFilenameRadios;
+  }
+
+  set focalpointWriteFilenameRadios(focalpointWriteFilenameRadios) {
+    this._focalpointWriteFilenameRadios = dtrtValidate.validate(focalpointWriteFilenameRadios, 'object', 'FmcUi.focalpointWriteFilenameRadios');
   }
 
   /**
@@ -397,6 +412,23 @@ export class FmcUi {
     await thumbsFilterUncroppedRadios.setStoredState(state);
 
     await this.handleFilterSubmit();
+  }
+
+  /**
+   * @function handleWriteFilenameRadioChange
+   * @param {object} event - Change event
+   * @memberof FmcUi
+   */
+  async handleWriteFilenameRadioChange(event) {
+    const {
+      focalpointWriteFilenameRadios
+    } = this;
+
+    const state = event.target.value;
+
+    await focalpointWriteFilenameRadios.setStoredState(state);
+
+    // TODO : Update Photos app etc
   }
 
   /**
@@ -1061,6 +1093,7 @@ export class FmcUi {
       elements,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      focalpointWriteFilenameRadios,
       focalpointWriteTitleRadios,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios
@@ -1129,6 +1162,7 @@ export class FmcUi {
       await this.handleFileWebpageBrowse(null, restore);
 
       await focalpointAutoSaveRadios.restoreStoredState();
+      await focalpointWriteFilenameRadios.restoreStoredState();
       await focalpointWriteTitleRadios.restoreStoredState();
       await thumbsAutoSelectFilteredRadios.restoreStoredState();
       await thumbsFilterUncroppedRadios.restoreStoredState();
@@ -1480,6 +1514,7 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
+      focalpointWriteFilenameRadios,
       focalpointWriteTitleRadios
     } = this;
 
@@ -1507,6 +1542,7 @@ export class FmcUi {
         imageFlags: flags.join(','),
         imagePercentX: focalpointXInput.value,
         imagePercentY: focalpointYInput.value,
+        writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
         writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
       });
 

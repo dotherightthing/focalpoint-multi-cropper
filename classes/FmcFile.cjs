@@ -784,6 +784,7 @@ end tell`);
    * @param {string} data.imageFlags - Image flags
    * @param {number} data.imagePercentX - Image percent X
    * @param {number} data.imagePercentY - Image percent Y
+   * @param {boolean} data.writeFilename - Write filename
    * @param {boolean} data.writeTitle - Write title
    * @returns {string} newFileName
    * @memberof FmcFile
@@ -797,6 +798,7 @@ end tell`);
       imageFlags,
       imagePercentY,
       imagePercentX,
+      writeFilename,
       writeTitle
     } = data;
 
@@ -826,7 +828,9 @@ end tell`);
         });
 
         this.setTitleInPhotosApp(fileNameOnlyCleanNoRegex, newFileName);
-      } else {
+      }
+
+      if (writeFilename) {
         fs.rename(oldFileNameWithPath, newFileNameWithPath, (error) => {
           if (error) {
             console.log(error);

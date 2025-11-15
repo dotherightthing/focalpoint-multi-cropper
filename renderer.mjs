@@ -24,6 +24,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     storeKey: 'focalpointAutoSave'
   });
 
+  const focalpointWriteFilenameRadios = new FmcRadiosUi({
+    selector: 'input[name="focalpoint-write-filename"]',
+    storeKey: 'focalpointWriteFilename'
+  });
+
   const focalpointWriteTitleRadios = new FmcRadiosUi({
     selector: 'input[name="focalpoint-write-title"]',
     storeKey: 'focalpointWriteTitle'
@@ -146,6 +151,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
     focalpointAutoSaveRadios,
+    focalpointWriteFilenameRadios,
     focalpointWriteTitleRadios,
     thumbsAutoSelectFilteredRadios,
     thumbsFilterUncroppedRadios,
@@ -241,6 +247,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       .addEventListener('click', _this.handleFocalpointReset.bind(_this));
     focalpointSaveButton
       .addEventListener('click', _this.handleFocalpointSave.bind(_this));
+    focalpointWriteFilenameRadios.elements.forEach(el => el
+      .addEventListener('change', _this.handleWriteFilenameRadioChange.bind(_this)));
     focalpointWriteTitleRadios.elements.forEach(el => el
       .addEventListener('change', _this.handleWriteTitleRadioChange.bind(_this)));
     focalpointXInput
