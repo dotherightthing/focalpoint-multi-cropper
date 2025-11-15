@@ -71,7 +71,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     thumbsAutoSelectFilteredName: 'thumbs-autoselect-filtered',
     thumbButtonClass,
     thumbClass,
-    thumbsFilterUncroppedName: 'thumbs-filter-uncropped',
     thumbImgClass,
     thumbImgWrapperClass: 'thumb-img-wrapper',
     thumbMetaClass: 'thumb-meta',
