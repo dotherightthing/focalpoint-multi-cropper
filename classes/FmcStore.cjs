@@ -38,6 +38,7 @@ class FmcStore {
 
     try {
       fs.writeFileSync(this.path, JSON.stringify(this.data, null, 2));
+      fs.copyFileSync(this.path, path.join(__dirname, '..', 'backup', 'user-preferences.json'));
     } catch (error) {
       throw new Error(`Cannot write to FmcStore: ${error}`);
     }

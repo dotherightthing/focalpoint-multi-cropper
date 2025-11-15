@@ -23,7 +23,7 @@
 * **Embed** - Copy paths including a relative link suitable for pasting into a Markdown document or webpage, optionally output a target cross on the image
 * **Geotag** - Copy latitude/longitude information if available
 * **Restore** - Settings are restored when reopening the Electron app
-* **Presets** - Store a batch of settings in userData (macOS: `/Users/NAME/Library/Application Support/focalpoint-multi-cropper/user-preferences.json`)
+* **Presets** - Store a batch of settings in userData (macOS: `~/Library/Application Support/focalpoint-multi-cropper/user-preferences.json`)
 
 ## Usage
 
