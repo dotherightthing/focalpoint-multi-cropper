@@ -112,6 +112,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('FmcFile:copyFromClipboard', FmcFile.copyFromClipboard);
   ipcMain.handle('FmcFile:copyToClipboard', FmcFile.copyToClipboard);
+  ipcMain.handle('FmcFile:getFileNameParts', FmcFile.getFileNameParts);
   ipcMain.handle('FmcFile:getRelativePath', FmcFile.getRelativePath);
   ipcMain.handle('FmcFile:openInEditor', FmcFile.openInEditor);
   ipcMain.handle('FmcFile:openInFinder', FmcFile.openInFinder);

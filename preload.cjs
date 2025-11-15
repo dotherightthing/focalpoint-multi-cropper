@@ -19,6 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   copyFromClipboard: (data) => ipcRenderer.invoke('FmcFile:copyFromClipboard', data),
   copyToClipboard: (data) => ipcRenderer.invoke('FmcFile:copyToClipboard', data),
+  getFileNameParts: (data) => ipcRenderer.invoke('FmcFile:getFileNameParts', data),
   getRelativePath: (data) => ipcRenderer.invoke('FmcFile:getRelativePath', data),
   openInEditor: (data) => ipcRenderer.invoke('FmcFile:openInEditor', data),
   openInFinder: (data) => ipcRenderer.invoke('FmcFile:openInFinder', data),

@@ -90,7 +90,7 @@ module.exports = class FmcFile {
       extName,
       fileNameOnly,
       fileNameClean
-    } = FmcFile.getFileNameParts(fileName);
+    } = await FmcFile.getFileNameParts(null, { fileName });
 
     const counts = {
       deletions: 0,
@@ -98,6 +98,7 @@ module.exports = class FmcFile {
       resizes: 0
     };
 
+    // TODO use FmcFile.getFileNameParts
     const currentDir = process.cwd();
     const targetPath = path.relative(currentDir, targetFolder);
     const baseExportPath = `${targetPath}/${fileNameOnly}${extName}`;
@@ -373,7 +374,7 @@ module.exports = class FmcFile {
     const {
       fileNameAndExt,
       folderPath
-    } = FmcFile.getFileNameParts(fileName);
+    } = await FmcFile.getFileNameParts(null, { fileName });
 
     const regex = FmcFile.getFocalpointRegex();
 
@@ -419,12 +420,18 @@ module.exports = class FmcFile {
 
   /**
    * @function getFileNameParts
-   * @param {string} fileName - File name
+   * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {string} data.fileName - File name
    * @returns {object} parts
    * @memberof FmcFile
    * @static
    */
-  static getFileNameParts(fileName) {
+  static async getFileNameParts(event, data) {
+    const {
+      fileName
+    } = data;
+
     const fileNameAndExt = path.basename(fileName); // Filename.ext | Filename__[nn%,nn%].ext
     const fileNameAndExtClean = fileNameAndExt.replace(/%20/g, ' ');
     const extName = path.extname(fileName); // .ext
@@ -432,6 +439,7 @@ module.exports = class FmcFile {
     const fileNameOnlyClean = fileNameOnly.replace(/%20/g, ' ');
     const fileNameClean = fileName.replace('file://', '').replace(/%20/g, ' '); // /Volumes/Foo/Bar/Baz/Filename.ext
     const folderPath = path.dirname(fileNameClean); // /Volumes/Foo/Bar/Baz
+    const relativeFilePath = path.relative(process.cwd(), folderPath + '/' + fileNameAndExtClean);
 
     return {
       extName,
@@ -440,7 +448,8 @@ module.exports = class FmcFile {
       fileNameClean,
       fileNameOnly,
       fileNameOnlyClean,
-      folderPath
+      folderPath,
+      relativeFilePath
     };
   }
 
@@ -807,7 +816,7 @@ end tell`);
       fileNameAndExtClean,
       fileNameOnlyClean,
       folderPath
-    } = FmcFile.getFileNameParts(fileName);
+    } = await FmcFile.getFileNameParts(null, { fileName });
 
     const regex = FmcFile.getFocalpointRegex();
 
