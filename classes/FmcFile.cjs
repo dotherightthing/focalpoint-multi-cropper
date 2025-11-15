@@ -826,7 +826,7 @@ end tell`);
           Title: newFileName
         });
 
-        this.setTitleInPhotosApp(fileNameOnlyCleanNoRegex, newFileName);
+        FmcFile.setTitleInPhotosApp(fileNameOnlyCleanNoRegex, newFileName);
       }
 
       if (writeFilename) {
