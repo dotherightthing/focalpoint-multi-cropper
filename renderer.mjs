@@ -158,8 +158,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const {
       debounceDelay,
-      elements,
-      focalpointAutoSaveRadios
+      elements
+      // focalpointAutoSaveRadios // see above
     } = _this;
 
     const {

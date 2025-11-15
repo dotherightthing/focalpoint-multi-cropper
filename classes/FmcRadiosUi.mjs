@@ -64,7 +64,7 @@ export class FmcRadiosUi {
 
   /**
    * @function getState
-   * @return {bool} state
+   * @returns {boolean} state
    * @memberof FmcRadiosUi
    */
   getState() {
@@ -91,12 +91,12 @@ export class FmcRadiosUi {
       }
     });
 
-    return checkedRadio
+    return checkedRadio;
   }
 
   /**
    * @function getStoredState
-   * @return {bool} state
+   * @returns {boolean} state
    * @memberof FmcRadiosUi
    */
   async getStoredState() {
@@ -109,7 +109,6 @@ export class FmcRadiosUi {
 
   /**
    * @function setStoredState
-   * @param {string} state - State
    * @memberof FmcRadiosUi
    */
   async setStoredState() {
@@ -135,7 +134,7 @@ export class FmcRadiosUi {
     if (storedState === 'on') {
       setTimeout(() => {
         FmcUi.emitElementEvent(checkedRadio, 'change');
-      }, waitForFmcCroppersUiInstance)
+      }, waitForFmcCroppersUiInstance);
     }
   }
 }

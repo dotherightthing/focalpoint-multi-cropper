@@ -314,7 +314,7 @@ export class FmcUi {
 
     const {
       focalpointProportionsRadios,
-      focalpointXInput, 
+      focalpointXInput,
       focalpointYInput
     } = elements;
 
