@@ -15,7 +15,7 @@
 * **Filter** - Filter thumbnails by partial filename, and whether they have been cropped
 * **Set focalpoint** - Click the master cropper image or use the number inputs to set a focalpoint, slave croppers' crop boxes will automatically follow
 * **Rounding** - Round focalpoint XY to integers for easier storage
-* **Storage** - Toggle on auto-save to write a non-default focalpoint to the image filename as a resolution-independent percentage of its width and height (integers), e.g. `foo__[40%,37%].jpg` (regular) or `bar__[40%,37%,P].jpg` (panorama)
+* **Storage** - Toggle on *Auto-Save* and either *Write Focalpoint to Filename* or *Write Focalpoint to EXIF/IPTC Title* to write a non-default focalpoint to the image as a resolution-independent percentage of its width and height (integers), e.g. `foo__[40%,37%].jpg` (regular) or `bar__[40%,37%,P].jpg` (panorama)
 * **Reset** - Remove user changes and reapply the focalpoint stored in the image filename, or the defaults
 * **Delete** - Delete the focalpoint and remove non-default focalpoint from the image filename
 * **Resize & Crop** - Use [gm](https://github.com/aheckmann/gm) to `resizeAndCrop` from the slave croppers' crop boxes, and `resize` from the hidden non-cropper inclusions
