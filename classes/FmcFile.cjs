@@ -468,7 +468,7 @@ module.exports = class FmcFile {
   static async getImageFiles(dir) {
     const files = await FmcFile.getFiles(dir);
 
-    return files.filter(file => file.match(/(.gif|.jpg|.jpeg|.png|.webp)+/gi));
+    return files.filter(file => file.match(/^(?!.*_original\.(?:gif|jpg|jpeg|png|webp)$).+\.(?:gif|jpg|jpeg|png|webp)$/gi));
   }
 
   /**
