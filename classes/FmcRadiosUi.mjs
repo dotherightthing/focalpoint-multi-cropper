@@ -1,4 +1,5 @@
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcUi } from './FmcUi.mjs';
 
 export class FmcRadiosUi {
   /**
@@ -76,12 +77,21 @@ export class FmcRadiosUi {
    * @function setState
    * @summary Turn on or off
    * @param {string} state - on|off
+   * @returns {HTMLElement} checkedRadio
    * @memberof FmcRadiosUi
    */
   setState(state) {
+    let checkedRadio = null;
+
     this.elements.forEach(radio => {
       radio.checked = (radio.value === state);
+
+      if (radio.value === state) {
+        checkedRadio = radio;
+      }
     });
+
+    return checkedRadio
   }
 
   /**
@@ -119,7 +129,13 @@ export class FmcRadiosUi {
    */
   async restoreStoredState() {
     const storedState = await this.getStoredState();
+    const checkedRadio = this.setState(storedState);
+    const waitForFmcCroppersUiInstance = 2000;
 
-    this.setState(storedState);
+    if (storedState === 'on') {
+      setTimeout(() => {
+        FmcUi.emitElementEvent(checkedRadio, 'change');
+      }, waitForFmcCroppersUiInstance)
+    }
   }
 }

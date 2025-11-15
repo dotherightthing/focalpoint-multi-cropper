@@ -19,6 +19,16 @@ window.addEventListener('DOMContentLoaded', async () => {
   const thumbClass = 'thumb';
   const thumbImgClass = 'thumb-img';
 
+  const focalpointAutoSaveRadios = new FmcRadiosUi({
+    selector: 'input[name="focalpoint-autosave"]',
+    storeKey: 'focalpointAutoSave'
+  });
+
+  const thumbsFilterUncroppedRadios = new FmcRadiosUi({
+    selector: 'input[name="thumbs-filter-uncropped"]',
+    storeKey: 'thumbsFilterUncropped'
+  });
+
   const fmcCroppersUiInstance = new FmcCroppersUi({
     Cropper: window.Cropper,
     cropperCanvasClass: 'cropper-canvas',
@@ -66,12 +76,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     thumbImgWrapperClass: 'thumb-img-wrapper',
     thumbMetaClass: 'thumb-meta',
     thumbsCountId: 'thumb-count',
-    thumbsId: 'thumbs'
-  });
-
-  const focalpointAutoSaveRadios = new FmcRadiosUi({
-    selector: 'input[name="focalpoint-autosave"]',
-    storeKey: 'focalpointAutoSave'
+    thumbsId: 'thumbs',
+    thumbsFilterUncroppedRadios
   });
 
   const fmcUi = new FmcUi({
@@ -126,7 +132,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       thumbsContainer: document.getElementById('thumbs'),
       thumbsContainerOuter: document.getElementById('thumbs-container'),
       thumbsAutoSelectFilteredRadios: document.getElementsByName('thumbs-autoselect-filtered'),
-      thumbsFilterUncroppedRadios: document.getElementsByName('thumbs-filter-uncropped'),
       thumbFileName: document.getElementById('thumb-filename'),
       window: window
     },
@@ -134,6 +139,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
     focalpointAutoSaveRadios,
+    thumbsFilterUncroppedRadios,
     selectors: {
       controlHintClass,
       thumbButtonClass,
@@ -190,7 +196,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       settingsSaveButton,
       thumbsAutoSelectFilteredRadios,
       thumbsContainer,
-      thumbsFilterUncroppedRadios,
       window
     } = elements;
 
@@ -264,8 +269,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       .addEventListener('change', _this.handleAutoSelectFilteredRadioChange.bind(_this)));
     thumbsContainer
       .addEventListener('click', _this.handleThumbClick.bind(_this));
-    thumbsFilterUncroppedRadios.forEach(el => el
-      .addEventListener('change', _this.handleFilterSubmit.bind(_this)));
+    thumbsFilterUncroppedRadios.elements.forEach(el => el
+      .addEventListener('change', _this.handleThumbsFilterUncroppedRadiosChange.bind(_this)));
     window
       .addEventListener('keydown', _this.handleWindowKeydown.bind(_this));
     window

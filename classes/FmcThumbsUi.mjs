@@ -24,7 +24,7 @@ export class FmcThumbsUi {
       thumbMetaClass,
       thumbsAutoSelectFilteredName,
       thumbsCountId,
-      thumbsFilterUncroppedName,
+      thumbsFilterUncroppedRadios,
       thumbsId
     } = config;
 
@@ -38,7 +38,7 @@ export class FmcThumbsUi {
       thumbMetaClass,
       thumbsAutoSelectFilteredName,
       thumbsCountId,
-      thumbsFilterUncroppedName,
+      thumbsFilterUncroppedRadios,
       thumbsId
     });
   }
@@ -163,16 +163,16 @@ export class FmcThumbsUi {
   }
 
   /**
-   * thumbsFilterUncroppedName
-   * @type {string}
+   * thumbsFilterUncroppedRadios
+   * @type {object}
    * @memberof FmcThumbsUi
    */
-  get thumbsFilterUncroppedName() {
-    return this._thumbsFilterUncroppedName;
+  get thumbsFilterUncroppedRadios() {
+    return this._thumbsFilterUncroppedRadios;
   }
 
-  set thumbsFilterUncroppedName(thumbsFilterUncroppedName) {
-    this._thumbsFilterUncroppedName = dtrtValidate.validate(thumbsFilterUncroppedName, 'string', 'FmcThumbsUi.thumbsFilterUncroppedName');
+  set thumbsFilterUncroppedRadios(thumbsFilterUncroppedRadios) {
+    this._thumbsFilterUncroppedRadios = dtrtValidate.validate(thumbsFilterUncroppedRadios, 'object', 'FmcThumbsUi.thumbsFilterUncroppedRadios');
   }
 
   /* Instance methods */
@@ -285,12 +285,11 @@ export class FmcThumbsUi {
       thumbClass,
       thumbButtonClass,
       thumbImgClass,
-      thumbsFilterUncroppedName,
+      thumbsFilterUncroppedRadios,
       thumbsId
     } = this;
 
-    const thumbsFilterUncroppedRadios = document.getElementsByName(thumbsFilterUncroppedName);
-    const hideUncropped = [ ...thumbsFilterUncroppedRadios ].filter(radio => radio.checked)[0].value === 'on';
+    const hideUncropped = thumbsFilterUncroppedRadios.getState() === 'on';
     const thumbButtons = document.querySelectorAll(`#${thumbsId} .${thumbButtonClass}`);
     const thumbImages = document.querySelectorAll(`#${thumbsId} .${thumbImgClass}`);
     const thumbs = document.querySelectorAll(`#${thumbsId} .${thumbClass}`);

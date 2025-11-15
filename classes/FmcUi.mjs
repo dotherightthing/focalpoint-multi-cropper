@@ -20,6 +20,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      thumbsFilterUncroppedRadios,
       selectors
     } = config;
 
@@ -30,6 +31,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      thumbsFilterUncroppedRadios,
       selectors
     });
   }
@@ -113,6 +115,19 @@ export class FmcUi {
 
   set focalpointAutoSaveRadios(focalpointAutoSaveRadios) {
     this._focalpointAutoSaveRadios = dtrtValidate.validate(focalpointAutoSaveRadios, 'object', 'FmcUi.focalpointAutoSaveRadios');
+  }
+
+  /**
+   * thumbsFilterUncroppedRadios
+   * @type {object}
+   * @memberof FmcUi
+   */
+  get thumbsFilterUncroppedRadios() {
+    return this._thumbsFilterUncroppedRadios;
+  }
+
+  set thumbsFilterUncroppedRadios(thumbsFilterUncroppedRadios) {
+    this._thumbsFilterUncroppedRadios = dtrtValidate.validate(thumbsFilterUncroppedRadios, 'object', 'FmcUi.thumbsFilterUncroppedRadios');
   }
 
   /**
@@ -299,7 +314,7 @@ export class FmcUi {
 
     const {
       focalpointProportionsRadios,
-      focalpointXInput,
+      focalpointXInput, 
       focalpointYInput
     } = elements;
 
@@ -343,6 +358,23 @@ export class FmcUi {
     });
 
     FmcUi.emitElementEvent(filterSubmitButton, 'click', {});
+  }
+
+  /**
+   * @function handleThumbsFilterUncroppedRadiosChange
+   * @param {object} event - Change event
+   * @memberof FmcUi
+   */
+  async handleThumbsFilterUncroppedRadiosChange(event) {
+    const {
+      thumbsFilterUncroppedRadios
+    } = this;
+
+    const state = event.target.value;
+
+    await thumbsFilterUncroppedRadios.setStoredState(state);
+
+    await this.handleFilterSubmit();
   }
 
   /**
@@ -1008,7 +1040,8 @@ export class FmcUi {
     const {
       elements,
       fmcThumbsUiInstance,
-      focalpointAutoSaveRadios
+      focalpointAutoSaveRadios,
+      thumbsFilterUncroppedRadios
     } = this;
 
     const {
@@ -1082,9 +1115,9 @@ export class FmcUi {
       });
 
       await focalpointAutoSaveRadios.restoreStoredState();
+      await thumbsFilterUncroppedRadios.restoreStoredState();
 
       this.setAutoSelectFiltered(storedThumbsAutoSelectFiltered);
-      this.setFilterUncropped(false);
       this.setWriteMode(storedFocalpointWrite);
 
       fmcThumbsUiInstance.clickSelectedThumb(1);
@@ -1510,32 +1543,6 @@ export class FmcUi {
 
     focalpointWriteRadios.forEach(radio => {
       radio.checked = (radio.value === mode);
-    });
-  }
-
-  /**
-   * @function setFilterUncropped
-   * @summary Turn filter uncropped thumbs on or off
-   * @param {boolean} enabled - On
-   * @memberof FmcUi
-   */
-  setFilterUncropped(enabled) {
-    const {
-      elements
-    } = this;
-
-    const {
-      thumbsFilterUncroppedRadios
-    } = elements;
-
-    const filterUncroppedSetting = enabled ? 'on' : 'off';
-
-    thumbsFilterUncroppedRadios.forEach(radio => {
-      radio.checked = (radio.value === filterUncroppedSetting);
-
-      if (radio.value === 'on') {
-        FmcUi.emitElementEvent(radio, 'change');
-      }
     });
   }
 
