@@ -24,6 +24,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     storeKey: 'focalpointAutoSave'
   });
 
+  const focalpointWriteTitleRadios = new FmcRadiosUi({
+    selector: 'input[name="focalpoint-write-title"]',
+    storeKey: 'focalpointWriteTitle'
+  });
+
   const thumbsFilterUncroppedRadios = new FmcRadiosUi({
     selector: 'input[name="thumbs-filter-uncropped"]',
     storeKey: 'thumbsFilterUncropped'
@@ -110,7 +115,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       focalpointProportionsRadios: document.getElementsByName(focalpointProportionsRadiosName),
       focalpointResetButton: document.getElementById('reset-focalpoint'),
       focalpointSaveButton: document.getElementById('save-focalpoint'),
-      focalpointWriteRadios: document.getElementsByName('focalpoint-write'),
       focalpointXInput: document.getElementById(focalpointXInputId),
       focalpointYInput: document.getElementById(focalpointYInputId),
       folderInButton: document.getElementById('folder-in-button'),
@@ -142,6 +146,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
     focalpointAutoSaveRadios,
+    focalpointWriteTitleRadios,
     thumbsAutoSelectFilteredRadios,
     thumbsFilterUncroppedRadios,
     selectors: {
@@ -163,7 +168,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     const {
       debounceDelay,
       elements
-      // focalpointAutoSaveRadios // see above
     } = _this;
 
     const {
@@ -183,7 +187,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       focalpointProportionsRadios,
       focalpointResetButton,
       focalpointSaveButton,
-      focalpointWriteRadios,
       focalpointXInput,
       focalpointYInput,
       folderInButton,
@@ -238,8 +241,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       .addEventListener('click', _this.handleFocalpointReset.bind(_this));
     focalpointSaveButton
       .addEventListener('click', _this.handleFocalpointSave.bind(_this));
-    focalpointWriteRadios.forEach(el => el
-      .addEventListener('change', _this.handleWriteRadioChange.bind(_this)));
+    focalpointWriteTitleRadios.elements.forEach(el => el
+      .addEventListener('change', _this.handleWriteTitleRadioChange.bind(_this)));
     focalpointXInput
       .addEventListener('change', handleFocalpointInputDebounced.bind(_this));
     focalpointYInput

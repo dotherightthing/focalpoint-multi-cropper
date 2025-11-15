@@ -20,6 +20,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      focalpointWriteTitleRadios,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios,
       selectors
@@ -32,6 +33,7 @@ export class FmcUi {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      focalpointWriteTitleRadios,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios,
       selectors
@@ -108,7 +110,7 @@ export class FmcUi {
 
   /**
    * focalpointAutoSaveRadios
-   * @type {object}
+   * @type {object} Instance of FmcRadiosUi
    * @memberof FmcUi
    */
   get focalpointAutoSaveRadios() {
@@ -120,8 +122,21 @@ export class FmcUi {
   }
 
   /**
+   * focalpointWriteTitleRadios
+   * @type {object} Instance of FmcRadiosUi
+   * @memberof FmcUi
+   */
+  get focalpointWriteTitleRadios() {
+    return this._focalpointWriteTitleRadios;
+  }
+
+  set focalpointWriteTitleRadios(focalpointWriteTitleRadios) {
+    this._focalpointWriteTitleRadios = dtrtValidate.validate(focalpointWriteTitleRadios, 'object', 'FmcUi.focalpointWriteTitleRadios');
+  }
+
+  /**
    * thumbsAutoSelectFilteredRadios
-   * @type {object}
+   * @type {object} Instance of FmcRadiosUi
    * @memberof FmcUi
    */
   get thumbsAutoSelectFilteredRadios() {
@@ -134,7 +149,7 @@ export class FmcUi {
 
   /**
    * thumbsFilterUncroppedRadios
-   * @type {object}
+   * @type {object} Instance of FmcRadiosUi
    * @memberof FmcUi
    */
   get thumbsFilterUncroppedRadios() {
@@ -385,19 +400,18 @@ export class FmcUi {
   }
 
   /**
-   * @function handleWriteRadioChange
+   * @function handleWriteTitleRadioChange
    * @param {object} event - Change event
    * @memberof FmcUi
    */
-  async handleWriteRadioChange(event) {
-    await window.electronAPI.setKeys({
-      keyValuePairs: [
-        {
-          focalpointWriteFilename: event.target.value === 'filename',
-          focalpointWriteTitle: event.target.value === 'title'
-        }
-      ]
-    });
+  async handleWriteTitleRadioChange(event) {
+    const {
+      focalpointWriteTitleRadios
+    } = this;
+
+    const state = event.target.value;
+
+    await focalpointWriteTitleRadios.setStoredState(state);
 
     // TODO : Update Photos app etc
   }
@@ -675,7 +689,6 @@ export class FmcUi {
 
     const {
       focalpointProportionsRadios,
-      // focalpointWriteRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
@@ -1048,6 +1061,7 @@ export class FmcUi {
       elements,
       fmcThumbsUiInstance,
       focalpointAutoSaveRadios,
+      focalpointWriteTitleRadios,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios
     } = this;
@@ -1114,15 +1128,10 @@ export class FmcUi {
       await this.handleFolderWebsiteBrowse(null, restore);
       await this.handleFileWebpageBrowse(null, restore);
 
-      const { focalpointWrite: storedFocalpointWrite } = await window.electronAPI.getKeys({
-        keys: [ 'focalpointWrite' ]
-      });
-
       await focalpointAutoSaveRadios.restoreStoredState();
+      await focalpointWriteTitleRadios.restoreStoredState();
       await thumbsAutoSelectFilteredRadios.restoreStoredState();
       await thumbsFilterUncroppedRadios.restoreStoredState();
-
-      this.setWriteMode(storedFocalpointWrite);
 
       fmcThumbsUiInstance.clickSelectedThumb(1);
 
@@ -1470,7 +1479,8 @@ export class FmcUi {
   async saveFocalpoint() {
     const {
       elements,
-      fmcCroppersUiInstance
+      fmcCroppersUiInstance,
+      focalpointWriteTitleRadios
     } = this;
 
     const {
@@ -1489,10 +1499,6 @@ export class FmcUi {
       flags.push('P');
     }
 
-    const { focalpointWrite: storedFocalpointWrite } = await window.electronAPI.getKeys({
-      keys: [ 'focalpointWrite' ]
-    });
-
     // value is a string despite input being of type number
     if ((Number(focalpointXInput.value) === 50) && (Number(focalpointYInput.value) === 50)) {
       msgObj = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
@@ -1501,31 +1507,11 @@ export class FmcUi {
         imageFlags: flags.join(','),
         imagePercentX: focalpointXInput.value,
         imagePercentY: focalpointYInput.value,
-        writeMode: storedFocalpointWrite
+        writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
       });
 
       FmcUi.emitElementEvent(window, 'message', msgObj);
     }
-  }
-
-  /**
-   * @function setWriteMode
-   * @summary Toggle write mode
-   * @param {string} mode - filename|title
-   * @memberof FmcUi
-   */
-  setWriteMode(mode) {
-    const {
-      elements
-    } = this;
-
-    const {
-      focalpointWriteRadios
-    } = elements;
-
-    focalpointWriteRadios.forEach(radio => {
-      radio.checked = (radio.value === mode);
-    });
   }
 
   /**

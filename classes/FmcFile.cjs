@@ -784,7 +784,7 @@ end tell`);
    * @param {string} data.imageFlags - Image flags
    * @param {number} data.imagePercentX - Image percent X
    * @param {number} data.imagePercentY - Image percent Y
-   * @param {string} data.writeMode - Write mode
+   * @param {boolean} data.writeTitle - Write title
    * @returns {string} newFileName
    * @memberof FmcFile
    * @static
@@ -797,7 +797,7 @@ end tell`);
       imageFlags,
       imagePercentY,
       imagePercentX,
-      writeMode
+      writeTitle
     } = data;
 
     const {
@@ -820,7 +820,7 @@ end tell`);
 
     if (newFileName !== oldFileName) {
       // TODO update UI
-      if (writeMode === 'title') {
+      if (writeTitle) {
         await exiftool.write(oldFileNameWithPath, {
           Title: newFileName
         });

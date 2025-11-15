@@ -1447,13 +1447,13 @@ export class FmcCroppersUi {
    * @param {string} args.imageFlags - Image flags (comma separated)
    * @param {string} args.imagePercentX - Image percentage X
    * @param {string} args.imagePercentY - Image percentage Y
-   * @param {string} args.writeMode - Write mode
+   * @param {boolean} args.writeTitle - Write title
    * @returns {Promise<string>} { msg, type }
    * @memberof FmcCroppersUi
    */
   async writeImagePercentXYToImage(
     {
-      imageFlags, imagePercentX, imagePercentY, writeMode
+      imageFlags, imagePercentX, imagePercentY, writeTitle
     }
   ) {
     const {
@@ -1479,7 +1479,7 @@ export class FmcCroppersUi {
         imageFlags,
         imagePercentY,
         imagePercentX,
-        writeMode
+        writeTitle
       });
     }
 
