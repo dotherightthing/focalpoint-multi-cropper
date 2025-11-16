@@ -21,6 +21,8 @@ export class FmcCroppersUi {
       croppersId,
       croppersOptions,
       focalpointProportionsRadiosName,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       focalpointXInputId,
       focalpointYInputId,
       updateDelay
@@ -33,6 +35,8 @@ export class FmcCroppersUi {
       croppersId,
       croppersOptions,
       focalpointProportionsRadiosName,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       focalpointXInputId,
       focalpointYInputId,
       updateDelay
@@ -137,6 +141,32 @@ export class FmcCroppersUi {
 
   set focalpointProportionsRadiosName(focalpointProportionsRadiosName) {
     this._focalpointProportionsRadiosName = dtrtValidate.validate(focalpointProportionsRadiosName, 'string', 'FmcCroppersUi.focalpointProportionsRadiosName');
+  }
+
+  /**
+   * focalpointWriteFilenameRadios
+   * @type {object} Instance of FmcRadiosUi
+   * @memberof FmcCroppersUi
+   */
+  get focalpointWriteFilenameRadios() {
+    return this._focalpointWriteFilenameRadios;
+  }
+
+  set focalpointWriteFilenameRadios(focalpointWriteFilenameRadios) {
+    this._focalpointWriteFilenameRadios = dtrtValidate.validate(focalpointWriteFilenameRadios, 'object', 'FmcCroppersUi.focalpointWriteFilenameRadios');
+  }
+
+  /**
+   * focalpointWriteTitleRadios
+   * @type {object} Instance of FmcRadiosUi
+   * @memberof FmcCroppersUi
+   */
+  get focalpointWriteTitleRadios() {
+    return this._focalpointWriteTitleRadios;
+  }
+
+  set focalpointWriteTitleRadios(focalpointWriteTitleRadios) {
+    this._focalpointWriteTitleRadios = dtrtValidate.validate(focalpointWriteTitleRadios, 'object', 'FmcCroppersUi.focalpointWriteTitleRadios');
   }
 
   /**
@@ -650,8 +680,6 @@ export class FmcCroppersUi {
    * @param {string} args.imagePercentXUi - Image Percent X as shown in the UI controls
    * @param {string} args.imagePercentYUi - Image Percent Y as shown in the UI controls
    * @param {string} args.imageProportionsUi - Image Proportions setting as shown in the UI controls
-   * @param {boolean} args.writeFilename - Whether to write focalpoint data to filename
-   * @param {boolean} args.writeTitle - Whether to write focalpoint data to title metadata
    * @returns {string} state
    * @memberof FmcCroppersUi
    */
@@ -661,17 +689,20 @@ export class FmcCroppersUi {
     thumbIndex,
     imagePercentXUi,
     imagePercentYUi,
-    imageProportionsUi,
-    writeFilename,
-    writeTitle
+    imageProportionsUi
   }) {
     const {
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       masterCropper
     } = this;
 
     let msg;
     let state;
     let type;
+
+    const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
+    const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
     const msgTarget = (() => {
       switch (true) {

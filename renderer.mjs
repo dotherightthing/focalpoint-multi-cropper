@@ -75,6 +75,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       zoomOnWheel: false // Enable to zoom the image by mouse wheeling
     },
     focalpointProportionsRadiosName,
+    focalpointWriteFilenameRadios,
+    focalpointWriteTitleRadios,
     focalpointXInputId,
     focalpointYInputId,
     updateDelay: (typeof Cypress === 'undefined') ? 1000 : 0

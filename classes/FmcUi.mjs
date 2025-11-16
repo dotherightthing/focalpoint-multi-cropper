@@ -720,9 +720,7 @@ export class FmcUi {
       elements,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
-      focalpointAutoSaveRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios
+      focalpointAutoSaveRadios
     } = this;
 
     const {
@@ -756,9 +754,7 @@ export class FmcUi {
         thumbIndex,
         imagePercentXUi: focalpointXInput.value,
         imagePercentYUi: focalpointYInput.value,
-        imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value,
-        writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
-        writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
+        imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
       });
 
       focalpointXInput.dataset.thumbIndexPrevious = thumbIndex;
