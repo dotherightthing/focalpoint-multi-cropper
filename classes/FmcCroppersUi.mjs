@@ -682,6 +682,7 @@ export class FmcCroppersUi {
    * @param {string} args.imageProportionsUi - Image Proportions setting as shown in the UI controls
    * @returns {string} state
    * @memberof FmcCroppersUi
+   * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
    */
   async setFocalpointSaveState({
     focalpointReset,
@@ -1372,6 +1373,7 @@ export class FmcCroppersUi {
   /**
    * @function reinstateImagePercentXYFromImage
    * @memberof FmcCroppersUi
+   * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
    */
   async reinstateImagePercentXYFromImage() {
     const {
