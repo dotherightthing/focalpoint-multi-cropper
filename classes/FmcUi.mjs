@@ -771,13 +771,13 @@ export class FmcUi {
    * @param {object} event - Click event
    * @memberof FmcUi
    */
-  handleFocalpointReset(event) {
+  async handleFocalpointReset(event) {
     const {
       fmcCroppersUiInstance
     } = this;
 
     // input change listener calls setFocalpointSaveState
-    fmcCroppersUiInstance.reinstateImagePercentXYFromImage(event);
+    await fmcCroppersUiInstance.reinstateImagePercentXYFromImage(event);
   }
 
   /**
@@ -994,18 +994,28 @@ export class FmcUi {
   }
 
   /**
+   * @function sleep
+   * @param {number} ms - Milliseconds
+   * @memberof FmcUi
+   * @returns {Promise} promise
+   * @see https://leapcell.io/blog/how-to-sleep-in-javascript-using-async-await
+   */
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms)); // eslint-disable-line no-promise-executor-return
+  }
+
+  /**
    * @function handleLastCropperImgReady
    * @memberof FmcUi
    */
-  handleLastCropperImgReady() {
+  async handleLastCropperImgReady() {
     const {
       fmcCroppersUiInstance
     } = this;
 
-    // short timeout prevents intermittent (browser) error from FmcCroppersUi.calcCanvasOffsets()
-    setTimeout(() => {
-      fmcCroppersUiInstance.initImagePercentXY();
-    }, 10);
+    // prevents intermittent (browser) error from FmcCroppersUi.calcCanvasOffsets()
+    await this.sleep(10);
+    await fmcCroppersUiInstance.initImagePercentXY();
   }
 
   /**
