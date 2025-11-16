@@ -717,21 +717,13 @@ export class FmcCroppersUi {
       }
     })();
 
+    const msgLoadedFrom = (msgTarget.length) ? (` from ${msgTarget}`) : '';
     const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
 
-    const image = masterCropper.cropperInstance.element;
-    let { src: imagePath } = image;
+    const { src } = masterCropper.cropperInstance.element;
+    const { Title } = await window.electronAPI.getImageTitle({ imagePath: src });
 
-    // TODO currently possible to enable both writeFilename and writeTitle
-    if (writeTitle) {
-      const { fileNameClean } = await window.electronAPI.getFileNameParts({ fileName: imagePath });
-
-      const { Title } = await window.electronAPI.getImageTitle({
-        imagePath: fileNameClean
-      });
-
-      imagePath = Title;
-    }
+    const imagePath = writeTitle ? Title : src;
 
     const {
       imagePercentX: savedImagePercentX, // string
@@ -761,10 +753,10 @@ export class FmcCroppersUi {
       state = 'saved';
 
       if (thumbIndex !== thumbIndexPrevious) {
-        msg = 'Focalpoint loaded';
+        msg = 'Focalpoint loaded' + msgLoadedFrom;
         type = 'success';
       } else if (focalpointReset) {
-        msg = 'Focalpoint reloaded';
+        msg = 'Focalpoint reloaded' + msgLoadedFrom;
         type = 'success';
       } else {
         msg = 'Focalpoint saved' + msgSavedTo;
@@ -1036,8 +1028,8 @@ export class FmcCroppersUi {
    * @summary Initialise focal point
    * @memberof FmcCroppersUi
    */
-  initImagePercentXY() {
-    this.reinstateImagePercentXYFromImage();
+  async initImagePercentXY() {
+    await this.reinstateImagePercentXYFromImage();
   }
 
   /**
@@ -1381,24 +1373,29 @@ export class FmcCroppersUi {
    * @function reinstateImagePercentXYFromImage
    * @memberof FmcCroppersUi
    */
-  reinstateImagePercentXYFromImage() {
+  async reinstateImagePercentXYFromImage() {
     const {
       focalpointProportionsRadiosName,
+      focalpointWriteTitleRadios,
       focalpointXInputId,
       focalpointYInputId,
       masterCropper
     } = this;
 
     const { src } = masterCropper.cropperInstance.element;
+    const { Title } = await window.electronAPI.getImageTitle({ imagePath: src });
+    const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
+
+    const imagePath = writeTitle ? Title : src;
 
     const {
       imagePercentX = 50,
       imagePercentY = 50
-    } = this.getImagePercentXYFromImage(src);
+    } = this.getImagePercentXYFromImage(imagePath);
 
     const {
       panorama = false
-    } = this.getFlagsFromImage(src);
+    } = this.getFlagsFromImage(imagePath);
 
     document.getElementById(focalpointXInputId).value = imagePercentX;
     document.getElementById(focalpointYInputId).value = imagePercentY;
