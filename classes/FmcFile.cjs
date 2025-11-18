@@ -94,6 +94,70 @@ module.exports = class FmcFile {
   }
 
   /**
+   * @function getImageDate
+   * @param {string} imagePath - Image path
+   * @returns {object} { date }
+   * @memberof FmcFile
+   * @static
+   */
+  static async getImageDate(imagePath) {
+    const { relativeFilePath } = await FmcFile.getFileNameParts(null, { fileName: imagePath });
+
+    const tags = await exiftool.read(relativeFilePath);
+
+    const {
+      DateTimeOriginal = {}
+    } = tags;
+
+    const {
+      year,
+      month,
+      day,
+      hour,
+      minute,
+      second
+    } = DateTimeOriginal;
+
+    const date = DateTimeOriginal.toDate();
+    const dayIndex = date.getDay();
+
+    const dayName = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ][dayIndex];
+
+    const monthName = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ][month - 1];
+
+    const ampm = hour < 12 ? 'AM' : 'PM';
+
+    // AppleScript retrieves photo "date" in this format:
+    // "Friday, 12 May 2017 at 11:55:19 AM"
+    const photosAppDate = `${dayName}, ${day} ${monthName} ${year} at ${hour}:${minute}:${second} ${ampm}`;
+
+    return {
+      date: photosAppDate
+    };
+  }
+
+  /**
    * @function resizeAndCropImage
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
@@ -509,27 +573,58 @@ module.exports = class FmcFile {
 
   /**
    * @function setTitleInPhotosApp
-   * @summary Get the path to an image stored in the Photos app
+   * @summary Locate matching image in Photos app library and amend its title with the focalpoint settings
    * @param {string} imageName - Image name
    * @param {string} title - EXIF/IPTC title
-   * @returns {string} imagePath
+   * @param {string} date - Date created
    * @memberof FmcFile
    * @static
    */
-  static async setTitleInPhotosApp(imageName, title) { // eslint-disable-line no-unused-vars
-    osascript.execute(`tell application "Photos"
-  set searchList to search folder "library" for "${imageName}"
-  spotlight searchList
-end tell`);
-  }
+  static async setTitleInPhotosApp(imageName, title, date) {
+    // Available commands: Script Editor > Window > Library > Photos Suite.
+    // If editing use Apple's Script Editor to test the output
+    // Alternative: set searchResults to (every media item whose name contains "${imageName}")
+    const titleSafe = title.replace(/ /g, '_');
 
-  /*
-  set imageSel to item 1 of searchList
-  spotlight imageSel
-  tell imageSel
-    set its name to "${title}"
-  end tell
-  */
+    const applescript = `
+      tell application "Photos"
+        activate
+
+        set imageName to "${imageName}"
+        set exifDate to "${date}"
+        set newTitle to "${titleSafe}"
+
+        set resultItems to search folder "library" for imageName
+        set resultCount to length of resultItems
+
+        if resultCount > 1 then
+          repeat with theItem in resultItems
+            set itemDate to date of theItem
+            if itemDate = date exifDate then
+              tell theItem
+                set its name to newTitle
+                spotlight theItem
+              end tell
+            end if
+          end repeat
+        else
+          set theItem to item 1 of resultItems
+          tell theItem
+            set its name to newTitle
+            spotlight theItem
+          end tell
+        end if
+      end tell
+      `;
+
+    // console.log(applescript);
+
+    try {
+      await osascript.execute(applescript);
+    } catch (err) {
+      console.error('Error updating Photos app:', err);
+    }
+  }
 
   /**
    * @function getImagesData
@@ -561,7 +656,7 @@ end tell`);
         } = tags;
 
         const {
-          rawValue: dateTimeOriginalRawValue = ''
+          rawValue: dateTimeOriginalRawValue = '' // "2017:05:12 11:58:23"
         } = DateTimeOriginal;
 
         imageData = {
@@ -862,11 +957,13 @@ end tell`);
 
     if (newFileName !== oldFileName) {
       if (writeTitle) {
+        const { date } = await FmcFile.getImageDate(oldFileNameWithPath);
+
         await exiftool.write(oldFileNameWithPath, {
           Title: newFileName
         });
 
-        FmcFile.setTitleInPhotosApp(fileNameOnlyCleanNoRegex, newFileName);
+        await FmcFile.setTitleInPhotosApp(fileNameOnlyCleanNoRegex, newFileName, date);
       }
 
       if (writeFilename) {
