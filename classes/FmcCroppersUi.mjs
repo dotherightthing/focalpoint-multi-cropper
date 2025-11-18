@@ -1512,6 +1512,7 @@ export class FmcCroppersUi {
    * @param {boolean} args.writeTitle - Whether to write focalpoint data to title metadata
    * @returns {Promise<string>} { msg, type }
    * @memberof FmcCroppersUi
+   * @todo update to match setFocalpointSaveState
    */
   async writeImagePercentXYToImage(
     {
@@ -1563,6 +1564,7 @@ export class FmcCroppersUi {
             newFileName
           });
 
+          // TODO update to save to title or combine with setFocalpointSaveState
           resolve({
             msg: 'Saved focalpoint to filename',
             type: 'success'
