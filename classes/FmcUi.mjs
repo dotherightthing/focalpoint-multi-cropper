@@ -14,6 +14,7 @@ export class FmcUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
+      copyLatLongButton,
       debounceDelay,
       elements,
       exportDelay,
@@ -28,6 +29,7 @@ export class FmcUi {
     } = config;
 
     Object.assign(this, {
+      copyLatLongButton,
       debounceDelay,
       elements,
       exportDelay,
@@ -43,6 +45,19 @@ export class FmcUi {
   }
 
   /* Getters and Setters */
+
+  /**
+   * copyLatLongButton
+   * @type {object} Instance of FmcButtonUi
+   * @memberof FmcUi
+   */
+  get copyLatLongButton() {
+    return this._copyLatLongButton;
+  }
+
+  set copyLatLongButton(copyLatLongButton) {
+    this._copyLatLongButton = dtrtValidate.validate(copyLatLongButton, 'object', 'FmcUi.copyLatLongButton');
+  }
 
   /**
    * debounceDelay
@@ -1387,7 +1402,7 @@ export class FmcUi {
 
     const { latLong } = clickedButton.dataset;
 
-    await this.setLatLong(latLong);
+    this.setLatLong(latLong);
     await this.setPaths(newImageSrc, pathOut);
 
     // calls fmcCroppersUiInstance.init
@@ -1574,21 +1589,17 @@ export class FmcUi {
    * @param {string} latLong - Lat/Long
    * @memberof FmcUi
    */
-  async setLatLong(latLong) {
-    const {
-      elements
-    } = this;
-
+  setLatLong(latLong) {
     const {
       copyLatLongButton
-    } = elements;
+    } = this;
 
     if (latLong !== '') {
-      this.enable(copyLatLongButton, {
+      copyLatLongButton.enable({
         title: latLong
       });
     } else {
-      this.disable(copyLatLongButton);
+      copyLatLongButton.disable();
     }
   }
 

@@ -1,9 +1,10 @@
 // Electron's render process (web page)
 
-import { FmcUi } from './classes/FmcUi.mjs';
+import { FmcButtonUi } from './classes/FmcButtonUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
-import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
+import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
+import { FmcUi } from './classes/FmcUi.mjs';
 
 // listeners
 
@@ -18,6 +19,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   const thumbButtonClass = 'btn-thumb';
   const thumbClass = 'thumb';
   const thumbImgClass = 'thumb-img';
+
+  const copyLatLongButton = new FmcButtonUi({
+    selector: '#copy-lat-long'
+  });
 
   const focalpointAutoSaveRadios = new FmcRadiosUi({
     selector: 'input[name="focalpoint-autosave"]',
@@ -97,13 +102,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   const fmcUi = new FmcUi({
+    copyLatLongButton,
     debounceDelay: 500,
     elements: {
       activePresetName: document.getElementById('active-preset-name'),
       consoleContainer: document.getElementById('console'),
       consoleContainerOuter: document.getElementById('console-container'),
       consoleType: document.getElementById('console-type'),
-      copyLatLongButton: document.getElementById('copy-lat-long'),
       copyPathInButton: document.getElementById('copy-path-in'),
       copyPathOutButton: document.getElementById('copy-path-out'),
       copyPathWebEmbedButton: document.getElementById('copy-path-web-embed'),
@@ -179,7 +184,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     } = _this;
 
     const {
-      copyLatLongButton,
       copyPathInButton,
       copyPathOutButton,
       copyPathWebEmbedButton,
@@ -215,7 +219,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const handleFocalpointInputDebounced = FmcUi.debounce(_this.handleFocalpointInputChange, debounceDelay);
 
-    copyLatLongButton
+    copyLatLongButton.element
       .addEventListener('click', _this.handleCopyPath.bind(_this));
     copyPathInButton
       .addEventListener('click', _this.handleCopyPath.bind(_this));
