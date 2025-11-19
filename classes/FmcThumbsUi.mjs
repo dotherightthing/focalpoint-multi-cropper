@@ -169,7 +169,9 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   applySelectedClass(target) {
-    const { selectedClass } = this;
+    const {
+      selectedClass
+    } = this;
 
     this.removeSelectedClass();
 
@@ -181,7 +183,9 @@ export class FmcThumbsUi {
    * @param {string} src - New src
    */
   changeSelectedImageSrc(src) {
-    const { selectedClass } = this;
+    const {
+      selectedClass
+    } = this;
 
     document.querySelector(`.${selectedClass} img`).setAttribute('src', src);
   }
@@ -220,7 +224,9 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   containsThumbs() {
-    const { thumbImgClass } = this;
+    const {
+      thumbImgClass
+    } = this;
 
     const thumbLength = document.querySelectorAll(`.${thumbImgClass}`).length;
 
@@ -235,7 +241,10 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   displayCount({ thumbTotal, thumbIndex }) {
-    const { thumbsCountId } = this;
+    const {
+      thumbsCountId
+    } = this;
+
     const el = document.getElementById(thumbsCountId);
 
     let str = '';

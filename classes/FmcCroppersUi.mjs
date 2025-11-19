@@ -302,7 +302,9 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   calcCropBoxXYFromPageXY({ pageX, pageY }) {
-    const { masterCropper } = this;
+    const {
+      masterCropper
+    } = this;
 
     const {
       top: canvasTop,
@@ -341,7 +343,9 @@ export class FmcCroppersUi {
    * @see {@link cypress/e2e/electron-spec.cy.js}
    */
   calcImageXYFromImagePercentXY({ imagePercentX, imagePercentY }) {
-    const { masterCropper } = this;
+    const {
+      masterCropper
+    } = this;
 
     const {
       width: imageWidth,
@@ -529,7 +533,9 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   destroy() {
-    const { croppers } = this;
+    const {
+      croppers
+    } = this;
 
     croppers.forEach(cropper => {
       const { cropperInstance } = cropper;
@@ -597,7 +603,9 @@ export class FmcCroppersUi {
           this.masterCropperCropBoxWasDragged = true; // differentiate between a click and a move
         },
         cropend: (e) => { // dragEnd callback, see https://github.com/fengyuanchen/cropperjs/issues/669; fires after move
-          const { updateDelay } = this;
+          const {
+            updateDelay
+          } = this;
 
           const {
             pageX: pageXRaw,
@@ -1419,7 +1427,9 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   scaleSlaveVal(slaveCropper, val) {
-    const { masterCropper } = this;
+    const {
+      masterCropper
+    } = this;
 
     const {
       width: masterCropperImageWidth
@@ -1475,7 +1485,10 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   validateCroppersImage() {
-    const { croppersId } = this;
+    const {
+      croppersId
+    } = this;
+
     const cropperImages = document.querySelectorAll(`#${croppersId} .cropper-image`);
     let isValid = true;
 
