@@ -11,10 +11,6 @@ import { FmcUi } from './classes/FmcUi.mjs';
 window.addEventListener('DOMContentLoaded', async () => {
   // instantiate classes
 
-  const controlHintClass = 'control-hint';
-  const focalpointProportionsRadiosName = 'focalpoint-proportions';
-  const focalpointXInputId = 'focalpoint-x';
-  const focalpointYInputId = 'focalpoint-y';
   const hideClass = 'cropper-hide';
   const thumbButtonClass = 'btn-thumb';
   const thumbClass = 'thumb';
@@ -61,7 +57,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: 'input[name="focalpoint-autosave"]',
       storeKey: 'focalpointAutoSave'
     }),
-    focalpointProportionsRadios: document.getElementsByName(focalpointProportionsRadiosName),
+    focalpointProportionsRadios: document.getElementsByName('focalpoint-proportions'),
     focalpointResetButton: document.getElementById('reset-focalpoint'),
     focalpointSaveButton: document.getElementById('save-focalpoint'),
     focalpointWriteFilenameRadios: new FmcRadiosUi({
@@ -72,8 +68,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: 'input[name="focalpoint-write-title"]',
       storeKey: 'focalpointWriteTitle'
     }),
-    focalpointXInput: document.getElementById(focalpointXInputId),
-    focalpointYInput: document.getElementById(focalpointYInputId),
+    focalpointXInput: document.getElementById('focalpoint-x'),
+    focalpointYInput: document.getElementById('focalpoint-y'),
     folderInButton: document.getElementById('folder-in-button'),
     folderInInput: document.getElementById('folder-in'),
     folderOutButton: document.getElementById('folder-out-button'),
@@ -110,9 +106,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const fmcCroppersUiInstance = new FmcCroppersUi({
     Cropper: window.Cropper,
-    cropperCanvasClass: 'cropper-canvas',
-    cropperImageClass: 'cropper-image',
-    croppersId: 'croppers',
     croppersOptions: {
       autoCrop: true, // Enable to crop the image automatically when initialized
       autoCropArea: 1, // Define the automatic cropping area size - as 100% of the image
@@ -139,23 +132,27 @@ window.addEventListener('DOMContentLoaded', async () => {
       zoomOnWheel: false // Enable to zoom the image by mouse wheeling
     },
     elements,
-    focalpointProportionsRadiosName,
-    focalpointXInputId,
-    focalpointYInputId,
+    selectors: {
+      cropperCanvasClass: 'cropper-canvas',
+      cropperImageClass: 'cropper-image',
+      croppersId: 'croppers'
+    },
     updateDelay: (typeof Cypress === 'undefined') ? 1000 : 0
   });
 
   const fmcThumbsUiInstance = new FmcThumbsUi({
     elements,
-    hideClass,
-    selectedClass: 'btn-selected',
-    thumbButtonClass,
-    thumbClass,
-    thumbImgClass,
-    thumbImgWrapperClass: 'thumb-img-wrapper',
-    thumbMetaClass: 'thumb-meta',
-    thumbsCountId: 'thumb-count',
-    thumbsId: 'thumbs'
+    selectors: {
+      hideClass,
+      selectedClass: 'btn-selected',
+      thumbButtonClass,
+      thumbClass,
+      thumbImgClass,
+      thumbImgWrapperClass: 'thumb-img-wrapper',
+      thumbMetaClass: 'thumb-meta',
+      thumbsCountId: 'thumb-count',
+      thumbsId: 'thumbs'
+    }
   });
 
   const fmcUi = new FmcUi({
@@ -165,7 +162,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
     selectors: {
-      controlHintClass,
+      controlHintClass: 'control-hint',
       thumbButtonClass,
       thumbClass,
       thumbImgClass

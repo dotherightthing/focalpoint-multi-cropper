@@ -16,28 +16,12 @@ export class FmcThumbsUi {
     // select the relevant arguments from the config object passed in
     const {
       elements,
-      hideClass,
-      selectedClass,
-      thumbButtonClass,
-      thumbClass,
-      thumbImgClass,
-      thumbImgWrapperClass,
-      thumbMetaClass,
-      thumbsCountId,
-      thumbsId
+      selectors
     } = config;
 
     Object.assign(this, {
       elements,
-      hideClass,
-      selectedClass,
-      thumbButtonClass,
-      thumbClass,
-      thumbImgClass,
-      thumbImgWrapperClass,
-      thumbMetaClass,
-      thumbsCountId,
-      thumbsId
+      selectors
     });
   }
 
@@ -57,107 +41,16 @@ export class FmcThumbsUi {
   }
 
   /**
-   * hideClass
-   * @type {string}
+   * selectors
+   * @type {object}
    * @memberof FmcThumbsUi
    */
-  get hideClass() {
-    return this._hideClass;
+  get selectors() {
+    return this._selectors;
   }
 
-  set hideClass(hideClass) {
-    this._hideClass = dtrtValidate.validate(hideClass, 'string', 'FmcThumbsUi.hideClass');
-  }
-
-  /**
-   * selectedClass
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get selectedClass() {
-    return this._selectedClass;
-  }
-
-  set selectedClass(selectedClass) {
-    this._selectedClass = dtrtValidate.validate(selectedClass, 'string', 'FmcThumbsUi.selectedClass');
-  }
-
-  /**
-   * thumbButtonClass
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get thumbButtonClass() {
-    return this._thumbButtonClass;
-  }
-
-  set thumbButtonClass(thumbButtonClass) {
-    this._thumbButtonClass = dtrtValidate.validate(thumbButtonClass, 'string', 'FmcThumbsUi.thumbButtonClass');
-  }
-
-  /**
-   * thumbClass
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get thumbClass() {
-    return this._thumbClass;
-  }
-
-  set thumbClass(thumbClass) {
-    this._thumbClass = dtrtValidate.validate(thumbClass, 'string', 'FmcThumbsUi.thumbClass');
-  }
-
-  /**
-   * thumbImgClass
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get thumbImgClass() {
-    return this._thumbImgClass;
-  }
-
-  set thumbImgClass(thumbImgClass) {
-    this._thumbImgClass = dtrtValidate.validate(thumbImgClass, 'string', 'FmcThumbsUi.thumbImgClass');
-  }
-
-  /**
-   * thumbImgWrapperClass
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get thumbImgWrapperClass() {
-    return this._thumbImgWrapperClass;
-  }
-
-  set thumbImgWrapperClass(thumbImgWrapperClass) {
-    this._thumbImgWrapperClass = dtrtValidate.validate(thumbImgWrapperClass, 'string', 'FmcThumbsUi.thumbImgWrapperClass');
-  }
-
-  /**
-   * thumbMetaClass
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get thumbMetaClass() {
-    return this._thumbMetaClass;
-  }
-
-  set thumbMetaClass(thumbMetaClass) {
-    this._thumbMetaClass = dtrtValidate.validate(thumbMetaClass, 'string', 'FmcThumbsUi.thumbMetaClass');
-  }
-
-  /**
-   * thumbsCountId
-   * @type {string}
-   * @memberof FmcThumbsUi
-   */
-  get thumbsCountId() {
-    return this._thumbsCountId;
-  }
-
-  set thumbsCountId(thumbsCountId) {
-    this._thumbsCountId = dtrtValidate.validate(thumbsCountId, 'string', 'FmcThumbsUi.thumbsCountId');
+  set selectors(selectors) {
+    this._selectors = dtrtValidate.validate(selectors, 'object', 'FmcThumbsUi.selectors');
   }
 
   /* Instance methods */
@@ -170,8 +63,12 @@ export class FmcThumbsUi {
    */
   applySelectedClass(target) {
     const {
-      selectedClass
+      selectors
     } = this;
+
+    const {
+      selectedClass
+    } = selectors;
 
     this.removeSelectedClass();
 
@@ -184,8 +81,12 @@ export class FmcThumbsUi {
    */
   changeSelectedImageSrc(src) {
     const {
-      selectedClass
+      selectors
     } = this;
+
+    const {
+      selectedClass
+    } = selectors;
 
     document.querySelector(`.${selectedClass} img`).setAttribute('src', src);
   }
@@ -200,7 +101,11 @@ export class FmcThumbsUi {
    * @param {number} args.imagePercentY - Image percent Y
    */
   setCssImagePercentXY({
-    thumbButton, thumbImg, thumbIndex, imagePercentX, imagePercentY
+    thumbButton,
+    thumbImg,
+    thumbIndex,
+    imagePercentX,
+    imagePercentY
   }) {
     const x = (typeof imagePercentX !== 'undefined') ? imagePercentX : 50;
     const y = (typeof imagePercentY !== 'undefined') ? imagePercentY : 50;
@@ -225,8 +130,12 @@ export class FmcThumbsUi {
    */
   containsThumbs() {
     const {
-      thumbImgClass
+      selectors
     } = this;
+
+    const {
+      thumbImgClass
+    } = selectors;
 
     const thumbLength = document.querySelectorAll(`.${thumbImgClass}`).length;
 
@@ -242,8 +151,12 @@ export class FmcThumbsUi {
    */
   displayCount({ thumbTotal, thumbIndex }) {
     const {
-      thumbsCountId
+      selectors
     } = this;
+
+    const {
+      thumbsCountId
+    } = selectors;
 
     const el = document.getElementById(thumbsCountId);
 
@@ -275,17 +188,21 @@ export class FmcThumbsUi {
   filterByFilenameAndCropped(searchStr) {
     const {
       elements,
-      hideClass,
-      thumbClass,
-      thumbButtonClass,
-      thumbImgClass,
-      thumbsId
+      selectors
     } = this;
 
     const {
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios
     } = elements;
+
+    const {
+      hideClass,
+      thumbClass,
+      thumbButtonClass,
+      thumbImgClass,
+      thumbsId
+    } = selectors;
 
     const autoSelectFiltered = thumbsAutoSelectFilteredRadios.getState() === 'on';
     const hideUncropped = thumbsFilterUncroppedRadios.getState() === 'on';
@@ -377,13 +294,17 @@ export class FmcThumbsUi {
    */
   generateThumbsHtml(imagesData, selectedThumbIndex) {
     const {
+      selectors
+    } = this;
+
+    const {
       thumbButtonClass,
       thumbClass,
       thumbImgClass,
       thumbImgWrapperClass,
       thumbMetaClass,
       thumbsId
-    } = this;
+    } = selectors;
 
     let html = '';
 
@@ -455,8 +376,12 @@ export class FmcThumbsUi {
    */
   getButtons() {
     const {
-      thumbButtonClass
+      selectors
     } = this;
+
+    const {
+      thumbButtonClass
+    } = selectors;
 
     const thumbButtons = document.querySelectorAll(`.${thumbButtonClass}`);
 
@@ -491,8 +416,12 @@ export class FmcThumbsUi {
    */
   getSelectedThumbIndex() {
     const {
-      thumbsCountId
+      selectors
     } = this;
+
+    const {
+      thumbsCountId
+    } = selectors;
 
     const countEl = document.getElementById(thumbsCountId);
     const {
@@ -542,8 +471,12 @@ export class FmcThumbsUi {
    */
   removeSelectedClass() {
     const {
-      selectedClass
+      selectors
     } = this;
+
+    const {
+      selectedClass
+    } = selectors;
 
     const thumbButtons = this.getButtons();
 

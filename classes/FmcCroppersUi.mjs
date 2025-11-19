@@ -16,29 +16,23 @@ export class FmcCroppersUi {
     // select the relevant arguments from the config object passed in
     const {
       Cropper,
-      cropperCanvasClass,
-      cropperImageClass,
-      croppersId,
       croppersOptions,
       elements,
-      focalpointProportionsRadiosName,
-      focalpointXInputId,
-      focalpointYInputId,
+      selectors,
       updateDelay
     } = config;
 
     Object.assign(this, {
       Cropper,
-      cropperCanvasClass,
-      cropperImageClass,
-      croppersId,
       croppersOptions,
       elements,
-      focalpointProportionsRadiosName,
-      focalpointXInputId,
-      focalpointYInputId,
+      selectors,
       updateDelay
     });
+
+    const {
+      croppersId
+    } = selectors;
 
     // assign Expando property to expose methods during E2E testing
     document.getElementById(croppersId).fmcCroppersUi = this;
@@ -64,32 +58,6 @@ export class FmcCroppersUi {
   }
 
   /**
-   * cropperCanvasClass
-   * @type {string}
-   * @memberof FmcCroppersUi
-   */
-  get cropperCanvasClass() {
-    return this._cropperCanvasClass;
-  }
-
-  set cropperCanvasClass(cropperCanvasClass) {
-    this._cropperCanvasClass = dtrtValidate.validate(cropperCanvasClass, 'string', 'FmcCroppersUi.cropperCanvasClass');
-  }
-
-  /**
-   * cropperImageClass
-   * @type {string}
-   * @memberof FmcCroppersUi
-   */
-  get cropperImageClass() {
-    return this._cropperImageClass;
-  }
-
-  set cropperImageClass(cropperImageClass) {
-    this._cropperImageClass = dtrtValidate.validate(cropperImageClass, 'string', 'FmcCroppersUi.cropperImageClass');
-  }
-
-  /**
    * croppers
    * @type {Array}
    * @memberof FmcCroppersUi
@@ -100,19 +68,6 @@ export class FmcCroppersUi {
 
   set croppers(croppers) {
     this._croppers = dtrtValidate.validate(croppers, 'Array', 'FmcCroppersUi.croppers');
-  }
-
-  /**
-   * croppersId
-   * @type {string}
-   * @memberof FmcCroppersUi
-   */
-  get croppersId() {
-    return this._croppersId;
-  }
-
-  set croppersId(croppersId) {
-    this._croppersId = dtrtValidate.validate(croppersId, 'string', 'FmcCroppersUi.croppersId');
   }
 
   /**
@@ -139,45 +94,6 @@ export class FmcCroppersUi {
 
   set elements(elements) {
     this._elements = dtrtValidate.validate(elements, 'object', 'FmcCroppersUi.elements');
-  }
-
-  /**
-   * focalpointProportionsRadiosName
-   * @type {string}
-   * @memberof FmcCroppersUi
-   */
-  get focalpointProportionsRadiosName() {
-    return this._focalpointProportionsRadiosName;
-  }
-
-  set focalpointProportionsRadiosName(focalpointProportionsRadiosName) {
-    this._focalpointProportionsRadiosName = dtrtValidate.validate(focalpointProportionsRadiosName, 'string', 'FmcCroppersUi.focalpointProportionsRadiosName');
-  }
-
-  /**
-   * focalpointXInputId
-   * @type {string}
-   * @memberof FmcCroppersUi
-   */
-  get focalpointXInputId() {
-    return this._focalpointXInputId;
-  }
-
-  set focalpointXInputId(focalpointXInputId) {
-    this._focalpointXInputId = dtrtValidate.validate(focalpointXInputId, 'string', 'FmcCroppersUi.focalpointXInputId');
-  }
-
-  /**
-   * focalpointYInputId
-   * @type {string}
-   * @memberof FmcCroppersUi
-   */
-  get focalpointYInputId() {
-    return this._focalpointYInputId;
-  }
-
-  set focalpointYInputId(focalpointYInputId) {
-    this._focalpointYInputId = dtrtValidate.validate(focalpointYInputId, 'string', 'FmcCroppersUi.focalpointYInputId');
   }
 
   /**
@@ -235,6 +151,19 @@ export class FmcCroppersUi {
   }
 
   /**
+   * selectors
+   * @type {object}
+   * @memberof FmcCroppersUi
+   */
+  get selectors() {
+    return this._selectors;
+  }
+
+  set selectors(selectors) {
+    this._selectors = dtrtValidate.validate(selectors, 'object', 'FmcCroppersUi.selectors');
+  }
+
+  /**
    * slaveCroppers
    * @summary An array of objects, each containing a slave cropper instance
    * @type {Array}
@@ -272,13 +201,17 @@ export class FmcCroppersUi {
    */
   calcCanvasOffsets() {
     const {
-      cropperCanvasClass,
-      masterCropper
+      masterCropper,
+      selectors
     } = this;
 
     const {
       element: cropperImage
     } = masterCropper.cropperInstance;
+
+    const {
+      cropperCanvasClass
+    } = selectors;
 
     const cropperContainerEl = cropperImage.nextSibling;
     const cropperCanvasEl = cropperContainerEl.querySelector(`.${cropperCanvasClass}`);
@@ -585,9 +518,13 @@ export class FmcCroppersUi {
   getCropperOptions(exportWidth, exportHeight, role, action) {
     const {
       croppersOptions,
-      focalpointXInputId,
-      focalpointYInputId
+      elements
     } = this;
+
+    const {
+      focalpointXInput,
+      focalpointYInput
+    } = elements;
 
     const options = { ...croppersOptions };
 
@@ -641,8 +578,10 @@ export class FmcCroppersUi {
               round: true
             });
 
-            document.getElementById(focalpointXInputId).value = imagePercentX;
-            document.getElementById(focalpointYInputId).value = imagePercentY;
+            focalpointXInput.value = imagePercentX;
+            focalpointYInput.value = imagePercentY;
+
+            const focalpointYInputId = focalpointYInput.getAttribute('id');
 
             FmcUi.emitEvent(focalpointYInputId, 'change');
 
@@ -872,10 +811,14 @@ export class FmcCroppersUi {
    */
   init() {
     const {
-      cropperImageClass,
-      croppersId,
-      imageSrc
+      imageSrc,
+      selectors
     } = this;
+
+    const {
+      cropperImageClass,
+      croppersId
+    } = selectors;
 
     if (typeof imageSrc === 'undefined') {
       return;
@@ -1317,9 +1260,13 @@ export class FmcCroppersUi {
   async deleteImagePercentXYFromImage() {
     const {
       croppers,
-      croppersId,
-      masterCropper
+      masterCropper,
+      selectors
     } = this;
+
+    const {
+      croppersId
+    } = selectors;
 
     const fileName = masterCropper.cropperInstance.element.src;
 
@@ -1375,14 +1322,15 @@ export class FmcCroppersUi {
   async reinstateImagePercentXYFromImage() {
     const {
       elements,
-      focalpointProportionsRadiosName,
-      focalpointXInputId,
-      focalpointYInputId,
-      masterCropper
+      masterCropper,
+      selectors
     } = this;
 
     const {
-      focalpointWriteTitleRadios
+      focalpointProportionsRadios,
+      focalpointWriteTitleRadios,
+      focalpointXInput,
+      focalpointYInput
     } = elements;
 
     const { src } = masterCropper.cropperInstance.element;
@@ -1400,12 +1348,13 @@ export class FmcCroppersUi {
       panorama = false
     } = this.getFlagsFromImage(imagePath);
 
-    document.getElementById(focalpointXInputId).value = imagePercentX;
-    document.getElementById(focalpointYInputId).value = imagePercentY;
+    focalpointXInput.value = imagePercentX;
+    focalpointYInput.value = imagePercentY;
 
+    const focalpointYInputId = focalpointYInput.getAttribute('id');
     const proportionsSetting = panorama ? 'panorama' : 'default';
 
-    document.getElementsByName(focalpointProportionsRadiosName).forEach(radio => {
+    focalpointProportionsRadios.forEach(radio => {
       radio.checked = (radio.value === proportionsSetting);
     });
 
@@ -1451,8 +1400,12 @@ export class FmcCroppersUi {
    */
   setLoadingState(loading) {
     const {
-      croppersId
+      selectors
     } = this;
+
+    const {
+      croppersId
+    } = selectors;
 
     const croppersEl = document.getElementById(croppersId);
 
@@ -1470,8 +1423,12 @@ export class FmcCroppersUi {
    */
   setSaveState(state) {
     const {
-      croppersId
+      selectors
     } = this;
+
+    const {
+      croppersId
+    } = selectors;
 
     const croppersEl = document.getElementById(croppersId);
 
@@ -1486,8 +1443,12 @@ export class FmcCroppersUi {
    */
   validateCroppersImage() {
     const {
-      croppersId
+      selectors
     } = this;
+
+    const {
+      croppersId
+    } = selectors;
 
     const cropperImages = document.querySelectorAll(`#${croppersId} .cropper-image`);
     let isValid = true;
@@ -1524,11 +1485,15 @@ export class FmcCroppersUi {
     imagePercentY
   }) {
     const {
-      croppersId,
       croppers,
       elements,
-      masterCropper
+      masterCropper,
+      selectors
     } = this;
+
+    const {
+      croppersId
+    } = selectors;
 
     const {
       focalpointWriteFilenameRadios,
