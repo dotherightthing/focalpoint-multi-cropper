@@ -201,14 +201,14 @@ export class FmcThumbsUi {
       thumbClass,
       thumbButtonClass,
       thumbImgClass,
-      thumbsId
+      thumbsContainerId
     } = selectors;
 
     const autoSelectFiltered = thumbsAutoSelectFilteredRadios.getState() === 'on';
     const hideUncropped = thumbsFilterUncroppedRadios.getState() === 'on';
-    const thumbButtons = document.querySelectorAll(`#${thumbsId} .${thumbButtonClass}`);
-    const thumbImages = document.querySelectorAll(`#${thumbsId} .${thumbImgClass}`);
-    const thumbs = document.querySelectorAll(`#${thumbsId} .${thumbClass}`);
+    const thumbButtons = document.querySelectorAll(`#${thumbsContainerId} .${thumbButtonClass}`);
+    const thumbImages = document.querySelectorAll(`#${thumbsContainerId} .${thumbImgClass}`);
+    const thumbs = document.querySelectorAll(`#${thumbsContainerId} .${thumbClass}`);
     const thumbsHidden = [];
     const thumbsShown = [];
 
@@ -303,7 +303,7 @@ export class FmcThumbsUi {
       thumbImgClass,
       thumbImgWrapperClass,
       thumbMetaClass,
-      thumbsId
+      thumbsContainerId
     } = selectors;
 
     let html = '';
@@ -341,7 +341,7 @@ export class FmcThumbsUi {
 </li>`;
 
       if (i === imagesData.length - 1) {
-        document.getElementById(thumbsId).innerHTML = html;
+        document.getElementById(thumbsContainerId).innerHTML = html;
 
         this.clickSelectedThumb(selectedThumbIndex);
       }

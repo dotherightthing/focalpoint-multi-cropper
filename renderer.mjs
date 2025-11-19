@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const thumbButtonClass = 'btn-thumb';
   const thumbClass = 'thumb';
   const thumbImgClass = 'thumb-img';
+  const thumbsContainerId = 'thumbs';
 
   const elements = {
     activePresetName: document.getElementById('active-preset-name'),
@@ -90,7 +91,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     settingsLoadButton: document.getElementById('settings-load'),
     settingsSaveButton: document.getElementById('settings-save'),
     presetNameInput: document.getElementById('settings-preset-name'),
-    thumbsContainer: document.getElementById('thumbs'),
+    thumbsContainer: document.getElementById(thumbsContainerId),
     thumbsContainerOuter: document.getElementById('thumbs-container'),
     thumbFileName: document.getElementById('thumb-filename'),
     thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
@@ -150,8 +151,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       thumbImgClass,
       thumbImgWrapperClass: 'thumb-img-wrapper',
       thumbMetaClass: 'thumb-meta',
-      thumbsCountId: 'thumb-count',
-      thumbsId: 'thumbs'
+      thumbsContainerId,
+      thumbsCountId: 'thumb-count'
     }
   });
 
