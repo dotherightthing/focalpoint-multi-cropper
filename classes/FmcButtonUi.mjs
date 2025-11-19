@@ -165,6 +165,37 @@ export class FmcButtonUi {
   }
 
   /**
+   * @function handleLinkToPath
+   * @param {object} event - Click event
+   * @memberof FmcButtonUi
+   * @static
+   */
+  static async handleLinkToPath(event) {
+    event.preventDefault();
+
+    if (typeof window.electronAPI === 'undefined') {
+      FmcButtonUi.emitElementEvent(window, 'message', {
+        msg: 'Error: Finder links require Electron',
+        type: 'warning'
+      });
+
+      return;
+    }
+
+    const eventTarget = FmcButtonUi.getTargetElementOfType(event, 'button');
+
+    if (eventTarget) {
+      const { href } = eventTarget.dataset;
+
+      if (href && (href !== '#')) {
+        window.electronAPI.openInFinder({
+          href
+        });
+      }
+    }
+  }
+
+  /**
    * @function emitElementEvent
    * @summary Emit a custom event
    * @param {HTMLElement} element - element that will dispatch the event

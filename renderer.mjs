@@ -82,8 +82,16 @@ window.addEventListener('DOMContentLoaded', async () => {
     options: document.getElementById('options'),
     optionsCloseButton: document.getElementById('options-close'),
     optionsOpenButton: document.getElementById('options-open'),
-    pathInLink: document.getElementById('link-path-in'),
-    pathOutLink: document.getElementById('link-path-out'),
+    pathInLink: new FmcButtonUi({
+      selector: '#link-path-in',
+      updateEventName: 'updatePathInLink',
+      clickEventHandler: FmcButtonUi.handleLinkToPath
+    }),
+    pathOutLink: new FmcButtonUi({
+      selector: '#link-path-out',
+      updateEventName: 'updatePathOutLink',
+      clickEventHandler: FmcButtonUi.handleLinkToPath
+    }),
     presetNamesSelect: document.getElementById('preset-names'),
     settings: document.getElementById('settings'),
     settingsCloseButton: document.getElementById('settings-close'),
@@ -198,8 +206,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   elements.settingsCloseButton.addEventListener('click', fmcUi.handleSettingsClose.bind(fmcUi));
   elements.settingsLoadButton.addEventListener('click', fmcUi.handleSettingsLoad.bind(fmcUi));
   elements.settingsSaveButton.addEventListener('click', fmcUi.handleSettingsSave.bind(fmcUi));
-  elements.pathInLink.addEventListener('click', fmcUi.handleLinkToPath.bind(fmcUi));
-  elements.pathOutLink.addEventListener('click', fmcUi.handleLinkToPath.bind(fmcUi));
   elements.thumbsAutoSelectFilteredRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleAutoSelectFilteredRadioChange.bind(fmcUi)));
   elements.thumbsContainer.addEventListener('click', fmcUi.handleThumbClick.bind(fmcUi));
   elements.thumbsFilterUncroppedRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleThumbsFilterUncroppedRadiosChange.bind(fmcUi)));

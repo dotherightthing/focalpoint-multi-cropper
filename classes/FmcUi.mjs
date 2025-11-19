@@ -142,45 +142,6 @@ export class FmcUi {
   }
 
   /**
-   * @function disable
-   * @param {HTMLElement} el - Element
-   * @memberof FmcUi
-   */
-  disable(el) {
-    el.removeAttribute('title');
-
-    el.setAttribute('disabled', '');
-  }
-
-  /**
-   * @function enable
-   * @param {HTMLElement} el - Element
-   * @param {object} attrs - Attributes
-   * @param {string} attrs.href - href attribute
-   * @param {string} attrs.title - title attribute
-   * @memberof FmcUi
-   */
-  enable(el, attrs) {
-    const {
-      href,
-      title
-    } = attrs;
-
-    if (href) {
-      el.dataset.href = href;
-    }
-
-    if (title) {
-      el.dataset.title = title;
-      el.setAttribute('title', title);
-    } else if (el.dataset.title) {
-      el.setAttribute('title', el.dataset.title);
-    }
-
-    el.removeAttribute('disabled');
-  }
-
-  /**
    * @function getElementIndex
    * @summary Get the index of the selected node in a nodelist
    * @param {HTMLElement} element = Element
@@ -950,34 +911,6 @@ export class FmcUi {
   }
 
   /**
-   * @function handleLinkToPath
-   * @param {object} event - Click event
-   * @memberof FmcUi
-   */
-  async handleLinkToPath(event) {
-    event.preventDefault();
-
-    if (typeof window.electronAPI === 'undefined') {
-      FmcUi.emitElementEvent(window, 'message', {
-        msg: 'Error: Finder links require Electron',
-        type: 'warning'
-      });
-
-      return;
-    }
-
-    const et = FmcUi.getTargetElementOfType(event, 'button');
-
-    const { href } = et.dataset;
-
-    if (href !== '#') {
-      window.electronAPI.openInFinder({
-        href
-      });
-    }
-  }
-
-  /**
    * @function handleOptionsClose
    * @memberof FmcUi
    */
@@ -1521,15 +1454,13 @@ export class FmcUi {
     } = this;
 
     const {
-      pathInLink,
-      pathOutLink, // "Copy base export path"
       thumbFileName
     } = elements;
 
     const fileName = FmcUi.getFileNameFromPath(src);
     const srcSafe = this.srcSafe(src);
 
-    this.enable(pathInLink, {
+    FmcUi.emitElementEvent(window, 'updatePathInLink', {
       href: srcSafe,
       title: srcSafe
     });
@@ -1560,7 +1491,7 @@ export class FmcUi {
             title: pathWebEmbedSafe
           });
 
-          this.enable(pathOutLink, {
+          FmcUi.emitElementEvent(window, 'updatePathOutLink', {
             href: pathOutSafe,
             title: pathOutSafe
           });
@@ -1573,7 +1504,10 @@ export class FmcUi {
             title: ''
           });
 
-          this.disable(pathOutLink);
+          FmcUi.emitElementEvent(window, 'updatePathOutLink', {
+            href: '',
+            title: ''
+          });
         }
 
         resolve();
