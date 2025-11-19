@@ -466,6 +466,10 @@ dialog .h-small {
   opacity: 1; /* force display of increment/decrement buttons */
 }
 
+button span {
+  pointer-events: none;
+}
+
 .control-action {
   background-color: inherit;
   color: var(--color-input);
