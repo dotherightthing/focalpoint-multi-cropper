@@ -162,7 +162,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
     selectors: {
-      controlHintClass: 'control-hint',
       thumbButtonClass,
       thumbClass,
       thumbImgClass
