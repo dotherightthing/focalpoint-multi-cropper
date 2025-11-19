@@ -20,9 +20,8 @@ export class FmcCroppersUi {
       cropperImageClass,
       croppersId,
       croppersOptions,
+      elements,
       focalpointProportionsRadiosName,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
       focalpointXInputId,
       focalpointYInputId,
       updateDelay
@@ -34,9 +33,8 @@ export class FmcCroppersUi {
       cropperImageClass,
       croppersId,
       croppersOptions,
+      elements,
       focalpointProportionsRadiosName,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
       focalpointXInputId,
       focalpointYInputId,
       updateDelay
@@ -131,6 +129,19 @@ export class FmcCroppersUi {
   }
 
   /**
+   * elements
+   * @type {object}
+   * @memberof FmcCroppersUi
+   */
+  get elements() {
+    return this._elements;
+  }
+
+  set elements(elements) {
+    this._elements = dtrtValidate.validate(elements, 'object', 'FmcCroppersUi.elements');
+  }
+
+  /**
    * focalpointProportionsRadiosName
    * @type {string}
    * @memberof FmcCroppersUi
@@ -141,32 +152,6 @@ export class FmcCroppersUi {
 
   set focalpointProportionsRadiosName(focalpointProportionsRadiosName) {
     this._focalpointProportionsRadiosName = dtrtValidate.validate(focalpointProportionsRadiosName, 'string', 'FmcCroppersUi.focalpointProportionsRadiosName');
-  }
-
-  /**
-   * focalpointWriteFilenameRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcCroppersUi
-   */
-  get focalpointWriteFilenameRadios() {
-    return this._focalpointWriteFilenameRadios;
-  }
-
-  set focalpointWriteFilenameRadios(focalpointWriteFilenameRadios) {
-    this._focalpointWriteFilenameRadios = dtrtValidate.validate(focalpointWriteFilenameRadios, 'object', 'FmcCroppersUi.focalpointWriteFilenameRadios');
-  }
-
-  /**
-   * focalpointWriteTitleRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcCroppersUi
-   */
-  get focalpointWriteTitleRadios() {
-    return this._focalpointWriteTitleRadios;
-  }
-
-  set focalpointWriteTitleRadios(focalpointWriteTitleRadios) {
-    this._focalpointWriteTitleRadios = dtrtValidate.validate(focalpointWriteTitleRadios, 'object', 'FmcCroppersUi.focalpointWriteTitleRadios');
   }
 
   /**
@@ -693,10 +678,14 @@ export class FmcCroppersUi {
     imageProportionsUi
   }) {
     const {
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
+      elements,
       masterCropper
     } = this;
+
+    const {
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios
+    } = elements;
 
     let msg;
     let state;
@@ -1377,12 +1366,16 @@ export class FmcCroppersUi {
    */
   async reinstateImagePercentXYFromImage() {
     const {
+      elements,
       focalpointProportionsRadiosName,
-      focalpointWriteTitleRadios,
       focalpointXInputId,
       focalpointYInputId,
       masterCropper
     } = this;
+
+    const {
+      focalpointWriteTitleRadios
+    } = elements;
 
     const { src } = masterCropper.cropperInstance.element;
     const { Title } = await window.electronAPI.getImageTitle({ imagePath: src });

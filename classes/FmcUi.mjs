@@ -19,11 +19,6 @@ export class FmcUi {
       exportDelay,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
-      focalpointAutoSaveRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
-      thumbsAutoSelectFilteredRadios,
-      thumbsFilterUncroppedRadios,
       selectors
     } = config;
 
@@ -33,11 +28,6 @@ export class FmcUi {
       exportDelay,
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
-      focalpointAutoSaveRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
-      thumbsAutoSelectFilteredRadios,
-      thumbsFilterUncroppedRadios,
       selectors
     });
   }
@@ -108,71 +98,6 @@ export class FmcUi {
 
   set fmcThumbsUiInstance(fmcThumbsUiInstance) {
     this._fmcThumbsUiInstance = dtrtValidate.validate(fmcThumbsUiInstance, 'object', 'FmcUi.fmcThumbsUiInstance');
-  }
-
-  /**
-   * focalpointAutoSaveRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcUi
-   */
-  get focalpointAutoSaveRadios() {
-    return this._focalpointAutoSaveRadios;
-  }
-
-  set focalpointAutoSaveRadios(focalpointAutoSaveRadios) {
-    this._focalpointAutoSaveRadios = dtrtValidate.validate(focalpointAutoSaveRadios, 'object', 'FmcUi.focalpointAutoSaveRadios');
-  }
-
-  /**
-   * focalpointWriteFilenameRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcUi
-   */
-  get focalpointWriteFilenameRadios() {
-    return this._focalpointWriteFilenameRadios;
-  }
-
-  set focalpointWriteFilenameRadios(focalpointWriteFilenameRadios) {
-    this._focalpointWriteFilenameRadios = dtrtValidate.validate(focalpointWriteFilenameRadios, 'object', 'FmcUi.focalpointWriteFilenameRadios');
-  }
-
-  /**
-   * focalpointWriteTitleRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcUi
-   */
-  get focalpointWriteTitleRadios() {
-    return this._focalpointWriteTitleRadios;
-  }
-
-  set focalpointWriteTitleRadios(focalpointWriteTitleRadios) {
-    this._focalpointWriteTitleRadios = dtrtValidate.validate(focalpointWriteTitleRadios, 'object', 'FmcUi.focalpointWriteTitleRadios');
-  }
-
-  /**
-   * thumbsAutoSelectFilteredRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcUi
-   */
-  get thumbsAutoSelectFilteredRadios() {
-    return this._thumbsAutoSelectFilteredRadios;
-  }
-
-  set thumbsAutoSelectFilteredRadios(thumbsAutoSelectFilteredRadios) {
-    this._thumbsAutoSelectFilteredRadios = dtrtValidate.validate(thumbsAutoSelectFilteredRadios, 'object', 'FmcUi.thumbsAutoSelectFilteredRadios');
-  }
-
-  /**
-   * thumbsFilterUncroppedRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcUi
-   */
-  get thumbsFilterUncroppedRadios() {
-    return this._thumbsFilterUncroppedRadios;
-  }
-
-  set thumbsFilterUncroppedRadios(thumbsFilterUncroppedRadios) {
-    this._thumbsFilterUncroppedRadios = dtrtValidate.validate(thumbsFilterUncroppedRadios, 'object', 'FmcUi.thumbsFilterUncroppedRadios');
   }
 
   /**
@@ -355,14 +280,14 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance,
-      focalpointAutoSaveRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios
+      fmcThumbsUiInstance
     } = this;
 
     const {
+      focalpointAutoSaveRadios,
       focalpointProportionsRadios,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
@@ -393,8 +318,12 @@ export class FmcUi {
    */
   async handleAutoSelectFilteredRadioChange(event) {
     const {
-      thumbsAutoSelectFilteredRadios
+      elements
     } = this;
+
+    const {
+      thumbsAutoSelectFilteredRadios
+    } = elements;
 
     const state = event.target.value;
 
@@ -410,8 +339,12 @@ export class FmcUi {
    */
   async handleThumbsFilterUncroppedRadiosChange(event) {
     const {
-      thumbsFilterUncroppedRadios
+      elements
     } = this;
+
+    const {
+      thumbsFilterUncroppedRadios
+    } = elements;
 
     const state = event.target.value;
 
@@ -427,8 +360,12 @@ export class FmcUi {
    */
   async handleWriteFilenameRadioChange(event) {
     const {
-      focalpointWriteFilenameRadios
+      elements
     } = this;
+
+    const {
+      focalpointWriteFilenameRadios
+    } = elements;
 
     const state = event.target.value;
 
@@ -444,8 +381,12 @@ export class FmcUi {
    */
   async handleWriteTitleRadioChange(event) {
     const {
-      focalpointWriteTitleRadios
+      elements
     } = this;
+
+    const {
+      focalpointWriteTitleRadios
+    } = elements;
 
     const state = event.target.value;
 
@@ -721,11 +662,11 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance,
-      focalpointAutoSaveRadios
+      fmcThumbsUiInstance
     } = this;
 
     const {
+      focalpointAutoSaveRadios,
       focalpointProportionsRadios,
       focalpointXInput,
       focalpointYInput
@@ -786,13 +727,13 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios
+      fmcThumbsUiInstance
     } = this;
 
     const {
       focalpointProportionsRadios,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
@@ -1111,23 +1052,23 @@ export class FmcUi {
   async handleSettingsLoad() {
     const {
       elements,
-      fmcThumbsUiInstance,
-      focalpointAutoSaveRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
-      thumbsAutoSelectFilteredRadios,
-      thumbsFilterUncroppedRadios
+      fmcThumbsUiInstance
     } = this;
 
     const {
       activePresetName,
       fileWebpageInput,
       filter,
+      focalpointAutoSaveRadios,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       folderInInput,
       folderOutInput,
       folderWebsiteInput,
       presetNameInput,
-      presetNamesSelect
+      presetNamesSelect,
+      thumbsAutoSelectFilteredRadios,
+      thumbsFilterUncroppedRadios
     } = elements;
 
     let presetName = presetNamesSelect.value;
@@ -1541,13 +1482,13 @@ export class FmcUi {
   async saveFocalpoint() {
     const {
       elements,
-      fmcCroppersUiInstance,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios
+      fmcCroppersUiInstance
     } = this;
 
     const {
       focalpointProportionsRadios,
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;

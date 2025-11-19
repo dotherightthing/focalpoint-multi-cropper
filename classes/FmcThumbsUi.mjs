@@ -15,6 +15,7 @@ export class FmcThumbsUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
+      elements,
       hideClass,
       selectedClass,
       thumbButtonClass,
@@ -22,13 +23,12 @@ export class FmcThumbsUi {
       thumbImgClass,
       thumbImgWrapperClass,
       thumbMetaClass,
-      thumbsAutoSelectFilteredRadios,
       thumbsCountId,
-      thumbsFilterUncroppedRadios,
       thumbsId
     } = config;
 
     Object.assign(this, {
+      elements,
       hideClass,
       selectedClass,
       thumbButtonClass,
@@ -36,14 +36,25 @@ export class FmcThumbsUi {
       thumbImgClass,
       thumbImgWrapperClass,
       thumbMetaClass,
-      thumbsAutoSelectFilteredRadios,
       thumbsCountId,
-      thumbsFilterUncroppedRadios,
       thumbsId
     });
   }
 
   /* Getters and Setters */
+
+  /**
+   * elements
+   * @type {object}
+   * @memberof FmcThumbsUi
+   */
+  get elements() {
+    return this._elements;
+  }
+
+  set elements(elements) {
+    this._elements = dtrtValidate.validate(elements, 'object', 'FmcThumbsUi.elements');
+  }
 
   /**
    * hideClass
@@ -137,19 +148,6 @@ export class FmcThumbsUi {
   }
 
   /**
-   * thumbsAutoSelectFilteredRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcThumbsUi
-   */
-  get thumbsAutoSelectFilteredRadios() {
-    return this._thumbsAutoSelectFilteredRadios;
-  }
-
-  set thumbsAutoSelectFilteredRadios(thumbsAutoSelectFilteredRadios) {
-    this._thumbsAutoSelectFilteredRadios = dtrtValidate.validate(thumbsAutoSelectFilteredRadios, 'object', 'FmcThumbsUi.thumbsAutoSelectFilteredRadios');
-  }
-
-  /**
    * thumbsCountId
    * @type {string}
    * @memberof FmcThumbsUi
@@ -160,19 +158,6 @@ export class FmcThumbsUi {
 
   set thumbsCountId(thumbsCountId) {
     this._thumbsCountId = dtrtValidate.validate(thumbsCountId, 'string', 'FmcThumbsUi.thumbsCountId');
-  }
-
-  /**
-   * thumbsFilterUncroppedRadios
-   * @type {object} Instance of FmcRadiosUi
-   * @memberof FmcThumbsUi
-   */
-  get thumbsFilterUncroppedRadios() {
-    return this._thumbsFilterUncroppedRadios;
-  }
-
-  set thumbsFilterUncroppedRadios(thumbsFilterUncroppedRadios) {
-    this._thumbsFilterUncroppedRadios = dtrtValidate.validate(thumbsFilterUncroppedRadios, 'object', 'FmcThumbsUi.thumbsFilterUncroppedRadios');
   }
 
   /* Instance methods */
@@ -280,14 +265,18 @@ export class FmcThumbsUi {
    */
   filterByFilenameAndCropped(searchStr) {
     const {
+      elements,
       hideClass,
-      thumbsAutoSelectFilteredRadios,
       thumbClass,
       thumbButtonClass,
       thumbImgClass,
-      thumbsFilterUncroppedRadios,
       thumbsId
     } = this;
+
+    const {
+      thumbsAutoSelectFilteredRadios,
+      thumbsFilterUncroppedRadios
+    } = elements;
 
     const autoSelectFiltered = thumbsAutoSelectFilteredRadios.getState() === 'on';
     const hideUncropped = thumbsFilterUncroppedRadios.getState() === 'on';
