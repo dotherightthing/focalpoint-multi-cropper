@@ -931,8 +931,8 @@ module.exports = class FmcFile {
     const {
       fileName,
       imageFlags,
-      imagePercentY,
       imagePercentX,
+      imagePercentY,
       writeFilename,
       writeTitle
     } = data;

@@ -1514,11 +1514,13 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    * @todo update to match setFocalpointSaveState
    */
-  async writeImagePercentXYToImage(
-    {
-      imageFlags, imagePercentX, imagePercentY, writeFilename, writeTitle
-    }
-  ) {
+  async writeImagePercentXYToImage({
+    imageFlags,
+    imagePercentX,
+    imagePercentY,
+    writeFilename,
+    writeTitle
+  }) {
     const {
       croppersId,
       croppers,
@@ -1540,8 +1542,8 @@ export class FmcCroppersUi {
       newFileName = await window.electronAPI.saveImagePercentXYToImage({
         fileName,
         imageFlags,
-        imagePercentY,
         imagePercentX,
+        imagePercentY,
         writeFilename,
         writeTitle
       });
