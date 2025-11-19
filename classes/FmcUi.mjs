@@ -14,7 +14,6 @@ export class FmcUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
-      copyLatLongButton,
       debounceDelay,
       elements,
       exportDelay,
@@ -29,7 +28,6 @@ export class FmcUi {
     } = config;
 
     Object.assign(this, {
-      copyLatLongButton,
       debounceDelay,
       elements,
       exportDelay,
@@ -45,19 +43,6 @@ export class FmcUi {
   }
 
   /* Getters and Setters */
-
-  /**
-   * copyLatLongButton
-   * @type {object} Instance of FmcButtonUi
-   * @memberof FmcUi
-   */
-  get copyLatLongButton() {
-    return this._copyLatLongButton;
-  }
-
-  set copyLatLongButton(copyLatLongButton) {
-    this._copyLatLongButton = dtrtValidate.validate(copyLatLongButton, 'object', 'FmcUi.copyLatLongButton');
-  }
 
   /**
    * debounceDelay
@@ -319,8 +304,10 @@ export class FmcUi {
   static getTargetElementOfType(event, elementType) {
     let targetElement = event.target; // event.currentTarget
 
-    while (targetElement.tagName.toLowerCase() !== elementType) {
-      targetElement = targetElement.parentElement;
+    if (targetElement) {
+      while (targetElement && targetElement.tagName.toLowerCase() !== elementType) {
+        targetElement = targetElement.parentElement;
+      }
     }
 
     return targetElement;
@@ -616,8 +603,8 @@ export class FmcUi {
 
     await this.setPaths(baseExportPath, pathOut, false);
 
-    copyPathWebEmbedButton.focus();
-    copyPathWebEmbedButton.click();
+    copyPathWebEmbedButton.element.focus();
+    copyPathWebEmbedButton.element.click();
 
     return baseExportPath;
   }
@@ -1362,6 +1349,11 @@ export class FmcUi {
       clickedButtonIndex
     } = fmcThumbsUiInstance.getClickedButton(event);
 
+    // if there are only a few buttons the user may have clicked in the space to the right of the buttons
+    if (!clickedButton) {
+      return;
+    }
+
     const newImageSrc = clickedButton.querySelector('img').getAttribute('src');
 
     if (cropperFocalpointSaveStatus === 'dirty') {
@@ -1402,7 +1394,10 @@ export class FmcUi {
 
     const { latLong } = clickedButton.dataset;
 
-    this.setLatLong(latLong);
+    FmcUi.emitElementEvent(window, 'updateLatLng', {
+      title: latLong
+    });
+
     await this.setPaths(newImageSrc, pathOut);
 
     // calls fmcCroppersUiInstance.init
@@ -1584,26 +1579,6 @@ export class FmcUi {
   }
 
   /**
-   * @function setLatLong
-   * @summary Update attributes in the button
-   * @param {string} latLong - Lat/Long
-   * @memberof FmcUi
-   */
-  setLatLong(latLong) {
-    const {
-      copyLatLongButton
-    } = this;
-
-    if (latLong !== '') {
-      copyLatLongButton.enable({
-        title: latLong
-      });
-    } else {
-      copyLatLongButton.disable();
-    }
-  }
-
-  /**
    * @function setPaths
    * @summary Update attributes in the path links and buttons
    * @param {string} src - Image src
@@ -1617,9 +1592,6 @@ export class FmcUi {
     } = this;
 
     const {
-      copyPathInButton,
-      copyPathOutButton,
-      copyPathWebEmbedButton,
       pathInLink,
       pathOutLink, // "Copy base export path"
       thumbFileName
@@ -1628,12 +1600,12 @@ export class FmcUi {
     const fileName = FmcUi.getFileNameFromPath(src);
     const srcSafe = this.srcSafe(src);
 
-    this.enable(copyPathInButton, {
+    this.enable(pathInLink, {
+      href: srcSafe,
       title: srcSafe
     });
 
-    this.enable(pathInLink, {
-      href: srcSafe,
+    FmcUi.emitElementEvent(window, 'updatePathIn', {
       title: srcSafe
     });
 
@@ -1651,11 +1623,11 @@ export class FmcUi {
           const pathWebEmbed = await this.getPathWebEmbed(pathOut);
           const pathWebEmbedSafe = this.srcSafe(pathWebEmbed);
 
-          this.enable(copyPathOutButton, {
+          FmcUi.emitElementEvent(window, 'updatePathOut', {
             title: pathOutSafe
           });
 
-          this.enable(copyPathWebEmbedButton, {
+          FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
             title: pathWebEmbedSafe
           });
 
@@ -1664,8 +1636,14 @@ export class FmcUi {
             title: pathOutSafe
           });
         } else {
-          this.disable(copyPathOutButton);
-          this.disable(copyPathWebEmbedButton);
+          FmcUi.emitElementEvent(window, 'updatePathOut', {
+            title: ''
+          });
+
+          FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
+            title: ''
+          });
+
           this.disable(pathOutLink);
         }
 

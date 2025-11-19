@@ -479,11 +479,10 @@ export class FmcThumbsUi {
     }
 
     const clickedButton = FmcUi.getTargetElementOfType(event, 'button');
-    const clickedButtonIndex = Array.from(thumbsButtons).indexOf(clickedButton) + 1;
 
     return {
-      clickedButton,
-      clickedButtonIndex
+      clickedButton, // can be null
+      clickedButtonIndex: clickedButton ? (Array.from(thumbsButtons).indexOf(clickedButton) + 1) : -1
     };
   }
 

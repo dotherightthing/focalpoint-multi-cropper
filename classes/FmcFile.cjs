@@ -724,6 +724,7 @@ module.exports = class FmcFile {
    * @param {string} data.href - HREF
    * @memberof FmcFile
    * @static
+   * @todo Doesn't work if href contains a space (issue #123)
    */
   static openInFinder(event, data) {
     const { href } = data;

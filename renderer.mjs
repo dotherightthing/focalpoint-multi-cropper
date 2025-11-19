@@ -20,10 +20,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   const thumbClass = 'thumb';
   const thumbImgClass = 'thumb-img';
 
-  const copyLatLongButton = new FmcButtonUi({
-    selector: '#copy-lat-long'
-  });
-
   const focalpointAutoSaveRadios = new FmcRadiosUi({
     selector: 'input[name="focalpoint-autosave"]',
     storeKey: 'focalpointAutoSave'
@@ -102,16 +98,32 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   const fmcUi = new FmcUi({
-    copyLatLongButton,
     debounceDelay: 500,
     elements: {
       activePresetName: document.getElementById('active-preset-name'),
       consoleContainer: document.getElementById('console'),
       consoleContainerOuter: document.getElementById('console-container'),
       consoleType: document.getElementById('console-type'),
-      copyPathInButton: document.getElementById('copy-path-in'),
-      copyPathOutButton: document.getElementById('copy-path-out'),
-      copyPathWebEmbedButton: document.getElementById('copy-path-web-embed'),
+      copyLatLongButton: new FmcButtonUi({
+        selector: '#copy-lat-long',
+        updateEventName: 'updateLatLng',
+        clickEventHandler: FmcButtonUi.handleCopyPath
+      }),
+      copyPathInButton: new FmcButtonUi({
+        selector: '#copy-path-in',
+        updateEventName: 'updatePathIn',
+        clickEventHandler: FmcButtonUi.handleCopyPath
+      }),
+      copyPathOutButton: new FmcButtonUi({
+        selector: '#copy-path-out',
+        updateEventName: 'updatePathOut',
+        clickEventHandler: FmcButtonUi.handleCopyPath
+      }),
+      copyPathWebEmbedButton: new FmcButtonUi({
+        selector: '#copy-path-web-embed',
+        updateEventName: 'updatePathWebEmbed',
+        clickEventHandler: FmcButtonUi.handleCopyPath
+      }),
       croppersContainer: document.getElementById('croppers'),
       editWebpageButton: document.getElementById('edit-webpage'),
       exportAllButton: document.getElementById('crop-all'),
@@ -184,9 +196,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     } = _this;
 
     const {
-      copyPathInButton,
-      copyPathOutButton,
-      copyPathWebEmbedButton,
       croppersContainer,
       editWebpageButton,
       exportAllButton,
@@ -219,14 +228,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const handleFocalpointInputDebounced = FmcUi.debounce(_this.handleFocalpointInputChange, debounceDelay);
 
-    copyLatLongButton.element
-      .addEventListener('click', _this.handleCopyPath.bind(_this));
-    copyPathInButton
-      .addEventListener('click', _this.handleCopyPath.bind(_this));
-    copyPathOutButton
-      .addEventListener('click', _this.handleCopyPath.bind(_this));
-    copyPathWebEmbedButton
-      .addEventListener('click', _this.handleCopyPath.bind(_this));
     croppersContainer
       .addEventListener('imageRenamed', _this.handleImageRenamed.bind(_this));
     editWebpageButton
