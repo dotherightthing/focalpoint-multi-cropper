@@ -1501,8 +1501,6 @@ export class FmcCroppersUi {
    * @param {string} args.imageFlags - Image flags (comma separated)
    * @param {string} args.imagePercentX - Image percentage X
    * @param {string} args.imagePercentY - Image percentage Y
-   * @param {boolean} args.writeFilename - Whether to write focalpoint data to filename
-   * @param {boolean} args.writeTitle - Whether to write focalpoint data to title metadata
    * @returns {Promise<string>} { msg, type }
    * @memberof FmcCroppersUi
    * @todo update to match setFocalpointSaveState
@@ -1510,15 +1508,19 @@ export class FmcCroppersUi {
   async writeImagePercentXYToImage({
     imageFlags,
     imagePercentX,
-    imagePercentY,
-    writeFilename,
-    writeTitle
+    imagePercentY
   }) {
     const {
       croppersId,
       croppers,
+      elements,
       masterCropper
     } = this;
+
+    const {
+      focalpointWriteFilenameRadios,
+      focalpointWriteTitleRadios
+    } = elements;
 
     const fileName = masterCropper.cropperInstance.element.src;
     const oldFileName = fileName.replace('file://', '').replaceAll('%20', ' ');
@@ -1537,8 +1539,8 @@ export class FmcCroppersUi {
         imageFlags,
         imagePercentX,
         imagePercentY,
-        writeFilename,
-        writeTitle
+        writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
+        writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
       });
     }
 

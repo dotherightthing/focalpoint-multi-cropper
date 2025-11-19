@@ -286,8 +286,6 @@ export class FmcUi {
     const {
       focalpointAutoSaveRadios,
       focalpointProportionsRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
@@ -305,9 +303,7 @@ export class FmcUi {
       thumbIndex,
       imagePercentXUi: focalpointXInput.value,
       imagePercentYUi: focalpointYInput.value,
-      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value,
-      writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
-      writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
+      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
   }
 
@@ -732,8 +728,6 @@ export class FmcUi {
 
     const {
       focalpointProportionsRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
@@ -747,9 +741,7 @@ export class FmcUi {
       thumbIndex,
       imagePercentXUi: focalpointXInput.value,
       imagePercentYUi: focalpointYInput.value,
-      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value,
-      writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
-      writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
+      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
   }
 
@@ -1487,8 +1479,6 @@ export class FmcUi {
 
     const {
       focalpointProportionsRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
@@ -1510,9 +1500,7 @@ export class FmcUi {
       msgObj = await fmcCroppersUiInstance.writeImagePercentXYToImage({
         imageFlags: flags.join(','),
         imagePercentX: focalpointXInput.value,
-        imagePercentY: focalpointYInput.value,
-        writeFilename: (focalpointWriteFilenameRadios.getState() === 'on'),
-        writeTitle: (focalpointWriteTitleRadios.getState() === 'on')
+        imagePercentY: focalpointYInput.value
       });
 
       FmcUi.emitElementEvent(window, 'message', msgObj);
