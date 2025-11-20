@@ -17,9 +17,9 @@ export class FmcButtonUi {
     } = config;
 
     Object.assign(this, {
-      clickEventHandler: dtrtValidate.validate(clickEventHandler, 'function', 'FmcButtonUi.clickEventHandler'),
-      selector: dtrtValidate.validate(selector, 'string', 'FmcButtonUi.selector'),
-      updateEventName: dtrtValidate.validate(updateEventName, 'string', 'FmcButtonUi.updateEventName')
+      clickEventHandler,
+      selector,
+      updateEventName
     });
 
     if (this.clickEventHandler) {
@@ -32,6 +32,19 @@ export class FmcButtonUi {
   }
 
   /* Getters and Setters */
+
+  /**
+   * clickEventHandler
+   * @type {Function}
+   * @memberof FmcButtonUi
+   */
+  get clickEventHandler() {
+    return this._clickEventHandler;
+  }
+
+  set clickEventHandler(clickEventHandler) {
+    this._clickEventHandler = dtrtValidate.validate(clickEventHandler, 'function', 'FmcButtonUi.clickEventHandler');
+  }
 
   /**
    * element
