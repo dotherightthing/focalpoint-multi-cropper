@@ -1322,8 +1322,7 @@ export class FmcCroppersUi {
   async reinstateImagePercentXYFromImage() {
     const {
       elements,
-      masterCropper,
-      selectors
+      masterCropper
     } = this;
 
     const {
