@@ -715,19 +715,13 @@ export class FmcUi {
    */
   async handleFolderInBrowse(event, restore = false) {
     const {
-      fmcCroppersUiInstance,
       fmcThumbsUiInstance,
-      elements,
-      selectors
+      elements
     } = this;
 
     const {
       folderInInput
     } = elements;
-
-    const {
-      thumbImgClass
-    } = selectors;
 
     // folderPath = targetFolder
     const { folderName, folderPath, imagesData } = await window.electronAPI.selectFolder({
@@ -751,26 +745,6 @@ export class FmcUi {
 
     // add thumbs to UI
     fmcThumbsUiInstance.generateThumbsHtml(imagesData, 1);
-
-    const thumbButtons = fmcThumbsUiInstance.getButtons();
-    const thumbImgs = document.querySelectorAll(`.${thumbImgClass}`);
-
-    // add focalpoint overlays to thumbs
-    setTimeout(() => {
-      thumbButtons.forEach((thumbButton, index) => {
-        const thumbImg = thumbImgs[index];
-        const { src } = thumbImg;
-        const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromImage(src);
-
-        fmcThumbsUiInstance.setCssImagePercentXY({
-          thumbButton,
-          thumbImg,
-          thumbIndex: index + 1,
-          imagePercentX,
-          imagePercentY
-        });
-      });
-    }, 500);
   }
 
   /**

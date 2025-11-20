@@ -16,11 +16,13 @@ export class FmcThumbsUi {
     // select the relevant arguments from the config object passed in
     const {
       elements,
+      fmcCroppersUiInstance,
       selectors
     } = config;
 
     Object.assign(this, {
       elements,
+      fmcCroppersUiInstance,
       selectors
     });
   }
@@ -38,6 +40,19 @@ export class FmcThumbsUi {
 
   set elements(elements) {
     this._elements = dtrtValidate.validate(elements, 'object', 'FmcThumbsUi.elements');
+  }
+
+  /**
+   * fmcCroppersUiInstance
+   * @type {object}
+   * @memberof FmcThumbsUi
+   */
+  get fmcCroppersUiInstance() {
+    return this._fmcCroppersUiInstance;
+  }
+
+  set fmcCroppersUiInstance(fmcCroppersUiInstance) {
+    this._fmcCroppersUiInstance = dtrtValidate.validate(fmcCroppersUiInstance, 'object', 'FmcThumbsUi.fmcCroppersUiInstance');
   }
 
   /**
@@ -294,6 +309,7 @@ export class FmcThumbsUi {
    */
   generateThumbsHtml(imagesData, selectedThumbIndex) {
     const {
+      fmcCroppersUiInstance,
       selectors
     } = this;
 
@@ -340,12 +356,33 @@ export class FmcThumbsUi {
   </button>
 </li>`;
 
+      // if last
       if (i === imagesData.length - 1) {
         document.getElementById(thumbsContainerId).innerHTML = html;
 
         this.clickSelectedThumb(selectedThumbIndex);
       }
     });
+
+    const thumbButtons = this.getButtons();
+    const thumbImgs = document.querySelectorAll(`.${thumbImgClass}`);
+
+    // add focalpoint overlays to thumbs
+    setTimeout(() => {
+      thumbButtons.forEach((thumbButton, index) => {
+        const thumbImg = thumbImgs[index];
+        const { src } = thumbImg;
+        const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromImage(src);
+
+        this.setCssImagePercentXY({
+          thumbButton,
+          thumbImg,
+          thumbIndex: index + 1,
+          imagePercentX,
+          imagePercentY
+        });
+      });
+    }, 500);
 
     this.displayCount({
       thumbTotal: imagesData.length,

@@ -151,6 +151,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const fmcThumbsUiInstance = new FmcThumbsUi({
     elements,
+    fmcCroppersUiInstance,
     selectors: {
       hideClass,
       selectedClass: 'btn-selected',
