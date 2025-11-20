@@ -17,83 +17,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   const thumbImgClass = 'thumb-img';
   const thumbsContainerId = 'thumbs';
 
-  const elements = {
-    activePresetName: document.getElementById('active-preset-name'),
-    consoleContainer: document.getElementById('console'),
-    consoleContainerOuter: document.getElementById('console-container'),
-    consoleType: document.getElementById('console-type'),
-    copyLatLongButton: new FmcButtonUi({
-      selector: '#copy-lat-long',
-      updateEventName: 'updateLatLng',
-      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
-    }),
-    copyPathInButton: new FmcButtonUi({
-      selector: '#copy-path-in',
-      updateEventName: 'updatePathIn',
-      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
-    }),
-    copyPathOutButton: new FmcButtonUi({
-      selector: '#copy-path-out',
-      updateEventName: 'updatePathOut',
-      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
-    }),
-    copyPathWebEmbedButton: new FmcButtonUi({
-      selector: '#copy-path-web-embed',
-      updateEventName: 'updatePathWebEmbed',
-      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
-    }),
-    croppersContainer: document.getElementById('croppers'),
-    openPresetsInput: document.getElementById('open-presets'),
-    fileWebpageInput: document.getElementById('file-webpage'),
-    filter: document.getElementById('thumb-filename-filter'),
-    focalpointAutoSaveRadios: new FmcRadiosUi({
-      selector: 'input[name="focalpoint-autosave"]',
-      storeKey: 'focalpointAutoSave'
-    }),
-    focalpointProportionsRadios: document.getElementsByName('focalpoint-proportions'),
-    focalpointWriteFilenameRadios: new FmcRadiosUi({
-      selector: 'input[name="focalpoint-write-filename"]',
-      storeKey: 'focalpointWriteFilename'
-    }),
-    focalpointWriteTitleRadios: new FmcRadiosUi({
-      selector: 'input[name="focalpoint-write-title"]',
-      storeKey: 'focalpointWriteTitle'
-    }),
-    focalpointXInput: document.getElementById('focalpoint-x'),
-    focalpointYInput: document.getElementById('focalpoint-y'),
-    folderInInput: document.getElementById('folder-in'),
-    folderOutInput: document.getElementById('folder-out'),
-    folderOutInputDependent: document.querySelector('[data-dependent="folder-out"]'),
-    folderWebsiteInput: document.getElementById('folder-website'),
-    lastCropperImg: document.querySelector('#croppers .img-container-last img'),
-    options: document.getElementById('options'),
-    pathInLink: new FmcButtonUi({
-      selector: '#link-path-in',
-      updateEventName: 'updatePathInLink',
-      clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
-    }),
-    pathOutLink: new FmcButtonUi({
-      selector: '#link-path-out',
-      updateEventName: 'updatePathOutLink',
-      clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
-    }),
-    presetNamesSelect: document.getElementById('preset-names'),
-    settings: document.getElementById('settings'),
-    presetNameInput: document.getElementById('settings-preset-name'),
-    thumbsContainer: document.getElementById(thumbsContainerId),
-    thumbsContainerOuter: document.getElementById('thumbs-container'),
-    thumbFileName: document.getElementById('thumb-filename'),
-    thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
-      selector: 'input[name="thumbs-autoselect-filtered"]',
-      storeKey: 'thumbsAutoSelectFiltered'
-    }),
-    thumbsFilterUncroppedRadios: new FmcRadiosUi({
-      selector: 'input[name="thumbs-filter-uncropped"]',
-      storeKey: 'thumbsFilterUncropped'
-    }),
-    window: window
-  };
-
   const fmcCroppersUiInstance = new FmcCroppersUi({
     Cropper: window.Cropper,
     croppersOptions: {
@@ -121,7 +44,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       zoomOnTouch: false, // Enable to zoom the image by dragging touch
       zoomOnWheel: false // Enable to zoom the image by mouse wheeling
     },
-    elements,
+    elements: {},
     selectors: {
       cropperCanvasClass: 'cropper-canvas',
       cropperImageClass: 'cropper-image',
@@ -131,7 +54,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   const fmcThumbsUiInstance = new FmcThumbsUi({
-    elements,
+    elements: {},
     fmcCroppersUiInstance,
     selectors: {
       hideClass,
@@ -148,7 +71,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const fmcUi = new FmcUi({
     debounceDelay: 500,
-    elements,
+    elements: {},
     exportDelay: 750,
     fmcCroppersUiInstance,
     fmcThumbsUiInstance,
@@ -159,9 +82,33 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // add these elements once fmcUi exists
-  fmcUi.elements = {
-    ...fmcUi.elements,
+  // once fmcUi exists
+  const elements = {
+    activePresetName: document.getElementById('active-preset-name'),
+    consoleContainer: document.getElementById('console'),
+    consoleContainerOuter: document.getElementById('console-container'),
+    consoleType: document.getElementById('console-type'),
+    copyLatLongButton: new FmcButtonUi({
+      selector: '#copy-lat-long',
+      updateEventName: 'updateLatLng',
+      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
+    }),
+    copyPathInButton: new FmcButtonUi({
+      selector: '#copy-path-in',
+      updateEventName: 'updatePathIn',
+      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
+    }),
+    copyPathOutButton: new FmcButtonUi({
+      selector: '#copy-path-out',
+      updateEventName: 'updatePathOut',
+      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
+    }),
+    copyPathWebEmbedButton: new FmcButtonUi({
+      selector: '#copy-path-web-embed',
+      updateEventName: 'updatePathWebEmbed',
+      clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
+    }),
+    croppersContainer: document.getElementById('croppers'),
     editWebpageButton: new FmcButtonUi({
       selector: '#edit-webpage',
       clickEventHandler: [ fmcUi, 'handleEditWebpage' ]
@@ -178,6 +125,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#file-webpage-button',
       clickEventHandler: [ fmcUi, 'handleFileWebpageBrowse' ]
     }),
+    fileWebpageInput: document.getElementById('file-webpage'),
+    filter: document.getElementById('thumb-filename-filter'),
     filterClearButton: new FmcButtonUi({
       selector: '#thumb-filename-filter-clear',
       clickEventHandler: [ fmcUi, 'handleFilterClear' ]
@@ -185,6 +134,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     filterSubmitButton: new FmcButtonUi({ // also referenced by fmcUi
       selector: '#thumb-filename-filter-submit',
       clickEventHandler: [ fmcUi, 'handleFilterSubmit' ]
+    }),
+    focalpointAutoSaveRadios: new FmcRadiosUi({
+      selector: 'input[name="focalpoint-autosave"]',
+      storeKey: 'focalpointAutoSave',
+      changeEventHandler: [ fmcUi, 'handleAutosaveRadioChange' ]
     }),
     focalpointDeleteButton: new FmcButtonUi({
       selector: '#delete-focalpoint',
@@ -194,26 +148,46 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#reset-focalpoint',
       clickEventHandler: [ fmcUi, 'handleFocalpointReset' ]
     }),
+    focalpointProportionsRadios: document.getElementsByName('focalpoint-proportions'),
     focalpointSaveButton: new FmcButtonUi({ // also referenced by fmcUi
       selector: '#save-focalpoint',
       clickEventHandler: [ fmcUi, 'handleFocalpointSave' ]
     }),
+    focalpointWriteFilenameRadios: new FmcRadiosUi({
+      selector: 'input[name="focalpoint-write-filename"]',
+      storeKey: 'focalpointWriteFilename',
+      changeEventHandler: [ fmcUi, 'handleWriteFilenameRadioChange' ]
+    }),
+    focalpointWriteTitleRadios: new FmcRadiosUi({
+      selector: 'input[name="focalpoint-write-title"]',
+      storeKey: 'focalpointWriteTitle',
+      changeEventHandler: [ fmcUi, 'handleWriteTitleRadioChange' ]
+    }),
+    focalpointXInput: document.getElementById('focalpoint-x'),
+    focalpointYInput: document.getElementById('focalpoint-y'),
     folderInButton: new FmcButtonUi({
       selector: '#folder-in-button',
       clickEventHandler: [ fmcUi, 'handleFolderInBrowse' ]
     }),
+    folderInInput: document.getElementById('folder-in'),
     folderOutButton: new FmcButtonUi({
       selector: '#folder-out-button',
       clickEventHandler: [ fmcUi, 'handleFolderOutBrowse' ]
     }),
+    folderOutInput: document.getElementById('folder-out'),
+    folderOutInputDependent: document.querySelector('[data-dependent="folder-out"]'),
     folderWebsiteButton: new FmcButtonUi({
       selector: '#folder-website-button',
       clickEventHandler: [ fmcUi, 'handleFolderWebsiteBrowse' ]
     }),
+    folderWebsiteInput: document.getElementById('folder-website'),
+    lastCropperImg: document.querySelector('#croppers .img-container-last img'),
     openPresetsButton: new FmcButtonUi({
       selector: '#open-presets-button',
       clickEventHandler: [ fmcUi, 'handleEditPresets' ]
     }),
+    openPresetsInput: document.getElementById('open-presets'),
+    options: document.getElementById('options'),
     optionsCloseButton: new FmcButtonUi({
       selector: '#options-close',
       clickEventHandler: [ fmcUi, 'handleOptionsClose' ]
@@ -222,6 +196,19 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#options-open',
       clickEventHandler: [ fmcUi, 'handleOptionsOpen' ]
     }),
+    pathInLink: new FmcButtonUi({
+      selector: '#link-path-in',
+      updateEventName: 'updatePathInLink',
+      clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
+    }),
+    pathOutLink: new FmcButtonUi({
+      selector: '#link-path-out',
+      updateEventName: 'updatePathOutLink',
+      clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
+    }),
+    presetNameInput: document.getElementById('settings-preset-name'),
+    presetNamesSelect: document.getElementById('preset-names'),
+    settings: document.getElementById('settings'),
     settingsCloseButton: new FmcButtonUi({
       selector: '#settings-close',
       clickEventHandler: [ fmcUi, 'handleSettingsClose' ]
@@ -237,22 +224,33 @@ window.addEventListener('DOMContentLoaded', async () => {
     settingsSaveButton: new FmcButtonUi({
       selector: '#settings-save',
       clickEventHandler: [ fmcUi, 'handleSettingsSave' ]
-    })
+    }),
+    thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
+      selector: 'input[name="thumbs-autoselect-filtered"]',
+      storeKey: 'thumbsAutoSelectFiltered',
+      changeEventHandler: [ fmcUi, 'handleAutoSelectFilteredRadioChange' ]
+    }),
+    thumbFileName: document.getElementById('thumb-filename'),
+    thumbsFilterUncroppedRadios: new FmcRadiosUi({
+      selector: 'input[name="thumbs-filter-uncropped"]',
+      storeKey: 'thumbsFilterUncropped',
+      changeEventHandler: [ fmcUi, 'handleThumbsFilterUncroppedRadiosChange' ]
+    }),
+    thumbsContainer: document.getElementById(thumbsContainerId),
+    thumbsContainerOuter: document.getElementById('thumbs-container'),
+    window: window
   };
 
-  const handleFocalpointInputDebounced = FmcUi.debounce(fmcUi.handleFocalpointInputChange, fmcUi.debounceDelay);
+  fmcCroppersUiInstance.elements = elements;
+  fmcThumbsUiInstance.elements = elements;
+  fmcUi.elements = elements;
 
   elements.croppersContainer.addEventListener('imageRenamed', fmcUi.handleImageRenamed.bind(fmcUi));
-  elements.focalpointAutoSaveRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleAutosaveRadioChange.bind(fmcUi)));
   elements.focalpointProportionsRadios.forEach(el => el.addEventListener('change', fmcUi.handleFocalpointInputChange.bind(fmcUi)));
-  elements.focalpointWriteFilenameRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleWriteFilenameRadioChange.bind(fmcUi)));
-  elements.focalpointWriteTitleRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleWriteTitleRadioChange.bind(fmcUi)));
-  elements.focalpointXInput.addEventListener('change', handleFocalpointInputDebounced.bind(fmcUi));
-  elements.focalpointYInput.addEventListener('change', handleFocalpointInputDebounced.bind(fmcUi));
+  elements.focalpointXInput.addEventListener('change', fmcUi.handleFocalpointInputChangeDebounced.bind(fmcUi));
+  elements.focalpointYInput.addEventListener('change', fmcUi.handleFocalpointInputChangeDebounced.bind(fmcUi));
   elements.lastCropperImg.addEventListener('ready', fmcUi.handleLastCropperImgReady.bind(fmcUi));
-  elements.thumbsAutoSelectFilteredRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleAutoSelectFilteredRadioChange.bind(fmcUi)));
   elements.thumbsContainer.addEventListener('click', fmcUi.handleThumbClick.bind(fmcUi));
-  elements.thumbsFilterUncroppedRadios.elements.forEach(el => el.addEventListener('change', fmcUi.handleThumbsFilterUncroppedRadiosChange.bind(fmcUi)));
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));
   elements.window.addEventListener('message', fmcUi.handleWindowMessage.bind(fmcUi));
   elements.window.addEventListener('resize', fmcUi.handleWindowResize.bind(fmcUi));
