@@ -160,7 +160,7 @@ export class FmcButtonUi {
       return;
     }
 
-    const eventTarget = FmcButtonUi.getTargetElementOfType(event, 'button');
+    const eventTarget = FmcUi.getTargetElementOfType(event, 'button');
 
     if (eventTarget) {
       const title = eventTarget.getAttribute('title');
@@ -196,7 +196,7 @@ export class FmcButtonUi {
       return;
     }
 
-    const eventTarget = FmcButtonUi.getTargetElementOfType(event, 'button');
+    const eventTarget = FmcUi.getTargetElementOfType(event, 'button');
 
     if (eventTarget) {
       const { href } = eventTarget.dataset;
@@ -207,26 +207,5 @@ export class FmcButtonUi {
         });
       }
     }
-  }
-
-  /**
-   * @function getTargetElementOfType
-   * @summary Ensures that the target element matches the expected element type (rather than a child element)
-   * @param {object} event - Event
-   * @param {string} elementType - Element type (tagName)
-   * @returns {HTMLElement} targetElement
-   * @memberof FmcButtonUi
-   * @static
-   */
-  static getTargetElementOfType(event, elementType) {
-    let targetElement = event.target; // event.currentTarget
-
-    if (targetElement) {
-      while (targetElement && targetElement.tagName.toLowerCase() !== elementType) {
-        targetElement = targetElement.parentElement;
-      }
-    }
-
-    return targetElement;
   }
 }
