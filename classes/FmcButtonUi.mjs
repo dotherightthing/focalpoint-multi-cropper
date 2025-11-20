@@ -1,4 +1,5 @@
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcUi } from './FmcUi.mjs';
 
 export class FmcButtonUi {
   /**
@@ -138,7 +139,7 @@ export class FmcButtonUi {
     event.preventDefault();
 
     if (typeof window.electronAPI === 'undefined') {
-      FmcButtonUi.emitElementEvent(window, 'message', {
+      FmcUi.emitElementEvent(window, 'message', {
         msg: 'Error: Clipboard operations require Electron',
         type: 'warning'
       });
@@ -156,7 +157,7 @@ export class FmcButtonUi {
           text: title
         });
 
-        FmcButtonUi.emitElementEvent(window, 'message', {
+        FmcUi.emitElementEvent(window, 'message', {
           msg: 'Value copied to clipboard',
           type: 'success'
         });
@@ -174,7 +175,7 @@ export class FmcButtonUi {
     event.preventDefault();
 
     if (typeof window.electronAPI === 'undefined') {
-      FmcButtonUi.emitElementEvent(window, 'message', {
+      FmcUi.emitElementEvent(window, 'message', {
         msg: 'Error: Finder links require Electron',
         type: 'warning'
       });
@@ -193,28 +194,6 @@ export class FmcButtonUi {
         });
       }
     }
-  }
-
-  /**
-   * @function emitElementEvent
-   * @summary Emit a custom event
-   * @param {HTMLElement} element - element that will dispatch the event
-   * @param {string} eventName - Event names are case-sensitive
-   * @param {object} eventDetail - name-value pair
-   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent}
-   * @see {@link https://gomakethings.com/callbacks-vs.-custom-events-in-vanilla-js/}
-   * @memberof FmcButtonUi
-   * @static
-   */
-  static emitElementEvent(element, eventName, eventDetail = {}) {
-    const event = new CustomEvent(eventName, {
-      bubbles: true, // stop with event.stopPropagation()
-      cancelable: true, // cancel with event.preventDefault()
-      // composed // web components only
-      detail: eventDetail
-    });
-
-    element.dispatchEvent(event);
   }
 
   /**
