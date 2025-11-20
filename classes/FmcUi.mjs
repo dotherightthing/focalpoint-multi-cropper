@@ -170,7 +170,7 @@ export class FmcUi {
       folderOutInput
     } = elements;
 
-    const { targetFolder } = folderOutInput.dataset;
+    const { targetFolder } = folderOutInput.element.dataset;
 
     const fileName = FmcUi.getFileNameFromPath(imgSrc);
     const pathOut = `${targetFolder}/${fileName}`;
@@ -216,8 +216,8 @@ export class FmcUi {
       folderWebsiteInput
     } = elements;
 
-    const { targetFolder: pathWebEmbed } = fileWebpageInput.dataset;
-    const { targetFolder: pathWebsite } = folderWebsiteInput.dataset;
+    const { targetFolder: pathWebEmbed } = fileWebpageInput.element.dataset;
+    const { targetFolder: pathWebsite } = folderWebsiteInput.element.dataset;
 
     let path = '';
 
@@ -260,10 +260,10 @@ export class FmcUi {
     await this.autosaveFocalpoint(autosaveState === 'on');
 
     await fmcCroppersUiInstance.setFocalpointSaveState({
-      thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
+      thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
       thumbIndex,
-      imagePercentXUi: focalpointXInput.value,
-      imagePercentYUi: focalpointYInput.value,
+      imagePercentXUi: focalpointXInput.element.value,
+      imagePercentYUi: focalpointYInput.element.value,
       imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
   }
@@ -391,7 +391,7 @@ export class FmcUi {
       openPresetsInput
     } = elements;
 
-    const filePath = openPresetsInput.value;
+    const filePath = openPresetsInput.element.value;
     const pathSeparator = filePath.lastIndexOf('/');
     const folderPath = filePath.slice(0, pathSeparator);
 
@@ -421,8 +421,8 @@ export class FmcUi {
       folderWebsiteInput
     } = elements;
 
-    const { targetFolder } = folderWebsiteInput.dataset;
-    const { targetFile } = fileWebpageInput.dataset;
+    const { targetFolder } = folderWebsiteInput.element.dataset;
+    const { targetFile } = fileWebpageInput.element.dataset;
 
     const msg = await window.electronAPI.openInEditor({
       editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
@@ -494,7 +494,7 @@ export class FmcUi {
 
     const { croppers } = fmcCroppersUiInstance;
     const { src } = croppers[0].cropperInstance.element;
-    const { targetFolder } = folderOutInput.dataset;
+    const { targetFolder } = folderOutInput.element.dataset;
 
     const baseExportPath = await fmcCroppersUiInstance.resizeAndCropImage(targetFolder);
     const pathOut = this.getPathOut(src);
@@ -533,9 +533,9 @@ export class FmcUi {
       return;
     }
 
-    fileWebpageInput.dataset.targetFile = filePath;
-    fileWebpageInput.dataset.targetFolder = folderPath;
-    fileWebpageInput.value = fileName;
+    fileWebpageInput.element.dataset.targetFile = filePath;
+    fileWebpageInput.element.dataset.targetFolder = folderPath;
+    fileWebpageInput.element.value = fileName;
   }
 
   /**
@@ -552,7 +552,7 @@ export class FmcUi {
       filter
     } = elements;
 
-    filter.value = '';
+    filter.element.value = '';
 
     fmcThumbsUiInstance.filterByFilenameAndCropped('');
   }
@@ -571,7 +571,7 @@ export class FmcUi {
       filter
     } = elements;
 
-    const searchStr = filter.value;
+    const searchStr = filter.element.value;
 
     fmcThumbsUiInstance.filterByFilenameAndCropped(searchStr);
   }
@@ -603,8 +603,8 @@ export class FmcUi {
     });
 
     // input change listener calls setFocalpointSaveState
-    focalpointXInput.value = 50;
-    focalpointYInput.value = 50;
+    focalpointXInput.element.value = 50;
+    focalpointYInput.element.value = 50;
 
     // fire 'change' event so that change is picked up by listener
     FmcUi.emitElementEvent(focalpointYInput, 'change'); // for both X and Y
@@ -639,8 +639,8 @@ export class FmcUi {
 
     // move cropbox
     fmcCroppersUiInstance.displayImagePercentXY({
-      imagePercentX: focalpointXInput.value, // string
-      imagePercentY: focalpointYInput.value // string
+      imagePercentX: focalpointXInput.element.value, // string
+      imagePercentY: focalpointYInput.element.value // string
     });
 
     if ((event.isTrusted) || (event.target === focalpointYInput)) {
@@ -650,15 +650,15 @@ export class FmcUi {
 
       await fmcCroppersUiInstance.setFocalpointSaveState({
         focalpointReset,
-        thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
+        thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
         thumbIndex,
-        imagePercentXUi: focalpointXInput.value,
-        imagePercentYUi: focalpointYInput.value,
+        imagePercentXUi: focalpointXInput.element.value,
+        imagePercentYUi: focalpointYInput.element.value,
         imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
       });
 
-      focalpointXInput.dataset.thumbIndexPrevious = thumbIndex;
-      focalpointYInput.dataset.thumbIndexPrevious = thumbIndex;
+      focalpointXInput.element.dataset.thumbIndexPrevious = thumbIndex;
+      focalpointYInput.element.dataset.thumbIndexPrevious = thumbIndex;
     }
   }
 
@@ -706,10 +706,10 @@ export class FmcUi {
     await this.saveFocalpoint();
 
     await fmcCroppersUiInstance.setFocalpointSaveState({
-      thumbIndexPrevious: focalpointXInput.dataset.thumbIndexPrevious,
+      thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
       thumbIndex,
-      imagePercentXUi: focalpointXInput.value,
-      imagePercentYUi: focalpointYInput.value,
+      imagePercentXUi: focalpointXInput.element.value,
+      imagePercentYUi: focalpointYInput.element.value,
       imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
   }
@@ -747,8 +747,8 @@ export class FmcUi {
     // if 'Browse' was clicked
     // capture data with the field (inside the 'Open Settings' dialog) until it is saved to a preset
     if (!restore) {
-      folderInInput.dataset.targetFolder = folderPath;
-      folderInInput.value = folderName;
+      folderInInput.element.dataset.targetFolder = folderPath;
+      folderInInput.element.value = folderName;
     }
 
     // add thumbs to UI
@@ -783,8 +783,8 @@ export class FmcUi {
       return;
     }
 
-    folderOutInput.dataset.targetFolder = folderPath;
-    folderOutInput.value = folderName;
+    folderOutInput.element.dataset.targetFolder = folderPath;
+    folderOutInput.element.value = folderName;
 
     // enables focalpoint controls
     // TODO controls are enabled before cropper is ready
@@ -818,8 +818,8 @@ export class FmcUi {
       return;
     }
 
-    folderWebsiteInput.dataset.targetFolder = folderPath;
-    folderWebsiteInput.value = folderName;
+    folderWebsiteInput.element.dataset.targetFolder = folderPath;
+    folderWebsiteInput.element.value = folderName;
   }
 
   /**
@@ -1004,23 +1004,23 @@ export class FmcUi {
         name
       } = preset;
 
-      fileWebpageInput.dataset.targetFile = fileWebpage.targetFile;
-      fileWebpageInput.dataset.targetFolder = fileWebpage.targetFolder;
-      fileWebpageInput.value = fileWebpage.value;
+      fileWebpageInput.element.dataset.targetFile = fileWebpage.targetFile;
+      fileWebpageInput.element.dataset.targetFolder = fileWebpage.targetFolder;
+      fileWebpageInput.element.value = fileWebpage.value;
 
-      filter.value = '';
+      filter.element.value = '';
 
-      folderInInput.dataset.targetFolder = folderIn.targetFolder;
-      folderInInput.value = folderIn.value;
+      folderInInput.element.dataset.targetFolder = folderIn.targetFolder;
+      folderInInput.element.value = folderIn.value;
 
-      folderOutInput.dataset.targetFolder = folderOut.targetFolder; // aka handleFolderOutBrowse folderPath
-      folderOutInput.value = folderOut.value; // aka handleFolderOutBrowse folderName
+      folderOutInput.element.dataset.targetFolder = folderOut.targetFolder; // aka handleFolderOutBrowse folderPath
+      folderOutInput.element.value = folderOut.value; // aka handleFolderOutBrowse folderName
       // folderOutInputDependent.removeAttribute('disabled');
 
-      folderWebsiteInput.dataset.targetFolder = folderWebsite.targetFolder;
-      folderWebsiteInput.value = folderWebsite.value;
+      folderWebsiteInput.element.dataset.targetFolder = folderWebsite.targetFolder;
+      folderWebsiteInput.element.value = folderWebsite.value;
 
-      presetNameInput.value = name;
+      presetNameInput.element.value = name;
 
       const restore = true;
 
@@ -1067,7 +1067,7 @@ export class FmcUi {
     await this.populateSettingsPresets();
     await this.selectActivePreset();
 
-    openPresetsInput.value = await window.electronAPI.getStoreFilePath();
+    openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
 
     settings.appendChild(consoleContainerOuter);
 
@@ -1126,27 +1126,27 @@ export class FmcUi {
     } = elements;
 
     const fileWebpage = {
-      targetFile: fileWebpageInput.dataset.targetFile,
-      targetFolder: fileWebpageInput.dataset.targetFolder,
-      value: fileWebpageInput.value
+      targetFile: fileWebpageInput.element.dataset.targetFile,
+      targetFolder: fileWebpageInput.element.dataset.targetFolder,
+      value: fileWebpageInput.element.value
     };
 
     const folderIn = {
-      targetFolder: folderInInput.dataset.targetFolder,
-      value: folderInInput.value // folderName
+      targetFolder: folderInInput.element.dataset.targetFolder,
+      value: folderInInput.element.value // folderName
     };
 
     const folderOut = {
-      targetFolder: folderOutInput.dataset.targetFolder,
-      value: folderOutInput.value
+      targetFolder: folderOutInput.element.dataset.targetFolder,
+      value: folderOutInput.element.value
     };
 
     const folderWebsite = {
-      targetFolder: folderWebsiteInput.dataset.targetFolder,
-      value: folderWebsiteInput.value
+      targetFolder: folderWebsiteInput.element.dataset.targetFolder,
+      value: folderWebsiteInput.element.value
     };
 
-    const name = presetNameInput.value;
+    const name = presetNameInput.element.value;
 
     const msgObj = await window.electronAPI.setPreset({
       fileWebpage,
@@ -1282,7 +1282,7 @@ export class FmcUi {
       if (key === 'Enter') {
         FmcUi.emitElementEvent(filterSubmitButton, 'click', {});
       } else if (metaKey && (key === 'v')) {
-        filter.value = await window.electronAPI.copyFromClipboard();
+        filter.element.value = await window.electronAPI.copyFromClipboard();
       }
     } else if (document.activeElement.classList.contains(thumbButtonClass)) {
       if (key === 'ArrowLeft') {
@@ -1409,13 +1409,13 @@ export class FmcUi {
     }
 
     // value is a string despite input being of type number
-    if ((Number(focalpointXInput.value) === 50) && (Number(focalpointYInput.value) === 50)) {
+    if ((Number(focalpointXInput.element.value) === 50) && (Number(focalpointYInput.element.value) === 50)) {
       msgObj = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
     } else {
       msgObj = await fmcCroppersUiInstance.writeImagePercentXYToImage({
         imageFlags: flags.join(','),
-        imagePercentX: focalpointXInput.value,
-        imagePercentY: focalpointYInput.value
+        imagePercentX: focalpointXInput.element.value,
+        imagePercentY: focalpointYInput.element.value
       });
 
       FmcUi.emitElementEvent(window, 'message', msgObj);

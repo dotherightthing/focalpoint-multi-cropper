@@ -3,6 +3,7 @@
 import { FmcButtonUi } from './classes/FmcButtonUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
+import { FmcTextfieldUi } from './classes/FmcTextfieldUi.mjs';
 import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
 import { FmcUi } from './classes/FmcUi.mjs';
 
@@ -125,8 +126,12 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#file-webpage-button',
       clickEventHandler: [ fmcUi, 'handleFileWebpageBrowse' ]
     }),
-    fileWebpageInput: document.getElementById('file-webpage'),
-    filter: document.getElementById('thumb-filename-filter'),
+    fileWebpageInput: new FmcTextfieldUi({
+      selector: '#file-webpage'
+    }),
+    filter: new FmcTextfieldUi({
+      selector: '#thumb-filename-filter'
+    }),
     filterClearButton: new FmcButtonUi({
       selector: '#thumb-filename-filter-clear',
       clickEventHandler: [ fmcUi, 'handleFilterClear' ]
@@ -163,30 +168,44 @@ window.addEventListener('DOMContentLoaded', async () => {
       storeKey: 'focalpointWriteTitle',
       changeEventHandler: [ fmcUi, 'handleWriteTitleRadioChange' ]
     }),
-    focalpointXInput: document.getElementById('focalpoint-x'),
-    focalpointYInput: document.getElementById('focalpoint-y'),
+    focalpointXInput: new FmcTextfieldUi({
+      selector: '#focalpoint-x',
+      changeEventHandler: [ fmcUi, 'handleFocalpointInputChangeDebounced' ]
+    }),
+    focalpointYInput: new FmcTextfieldUi({
+      selector: '#focalpoint-y',
+      changeEventHandler: [ fmcUi, 'handleFocalpointInputChangeDebounced' ]
+    }),
     folderInButton: new FmcButtonUi({
       selector: '#folder-in-button',
       clickEventHandler: [ fmcUi, 'handleFolderInBrowse' ]
     }),
-    folderInInput: document.getElementById('folder-in'),
+    folderInInput: new FmcTextfieldUi({
+      selector: '#folder-in'
+    }),
     folderOutButton: new FmcButtonUi({
       selector: '#folder-out-button',
       clickEventHandler: [ fmcUi, 'handleFolderOutBrowse' ]
     }),
-    folderOutInput: document.getElementById('folder-out'),
+    folderOutInput: new FmcTextfieldUi({
+      selector: '#folder-out'
+    }),
     folderOutInputDependent: document.querySelector('[data-dependent="folder-out"]'),
     folderWebsiteButton: new FmcButtonUi({
       selector: '#folder-website-button',
       clickEventHandler: [ fmcUi, 'handleFolderWebsiteBrowse' ]
     }),
-    folderWebsiteInput: document.getElementById('folder-website'),
+    folderWebsiteInput: new FmcTextfieldUi({
+      selector: '#folder-website'
+    }),
     lastCropperImg: document.querySelector('#croppers .img-container-last img'),
     openPresetsButton: new FmcButtonUi({
       selector: '#open-presets-button',
       clickEventHandler: [ fmcUi, 'handleEditPresets' ]
     }),
-    openPresetsInput: document.getElementById('open-presets'),
+    openPresetsInput: new FmcTextfieldUi({
+      selector: '#open-presets'
+    }),
     options: document.getElementById('options'),
     optionsCloseButton: new FmcButtonUi({
       selector: '#options-close',
@@ -206,7 +225,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       updateEventName: 'updatePathOutLink',
       clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
-    presetNameInput: document.getElementById('settings-preset-name'),
+    presetNameInput: new FmcTextfieldUi({
+      selector: '#settings-preset-name'
+    }),
     presetNamesSelect: document.getElementById('preset-names'),
     settings: document.getElementById('settings'),
     settingsCloseButton: new FmcButtonUi({
@@ -247,8 +268,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   elements.croppersContainer.addEventListener('imageRenamed', fmcUi.handleImageRenamed.bind(fmcUi));
   elements.focalpointProportionsRadios.forEach(el => el.addEventListener('change', fmcUi.handleFocalpointInputChange.bind(fmcUi)));
-  elements.focalpointXInput.addEventListener('change', fmcUi.handleFocalpointInputChangeDebounced.bind(fmcUi));
-  elements.focalpointYInput.addEventListener('change', fmcUi.handleFocalpointInputChangeDebounced.bind(fmcUi));
   elements.lastCropperImg.addEventListener('ready', fmcUi.handleLastCropperImgReady.bind(fmcUi));
   elements.thumbsContainer.addEventListener('click', fmcUi.handleThumbClick.bind(fmcUi));
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));

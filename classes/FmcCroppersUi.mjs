@@ -578,10 +578,10 @@ export class FmcCroppersUi {
               round: true
             });
 
-            focalpointXInput.value = imagePercentX;
-            focalpointYInput.value = imagePercentY;
+            focalpointXInput.element.value = imagePercentX;
+            focalpointYInput.element.value = imagePercentY;
 
-            const focalpointYInputId = focalpointYInput.getAttribute('id');
+            const focalpointYInputId = focalpointYInput.element.getAttribute('id');
 
             FmcUi.emitEvent(focalpointYInputId, 'change');
 
@@ -1347,10 +1347,10 @@ export class FmcCroppersUi {
       panorama = false
     } = this.getFlagsFromImage(imagePath);
 
-    focalpointXInput.value = imagePercentX;
-    focalpointYInput.value = imagePercentY;
+    focalpointXInput.element.value = imagePercentX;
+    focalpointYInput.element.value = imagePercentY;
 
-    const focalpointYInputId = focalpointYInput.getAttribute('id');
+    const focalpointYInputId = focalpointYInput.element.getAttribute('id');
     const proportionsSetting = panorama ? 'panorama' : 'default';
 
     focalpointProportionsRadios.forEach(radio => {
