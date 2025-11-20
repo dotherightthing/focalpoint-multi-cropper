@@ -909,7 +909,7 @@ export class FmcUi {
 
     thumbsContainerOuter.appendChild(consoleContainerOuter);
 
-    options.close();
+    options.element.close();
   }
 
   /**
@@ -926,9 +926,9 @@ export class FmcUi {
       options
     } = elements;
 
-    options.appendChild(consoleContainerOuter);
+    options.element.appendChild(consoleContainerOuter);
 
-    options.showModal();
+    options.element.showModal();
   }
 
   /**
@@ -948,7 +948,7 @@ export class FmcUi {
 
     thumbsContainerOuter.appendChild(consoleContainerOuter);
 
-    settings.close();
+    settings.element.close();
   }
 
   /**
@@ -1069,9 +1069,9 @@ export class FmcUi {
 
     openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
 
-    settings.appendChild(consoleContainerOuter);
+    settings.element.appendChild(consoleContainerOuter);
 
-    settings.showModal();
+    settings.element.showModal();
   }
 
   /**
@@ -1222,7 +1222,7 @@ export class FmcUi {
 
     clickedButton.setAttribute('tabindex', '0');
 
-    if (settings.hasAttribute('open')) {
+    if (settings.element.hasAttribute('open')) {
       clickedButton.scrollIntoView();
     } else {
       clickedButton.focus();

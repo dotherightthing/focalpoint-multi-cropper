@@ -2,6 +2,7 @@
 
 import { FmcButtonUi } from './classes/FmcButtonUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
+import { FmcDialogUi } from './classes/FmcDialogUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
 import { FmcTextfieldUi } from './classes/FmcTextfieldUi.mjs';
 import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
@@ -206,7 +207,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     openPresetsInput: new FmcTextfieldUi({
       selector: '#open-presets'
     }),
-    options: document.getElementById('options'),
+    options: new FmcDialogUi({
+      selector: '#options'
+    }),
     optionsCloseButton: new FmcButtonUi({
       selector: '#options-close',
       clickEventHandler: [ fmcUi, 'handleOptionsClose' ]
@@ -229,7 +232,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#settings-preset-name'
     }),
     presetNamesSelect: document.getElementById('preset-names'),
-    settings: document.getElementById('settings'),
+    settings: new FmcDialogUi({
+      selector: '#settings'
+    }),
     settingsCloseButton: new FmcButtonUi({
       selector: '#settings-close',
       clickEventHandler: [ fmcUi, 'handleSettingsClose' ]
