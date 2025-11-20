@@ -4,7 +4,7 @@ import { FmcUi } from './FmcUi.mjs';
 export class FmcButtonUi {
   /**
    * @class FmcButtonUi
-   * @summary Manages UI radio button pairs
+   * @summary Manages UI buttons
    * @param {object} config - Instance config
    * @public
    */
