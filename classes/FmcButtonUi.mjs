@@ -23,7 +23,9 @@ export class FmcButtonUi {
     });
 
     if (this.clickEventHandler) {
-      document.addEventListener('click', this.clickEventHandler.bind(this));
+      const [ instance, method ] = this.clickEventHandler;
+
+      this.element.addEventListener('click', instance[method].bind(instance));
     }
 
     if (this.updateEventName !== '') {
@@ -43,7 +45,7 @@ export class FmcButtonUi {
   }
 
   set clickEventHandler(clickEventHandler) {
-    this._clickEventHandler = dtrtValidate.validate(clickEventHandler, 'function', 'FmcButtonUi.clickEventHandler');
+    this._clickEventHandler = dtrtValidate.validate(clickEventHandler, 'array', 'FmcButtonUi.clickEventHandler');
   }
 
   /**
@@ -96,8 +98,11 @@ export class FmcButtonUi {
     } = event;
 
     const {
+      href = '',
       title = ''
     } = detail;
+
+    this.element.dataset.href = href;
 
     if (title !== '') {
       this.enable({ title });

@@ -133,11 +133,11 @@ export class FmcUi {
     if (on) {
       await this.saveFocalpoint();
 
-      focalpointResetButton.setAttribute('disabled', '');
-      focalpointSaveButton.setAttribute('disabled', '');
+      focalpointResetButton.disable();
+      focalpointSaveButton.disable();
     } else {
-      focalpointResetButton.removeAttribute('disabled');
-      focalpointSaveButton.removeAttribute('disabled');
+      focalpointResetButton.enable();
+      focalpointSaveButton.enable();
     }
   }
 
