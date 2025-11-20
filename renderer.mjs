@@ -4,6 +4,7 @@ import { FmcButtonUi } from './classes/FmcButtonUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
 import { FmcDialogUi } from './classes/FmcDialogUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
+import { FmcTextDisplayUi } from './classes/FmcTextDisplayUi.mjs';
 import { FmcTextfieldUi } from './classes/FmcTextfieldUi.mjs';
 import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
 import { FmcUi } from './classes/FmcUi.mjs';
@@ -86,10 +87,14 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // once fmcUi exists
   const elements = {
-    activePresetName: document.getElementById('active-preset-name'),
+    activePresetName: new FmcTextDisplayUi({
+      selector: '#active-preset-name'
+    }),
     consoleContainer: document.getElementById('console'),
     consoleContainerOuter: document.getElementById('console-container'),
-    consoleType: document.getElementById('console-type'),
+    consoleType: new FmcTextDisplayUi({
+      selector: '#console-type'
+    }),
     copyLatLongButton: new FmcButtonUi({
       selector: '#copy-lat-long',
       updateEventName: 'updateLatLng',
@@ -256,7 +261,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       storeKey: 'thumbsAutoSelectFiltered',
       changeEventHandler: [ fmcUi, 'handleAutoSelectFilteredRadioChange' ]
     }),
-    thumbFileName: document.getElementById('thumb-filename'),
+    thumbFileName: new FmcTextDisplayUi({
+      selector: '#thumb-filename'
+    }),
     thumbsFilterUncroppedRadios: new FmcRadiosUi({
       selector: 'input[name="thumbs-filter-uncropped"]',
       storeKey: 'thumbsFilterUncropped',

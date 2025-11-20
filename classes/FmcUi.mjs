@@ -985,7 +985,7 @@ export class FmcUi {
         presetName
       });
 
-      activePresetName.textContent = presetName;
+      activePresetName.element.textContent = presetName;
     }
 
     try {
@@ -994,7 +994,7 @@ export class FmcUi {
 
       ({ name: presetName } = preset);
 
-      activePresetName.textContent = presetName;
+      activePresetName.element.textContent = presetName;
 
       const {
         fileWebpage,
@@ -1162,7 +1162,7 @@ export class FmcUi {
       presetName: name
     });
 
-    activePresetName.textContent = name;
+    activePresetName.element.textContent = name;
 
     fmcThumbsUiInstance.clickSelectedThumb(1);
 
@@ -1318,9 +1318,9 @@ export class FmcUi {
     } = event.detail;
 
     consoleContainer.textContent = (msg !== '') ? `${msg}.` : msg;
-    consoleType.classList.remove('msg-info', 'msg-success', 'msg-warning');
-    consoleType.classList.add(`msg-${type}`);
-    consoleType.textContent = type;
+    consoleType.element.classList.remove('msg-info', 'msg-success', 'msg-warning');
+    consoleType.element.classList.add(`msg-${type}`);
+    consoleType.element.textContent = type;
 
     // ensure each message is displayed
     await new Promise(resolve => {
@@ -1451,7 +1451,7 @@ export class FmcUi {
       title: srcSafe
     });
 
-    thumbFileName.textContent = fileName;
+    thumbFileName.element.textContent = fileName;
 
     await new Promise(resolve => {
       // timeout prevents generic crops
