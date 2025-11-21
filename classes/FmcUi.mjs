@@ -643,7 +643,7 @@ export class FmcUi {
       imagePercentY: focalpointYInput.element.value // string
     });
 
-    if ((event.isTrusted) || (event.target === focalpointYInput)) {
+    if ((event.isTrusted) || (event.target === focalpointYInput.element)) {
       const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
       await this.autosaveFocalpoint(focalpointAutoSaveRadios.getState() === 'on');
