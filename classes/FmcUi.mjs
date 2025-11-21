@@ -1442,12 +1442,8 @@ export class FmcUi {
     const fileName = FmcUi.getFileNameFromPath(src);
     const srcSafe = this.srcSafe(src);
 
-    FmcUi.emitElementEvent(window, 'updatePathInLink', {
-      href: srcSafe,
-      title: srcSafe
-    });
-
     FmcUi.emitElementEvent(window, 'updatePathIn', {
+      href: srcSafe,
       title: srcSafe
     });
 
@@ -1465,28 +1461,20 @@ export class FmcUi {
           const pathWebEmbed = await this.getPathWebEmbed(pathOut);
           const pathWebEmbedSafe = this.srcSafe(pathWebEmbed);
 
-          FmcUi.emitElementEvent(window, 'updatePathOut', {
-            title: pathOutSafe
-          });
-
           FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
             title: pathWebEmbedSafe
           });
 
-          FmcUi.emitElementEvent(window, 'updatePathOutLink', {
+          FmcUi.emitElementEvent(window, 'updatePathOut', {
             href: pathOutSafe,
             title: pathOutSafe
           });
         } else {
-          FmcUi.emitElementEvent(window, 'updatePathOut', {
-            title: ''
-          });
-
           FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
             title: ''
           });
 
-          FmcUi.emitElementEvent(window, 'updatePathOutLink', {
+          FmcUi.emitElementEvent(window, 'updatePathOut', {
             href: '',
             title: ''
           });

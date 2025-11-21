@@ -11,12 +11,14 @@ export class FmcButtonUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
+      action = '',
       clickEventHandler,
       selector,
       updateEventName = ''
     } = config;
 
     Object.assign(this, {
+      action,
       clickEventHandler,
       selector,
       updateEventName
@@ -34,6 +36,19 @@ export class FmcButtonUi {
   }
 
   /* Getters and Setters */
+
+  /**
+   * action
+   * @type {string}
+   * @memberof FmcButtonUi
+   */
+  get action() {
+    return this._action;
+  }
+
+  set action(action) {
+    this._action = dtrtValidate.validate(action, 'string', 'FmcButtonUi.action');
+  }
 
   /**
    * clickEventHandler
@@ -94,15 +109,21 @@ export class FmcButtonUi {
    */
   handleUpdateEvent(event) {
     const {
+      action
+    } = this;
+
+    const {
       detail = {}
     } = event;
 
     const {
-      href = '',
+      href,
       title = ''
     } = detail;
 
-    this.element.dataset.href = href;
+    if (href && action === 'openFinder') {
+      this.element.dataset.href = href;
+    }
 
     if (title !== '') {
       this.enable({ title });
@@ -120,11 +141,15 @@ export class FmcButtonUi {
    */
   enable(attrs) {
     const {
+      action
+    } = this;
+
+    const {
       href,
       title
     } = attrs;
 
-    if (href) {
+    if (href && action === 'openFinder') {
       this.element.dataset.href = href;
     }
 
@@ -153,6 +178,7 @@ export class FmcButtonUi {
    * @param {object} event - Click event
    * @memberof FmcButtonUi
    * @static
+   * @todo Why is title used rather than data-title or better still data-path?
    */
   static handleCopyPath(event) {
     event.preventDefault();
