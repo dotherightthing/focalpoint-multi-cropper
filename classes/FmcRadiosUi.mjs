@@ -33,7 +33,7 @@ export class FmcRadiosUi {
 
   /**
    * changeEventHandler
-   * @type {Function}
+   * @type {Array}
    * @memberof FmcRadiosUi
    */
   get changeEventHandler() {

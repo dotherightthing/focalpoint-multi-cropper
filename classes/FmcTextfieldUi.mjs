@@ -32,7 +32,7 @@ export class FmcTextfieldUi {
 
   /**
    * changeEventHandler
-   * @type {Function}
+   * @type {Array}
    * @memberof FmcTextfieldUi
    */
   get changeEventHandler() {
