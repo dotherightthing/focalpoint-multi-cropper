@@ -6,7 +6,6 @@ export class FmcTextDisplayUi {
    * @summary Manages UI text display fields (span/div/hx with dynamic text inside)
    * @param {object} config - Instance config
    * @public
-   * @todo Finish integration
    */
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
@@ -36,7 +35,7 @@ export class FmcTextDisplayUi {
 
   /**
    * selector
-   * @type {object}
+   * @type {string}
    * @memberof FmcTextDisplayUi
    */
   get selector() {

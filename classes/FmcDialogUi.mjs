@@ -33,7 +33,7 @@ export class FmcDialogUi {
 
   /**
    * selector
-   * @type {object}
+   * @type {string}
    * @memberof FmcDialogUi
    */
   get selector() {

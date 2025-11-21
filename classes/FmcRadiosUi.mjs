@@ -57,7 +57,7 @@ export class FmcRadiosUi {
 
   /**
    * selector
-   * @type {object}
+   * @type {string}
    * @memberof FmcRadiosUi
    */
   get selector() {

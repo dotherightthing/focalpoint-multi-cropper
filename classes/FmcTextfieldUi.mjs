@@ -56,7 +56,7 @@ export class FmcTextfieldUi {
 
   /**
    * selector
-   * @type {object}
+   * @type {string}
    * @memberof FmcTextfieldUi
    */
   get selector() {

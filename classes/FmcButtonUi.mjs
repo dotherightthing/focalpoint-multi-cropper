@@ -37,7 +37,7 @@ export class FmcButtonUi {
 
   /**
    * clickEventHandler
-   * @type {Function}
+   * @type {Array}
    * @memberof FmcButtonUi
    */
   get clickEventHandler() {
@@ -61,7 +61,7 @@ export class FmcButtonUi {
 
   /**
    * selector
-   * @type {object}
+   * @type {string}
    * @memberof FmcButtonUi
    */
   get selector() {
@@ -149,6 +149,7 @@ export class FmcButtonUi {
 
   /**
    * @function handleCopyPath
+   * @summary Copy the element's title to the clipboard
    * @param {object} event - Click event
    * @memberof FmcButtonUi
    * @static
@@ -185,6 +186,7 @@ export class FmcButtonUi {
 
   /**
    * @function handleLinkToPath
+   * @summary Open the element's data-href in Finder
    * @param {object} event - Click event
    * @memberof FmcButtonUi
    * @static
