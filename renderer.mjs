@@ -238,7 +238,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#settings-preset-name'
     }),
     presetNamesSelect: new FmcSelectUi({
-      selector: '#preset-names'
+      selector: '#preset-names',
+      updateListener: 'updatePresets'
     }),
     settings: new FmcDialogUi({
       selector: '#settings'

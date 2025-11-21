@@ -26,6 +26,10 @@ export class FmcSelectUi {
 
       this.element.addEventListener('change', instance[method].bind(instance));
     }
+
+    if (this.updateListener !== '') {
+      window.addEventListener(this.updateListener, this.handleUpdate.bind(this));
+    }
   }
 
   /* Getters and Setters */
@@ -83,6 +87,36 @@ export class FmcSelectUi {
   /* Instance methods */
 
   /**
+   * @function handleUpdate
+   * @param {object} event - Custom event
+   * @memberof FmcButtonUi
+   */
+  handleUpdate(event) {
+    const {
+      detail = {}
+    } = event;
+
+    const {
+      label = 'Select',
+      options,
+      selectedOptionValue = 'default'
+    } = detail;
+
+    let html = `<option value="default">${label}</option>`;
+
+    if (options) {
+      html += options.map(item => `<option value="${item}">${item}</option>`).join('');
+
+      this.element.innerHTML = html;
+      this.enable();
+    } else {
+      this.disable();
+    }
+
+    this.select(selectedOptionValue);
+  }
+
+  /**
    * @function enable
    * @memberof FmcSelectUi
    */
@@ -96,5 +130,14 @@ export class FmcSelectUi {
    */
   disable() {
     this.element.setAttribute('disabled', '');
+  }
+
+  /**
+   * @function select
+   * @param {string} value - Value to select
+   * @memberof FmcSelectUi
+   */
+  select(value) {
+    this.element.value = value;
   }
 }

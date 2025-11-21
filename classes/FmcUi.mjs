@@ -1056,7 +1056,11 @@ export class FmcUi {
       settings
     } = elements;
 
-    await this.populateSettingsPresets();
+    FmcUi.emitElementEvent(window, 'updatePresets', {
+      label: 'Select a preset',
+      options: await window.electronAPI.getPresetNames()
+    });
+
     await this.selectActivePreset();
 
     openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
@@ -1158,7 +1162,11 @@ export class FmcUi {
 
     fmcThumbsUiInstance.clickSelectedThumb(1);
 
-    await this.populateSettingsPresets(name);
+    FmcUi.emitElementEvent(window, 'updatePresets', {
+      label: 'Select a preset',
+      options: await window.electronAPI.getPresetNames(),
+      selectedOptionValue: name
+    });
   }
 
   /**
@@ -1336,30 +1344,6 @@ export class FmcUi {
     } = this;
 
     fmcThumbsUiInstance.focusThumb('selected');
-  }
-
-  /**
-   * @function populateSettingsPresets
-   * @param {string} selectName - Name of preset to select
-   * @memberof FmcUi
-   */
-  async populateSettingsPresets(selectName = 'default') {
-    const {
-      elements
-    } = this;
-
-    const {
-      presetNamesSelect
-    } = elements;
-
-    const presetNames = await window.electronAPI.getPresetNames();
-
-    const optionsHtml = presetNames.map(item => `<option value="${item}">${item}</option>`).join('');
-
-    presetNamesSelect.element.innerHTML = '<option value="default">Select a preset</option>' + optionsHtml;
-
-    // select item
-    presetNamesSelect.element.value = selectName;
   }
 
   /**
