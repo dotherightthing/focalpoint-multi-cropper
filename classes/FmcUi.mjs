@@ -1456,29 +1456,23 @@ export class FmcUi {
           path: pathOut
         }) : true;
 
+        let pathOutSafe = '';
+        let pathWebEmbedSafe = '';
+
         if (pathOutExists) {
-          const pathOutSafe = this.srcSafe(pathOut);
           const pathWebEmbed = await this.getPathWebEmbed(pathOut);
-          const pathWebEmbedSafe = this.srcSafe(pathWebEmbed);
-
-          FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
-            title: pathWebEmbedSafe
-          });
-
-          FmcUi.emitElementEvent(window, 'updatePathOut', {
-            href: pathOutSafe,
-            title: pathOutSafe
-          });
-        } else {
-          FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
-            title: ''
-          });
-
-          FmcUi.emitElementEvent(window, 'updatePathOut', {
-            href: '',
-            title: ''
-          });
+          pathWebEmbedSafe = this.srcSafe(pathWebEmbed);
+          pathOutSafe = this.srcSafe(pathOut);
         }
+
+        FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
+          title: pathWebEmbedSafe
+        });
+
+        FmcUi.emitElementEvent(window, 'updatePathOut', {
+          href: pathOutSafe,
+          title: pathOutSafe
+        });
 
         resolve();
       }, 500);
