@@ -177,11 +177,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     focalpointXInput: new FmcTextfieldUi({
       selector: '#focalpoint-x',
-      changeHandler: [ fmcUi, 'handleFocalpointInputChangeDebounced' ]
+      changeHandler: [ fmcUi, 'handleFocalpointInputChange', 500 ]
     }),
     focalpointYInput: new FmcTextfieldUi({
       selector: '#focalpoint-y',
-      changeHandler: [ fmcUi, 'handleFocalpointInputChangeDebounced' ]
+      changeHandler: [ fmcUi, 'handleFocalpointInputChange', 500 ]
     }),
     folderInButton: new FmcButtonUi({
       selector: '#folder-in-button',

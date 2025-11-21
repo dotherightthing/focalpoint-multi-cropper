@@ -663,14 +663,6 @@ export class FmcUi {
   }
 
   /**
-   * @function handleFocalpointInputChangeDebounced
-   * @memberof FmcUi
-   */
-  handleFocalpointInputChangeDebounced() {
-    FmcUi.debounce(this.handleFocalpointInputChange, this.debounceDelay);
-  }
-
-  /**
    * @function handleFocalpointReset
    * @param {object} event - Click event
    * @memberof FmcUi

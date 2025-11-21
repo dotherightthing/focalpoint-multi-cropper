@@ -1,4 +1,5 @@
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcUi } from './FmcUi.mjs';
 
 export class FmcTextfieldUi {
   /**
@@ -22,9 +23,13 @@ export class FmcTextfieldUi {
     });
 
     if (this.changeHandler.length) {
-      const [ instance, method ] = this.changeHandler;
+      const [ instance, method, debounceDelayMs ] = this.changeHandler;
 
-      this.element.addEventListener('change', instance[method].bind(instance));
+      if (debounceDelayMs) {
+        this.element.addEventListener('change', FmcUi.debounce(instance[method].bind(instance), debounceDelayMs));
+      } else {
+        this.element.addEventListener('change', instance[method].bind(instance));
+      }
     }
   }
 
