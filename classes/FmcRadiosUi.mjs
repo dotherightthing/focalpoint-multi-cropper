@@ -11,19 +11,19 @@ export class FmcRadiosUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
-      changeEventHandler,
+      changeHandler,
       selector,
       storeKey
     } = config;
 
     Object.assign(this, {
-      changeEventHandler,
+      changeHandler,
       selector,
       storeKey
     });
 
-    if (this.changeEventHandler) {
-      const [ instance, method ] = this.changeEventHandler;
+    if (this.changeHandler) {
+      const [ instance, method ] = this.changeHandler;
 
       this.elements.forEach(el => el.addEventListener('change', instance[method].bind(instance)));
     }
@@ -32,16 +32,16 @@ export class FmcRadiosUi {
   /* Getters and Setters */
 
   /**
-   * changeEventHandler
+   * changeHandler
    * @type {Array}
    * @memberof FmcRadiosUi
    */
-  get changeEventHandler() {
-    return this._changeEventHandler;
+  get changeHandler() {
+    return this._changeHandler;
   }
 
-  set changeEventHandler(changeEventHandler) {
-    this._changeEventHandler = dtrtValidate.validate(changeEventHandler, 'array', 'FmcRadiosUi.changeEventHandler');
+  set changeHandler(changeHandler) {
+    this._changeHandler = dtrtValidate.validate(changeHandler, 'array', 'FmcRadiosUi.changeHandler');
   }
 
   /**

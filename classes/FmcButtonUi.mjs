@@ -11,41 +11,41 @@ export class FmcButtonUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
-      clickEventHandler,
+      clickHandler,
       selector,
-      updateEventName = ''
+      updateListener = ''
     } = config;
 
     Object.assign(this, {
-      clickEventHandler,
+      clickHandler,
       selector,
-      updateEventName
+      updateListener
     });
 
-    if (this.clickEventHandler) {
-      const [ instance, method ] = this.clickEventHandler;
+    if (this.clickHandler) {
+      const [ instance, method ] = this.clickHandler;
 
       this.element.addEventListener('click', instance[method].bind(instance));
     }
 
-    if (this.updateEventName !== '') {
-      window.addEventListener(this.updateEventName, this.handleUpdateEvent.bind(this));
+    if (this.updateListener !== '') {
+      window.addEventListener(this.updateListener, this.handleUpdate.bind(this));
     }
   }
 
   /* Getters and Setters */
 
   /**
-   * clickEventHandler
+   * clickHandler
    * @type {Array}
    * @memberof FmcButtonUi
    */
-  get clickEventHandler() {
-    return this._clickEventHandler;
+  get clickHandler() {
+    return this._clickHandler;
   }
 
-  set clickEventHandler(clickEventHandler) {
-    this._clickEventHandler = dtrtValidate.validate(clickEventHandler, 'array', 'FmcButtonUi.clickEventHandler');
+  set clickHandler(clickHandler) {
+    this._clickHandler = dtrtValidate.validate(clickHandler, 'array', 'FmcButtonUi.clickHandler');
   }
 
   /**
@@ -73,26 +73,26 @@ export class FmcButtonUi {
   }
 
   /**
-   * updateEventName
+   * updateListener
    * @type {string}
    * @memberof FmcButtonUi
    */
-  get updateEventName() {
-    return this._updateEventName;
+  get updateListener() {
+    return this._updateListener;
   }
 
-  set updateEventName(updateEventName) {
-    this._updateEventName = dtrtValidate.validate(updateEventName, 'string', 'FmcButtonUi.updateEventName');
+  set updateListener(updateListener) {
+    this._updateListener = dtrtValidate.validate(updateListener, 'string', 'FmcButtonUi.updateListener');
   }
 
   /* Instance methods */
 
   /**
-   * @function handleUpdateEvent
+   * @function handleUpdate
    * @param {object} event - Custom event
    * @memberof FmcButtonUi
    */
-  handleUpdateEvent(event) {
+  handleUpdate(event) {
     const {
       detail = {}
     } = event;

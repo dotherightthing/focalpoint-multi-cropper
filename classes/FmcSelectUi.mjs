@@ -10,19 +10,19 @@ export class FmcSelectUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
-      changeEventHandler = [],
+      changeHandler = [],
       selector,
-      updateEventName = ''
+      updateListener = ''
     } = config;
 
     Object.assign(this, {
-      changeEventHandler,
+      changeHandler,
       selector,
-      updateEventName
+      updateListener
     });
 
-    if (this.changeEventHandler.length) {
-      const [ instance, method ] = this.changeEventHandler;
+    if (this.changeHandler.length) {
+      const [ instance, method ] = this.changeHandler;
 
       this.element.addEventListener('change', instance[method].bind(instance));
     }
@@ -31,16 +31,16 @@ export class FmcSelectUi {
   /* Getters and Setters */
 
   /**
-   * changeEventHandler
+   * changeHandler
    * @type {Array}
    * @memberof FmcSelectUi
    */
-  get changeEventHandler() {
-    return this._changeEventHandler;
+  get changeHandler() {
+    return this._changeHandler;
   }
 
-  set changeEventHandler(changeEventHandler) {
-    this._changeEventHandler = dtrtValidate.validate(changeEventHandler, 'array', 'FmcSelectUi.changeEventHandler');
+  set changeHandler(changeHandler) {
+    this._changeHandler = dtrtValidate.validate(changeHandler, 'array', 'FmcSelectUi.changeHandler');
   }
 
   /**
@@ -68,68 +68,25 @@ export class FmcSelectUi {
   }
 
   /**
-   * updateEventName
+   * updateListener
    * @type {string}
    * @memberof FmcSelectUi
    */
-  get updateEventName() {
-    return this._updateEventName;
+  get updateListener() {
+    return this._updateListener;
   }
 
-  set updateEventName(updateEventName) {
-    this._updateEventName = dtrtValidate.validate(updateEventName, 'string', 'FmcSelectUi.updateEventName');
+  set updateListener(updateListener) {
+    this._updateListener = dtrtValidate.validate(updateListener, 'string', 'FmcSelectUi.updateListener');
   }
 
   /* Instance methods */
 
   /**
-   * @function handleUpdateEvent
-   * @param {object} event - Custom event
-   * @memberof FmcSelectUi
-   */
-  handleUpdateEvent(event) {
-    const {
-      detail = {}
-    } = event;
-
-    const {
-      href = '',
-      title = ''
-    } = detail;
-
-    this.element.dataset.href = href;
-
-    if (title !== '') {
-      this.enable({ title });
-    } else {
-      this.disable();
-    }
-  }
-
-  /**
    * @function enable
-   * @param {object} attrs - Attributes
-   * @param {string} attrs.href - href attribute
-   * @param {string} attrs.title - title attribute
    * @memberof FmcSelectUi
    */
-  enable(attrs) {
-    const {
-      href,
-      title
-    } = attrs;
-
-    if (href) {
-      this.element.dataset.href = href;
-    }
-
-    if (title) {
-      this.element.dataset.title = title;
-      this.element.setAttribute('title', title);
-    } else if (this.element.dataset.title) {
-      this.element.setAttribute('title', this.element.dataset.title);
-    }
-
+  enable() {
     this.element.removeAttribute('disabled');
   }
 
@@ -138,7 +95,6 @@ export class FmcSelectUi {
    * @memberof FmcSelectUi
    */
   disable() {
-    this.element.removeAttribute('title');
     this.element.setAttribute('disabled', '');
   }
 }

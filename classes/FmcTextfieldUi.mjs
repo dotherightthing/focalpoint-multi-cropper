@@ -10,19 +10,19 @@ export class FmcTextfieldUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
-      changeEventHandler = [],
+      changeHandler = [],
       selector,
-      updateEventName = ''
+      updateListener = ''
     } = config;
 
     Object.assign(this, {
-      changeEventHandler,
+      changeHandler,
       selector,
-      updateEventName
+      updateListener
     });
 
-    if (this.changeEventHandler.length) {
-      const [ instance, method ] = this.changeEventHandler;
+    if (this.changeHandler.length) {
+      const [ instance, method ] = this.changeHandler;
 
       this.element.addEventListener('change', instance[method].bind(instance));
     }
@@ -31,16 +31,16 @@ export class FmcTextfieldUi {
   /* Getters and Setters */
 
   /**
-   * changeEventHandler
+   * changeHandler
    * @type {Array}
    * @memberof FmcTextfieldUi
    */
-  get changeEventHandler() {
-    return this._changeEventHandler;
+  get changeHandler() {
+    return this._changeHandler;
   }
 
-  set changeEventHandler(changeEventHandler) {
-    this._changeEventHandler = dtrtValidate.validate(changeEventHandler, 'array', 'FmcTextfieldUi.changeEventHandler');
+  set changeHandler(changeHandler) {
+    this._changeHandler = dtrtValidate.validate(changeHandler, 'array', 'FmcTextfieldUi.changeHandler');
   }
 
   /**
@@ -68,39 +68,36 @@ export class FmcTextfieldUi {
   }
 
   /**
-   * updateEventName
+   * updateListener
    * @type {string}
    * @memberof FmcTextfieldUi
    */
-  get updateEventName() {
-    return this._updateEventName;
+  get updateListener() {
+    return this._updateListener;
   }
 
-  set updateEventName(updateEventName) {
-    this._updateEventName = dtrtValidate.validate(updateEventName, 'string', 'FmcTextfieldUi.updateEventName');
+  set updateListener(updateListener) {
+    this._updateListener = dtrtValidate.validate(updateListener, 'string', 'FmcTextfieldUi.updateListener');
   }
 
   /* Instance methods */
 
   /**
-   * @function handleUpdateEvent
+   * @function handleUpdate
    * @param {object} event - Custom event
    * @memberof FmcTextfieldUi
    */
-  handleUpdateEvent(event) {
+  handleUpdate(event) {
     const {
       detail = {}
     } = event;
 
     const {
-      href = '',
-      title = ''
+      value
     } = detail;
 
-    this.element.dataset.href = href;
-
-    if (title !== '') {
-      this.enable({ title });
+    if (value.length) {
+      this.enable(value);
     } else {
       this.disable();
     }
@@ -108,28 +105,12 @@ export class FmcTextfieldUi {
 
   /**
    * @function enable
-   * @param {object} attrs - Attributes
-   * @param {string} attrs.href - href attribute
-   * @param {string} attrs.title - title attribute
+   * @param {string} value - Value
    * @memberof FmcTextfieldUi
    */
-  enable(attrs) {
-    const {
-      href,
-      title
-    } = attrs;
-
-    if (href) {
-      this.element.dataset.href = href;
-    }
-
-    if (title) {
-      this.element.dataset.title = title;
-      this.element.setAttribute('title', title);
-    } else if (this.element.dataset.title) {
-      this.element.setAttribute('title', this.element.dataset.title);
-    }
-
+  enable(value) {
+    this.element.dataset.href = value;
+    this.element.setAttribute('title', value);
     this.element.removeAttribute('disabled');
   }
 
@@ -138,6 +119,7 @@ export class FmcTextfieldUi {
    * @memberof FmcTextfieldUi
    */
   disable() {
+    this.element.dataset.href = '#';
     this.element.removeAttribute('title');
     this.element.setAttribute('disabled', '');
   }

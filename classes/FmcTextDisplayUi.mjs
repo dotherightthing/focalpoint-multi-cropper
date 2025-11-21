@@ -11,12 +11,12 @@ export class FmcTextDisplayUi {
     // select the relevant arguments from the config object passed in
     const {
       selector,
-      updateEventName = ''
+      updateListener = ''
     } = config;
 
     Object.assign(this, {
       selector,
-      updateEventName
+      updateListener
     });
   }
 
@@ -47,41 +47,34 @@ export class FmcTextDisplayUi {
   }
 
   /**
-   * updateEventName
+   * updateListener
    * @type {string}
    * @memberof FmcTextDisplayUi
    */
-  get updateEventName() {
-    return this._updateEventName;
+  get updateListener() {
+    return this._updateListener;
   }
 
-  set updateEventName(updateEventName) {
-    this._updateEventName = dtrtValidate.validate(updateEventName, 'string', 'FmcTextDisplayUi.updateEventName');
+  set updateListener(updateListener) {
+    this._updateListener = dtrtValidate.validate(updateListener, 'string', 'FmcTextDisplayUi.updateListener');
   }
 
   /* Instance methods */
 
   /**
-   * @function handleUpdateEvent
+   * @function handleUpdate
    * @param {object} event - Custom event
    * @memberof FmcTextDisplayUi
    */
-  handleUpdateEvent(event) {
+  handleUpdate(event) {
     const {
       detail = {}
     } = event;
 
     const {
-      href = '',
-      title = ''
+      value
     } = detail;
 
-    this.element.dataset.href = href;
-
-    if (title !== '') {
-      this.enable({ title });
-    } else {
-      this.disable();
-    }
+    this.element.innerText = value;
   }
 }
