@@ -1242,9 +1242,7 @@ export class FmcUi {
 
     const { latLong } = clickedButton.dataset;
 
-    FmcUi.emitElementEvent(window, 'updateLatLng', {
-      title: latLong
-    });
+    FmcUi.emitElementEvent(window, 'updateLatLng', { value: latLong });
 
     await this.setPaths(newImageSrc, pathOut);
 
@@ -1440,22 +1438,16 @@ export class FmcUi {
     } = elements;
 
     const fileName = FmcUi.getFileNameFromPath(src);
-    const srcSafe = this.srcSafe(src);
+    const pathIn = this.srcSafe(src);
 
-    FmcUi.emitElementEvent(window, 'updatePathIn', {
-      href: srcSafe,
-      title: srcSafe
-    });
+    FmcUi.emitElementEvent(window, 'updatePathIn', { value: pathIn });
 
     thumbFileName.element.textContent = fileName;
 
     await new Promise(resolve => {
       // timeout prevents generic crops
       setTimeout(async () => {
-        const pathOutExists = checkPathExists ? await window.electronAPI.pathExists({
-          path: pathOut
-        }) : true;
-
+        const pathOutExists = checkPathExists ? await window.electronAPI.pathExists({ path: pathOut }) : true;
         let pathOutSafe = '';
         let pathWebEmbedSafe = '';
 
@@ -1465,14 +1457,8 @@ export class FmcUi {
           pathOutSafe = this.srcSafe(pathOut);
         }
 
-        FmcUi.emitElementEvent(window, 'updatePathWebEmbed', {
-          title: pathWebEmbedSafe
-        });
-
-        FmcUi.emitElementEvent(window, 'updatePathOut', {
-          href: pathOutSafe,
-          title: pathOutSafe
-        });
+        FmcUi.emitElementEvent(window, 'updatePathWebEmbed', { value: pathWebEmbedSafe });
+        FmcUi.emitElementEvent(window, 'updatePathOut', { value: pathOutSafe });
 
         resolve();
       }, 500);

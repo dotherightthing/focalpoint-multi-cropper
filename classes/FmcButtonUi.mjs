@@ -11,14 +11,12 @@ export class FmcButtonUi {
   constructor(config = {}) {
     // select the relevant arguments from the config object passed in
     const {
-      action = '',
       clickEventHandler,
       selector,
       updateEventName = ''
     } = config;
 
     Object.assign(this, {
-      action,
       clickEventHandler,
       selector,
       updateEventName
@@ -36,19 +34,6 @@ export class FmcButtonUi {
   }
 
   /* Getters and Setters */
-
-  /**
-   * action
-   * @type {string}
-   * @memberof FmcButtonUi
-   */
-  get action() {
-    return this._action;
-  }
-
-  set action(action) {
-    this._action = dtrtValidate.validate(action, 'string', 'FmcButtonUi.action');
-  }
 
   /**
    * clickEventHandler
@@ -109,24 +94,15 @@ export class FmcButtonUi {
    */
   handleUpdateEvent(event) {
     const {
-      action
-    } = this;
-
-    const {
       detail = {}
     } = event;
 
     const {
-      href,
-      title = ''
+      value
     } = detail;
 
-    if (href && action === 'openFinder') {
-      this.element.dataset.href = href;
-    }
-
-    if (title !== '') {
-      this.enable({ title });
+    if (value.length) {
+      this.enable(value);
     } else {
       this.disable();
     }
@@ -134,32 +110,12 @@ export class FmcButtonUi {
 
   /**
    * @function enable
-   * @param {object} attrs - Attributes
-   * @param {string} attrs.href - href attribute
-   * @param {string} attrs.title - title attribute
+   * @param {string} value - Value
    * @memberof FmcButtonUi
    */
-  enable(attrs) {
-    const {
-      action
-    } = this;
-
-    const {
-      href,
-      title
-    } = attrs;
-
-    if (href && action === 'openFinder') {
-      this.element.dataset.href = href;
-    }
-
-    if (title) {
-      this.element.dataset.title = title;
-      this.element.setAttribute('title', title);
-    } else if (this.element.dataset.title) {
-      this.element.setAttribute('title', this.element.dataset.title);
-    }
-
+  enable(value) {
+    this.element.dataset.href = value;
+    this.element.setAttribute('title', value);
     this.element.removeAttribute('disabled');
   }
 
@@ -168,6 +124,7 @@ export class FmcButtonUi {
    * @memberof FmcButtonUi
    */
   disable() {
+    this.element.dataset.href = '#';
     this.element.removeAttribute('title');
     this.element.setAttribute('disabled', '');
   }

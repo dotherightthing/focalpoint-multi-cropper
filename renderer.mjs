@@ -97,32 +97,27 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#console-type'
     }),
     copyLatLongButton: new FmcButtonUi({
-      action: 'copy', // title
       selector: '#copy-lat-long',
       updateEventName: 'updateLatLng',
       clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathInButton: new FmcButtonUi({
-      action: 'copy', // title
       selector: '#copy-path-in',
       updateEventName: 'updatePathIn',
       clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathOutButton: new FmcButtonUi({
-      action: 'copy', // title
       selector: '#copy-path-out',
       updateEventName: 'updatePathOut',
       clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathWebEmbedButton: new FmcButtonUi({
-      action: 'copy', // title
       selector: '#copy-path-web-embed',
       updateEventName: 'updatePathWebEmbed',
       clickEventHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     croppersContainer: document.getElementById('croppers'),
     editWebpageButton: new FmcButtonUi({
-      action: 'edit',
       selector: '#edit-webpage',
       clickEventHandler: [ fmcUi, 'handleEditWebpage' ]
     }),
@@ -135,7 +130,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickEventHandler: [ fmcUi, 'handleExportSelected' ]
     }),
     fileWebpageButton: new FmcButtonUi({
-      action: 'browse',
       selector: '#file-webpage-button',
       clickEventHandler: [ fmcUi, 'handleFileWebpageBrowse' ]
     }),
@@ -190,7 +184,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       changeEventHandler: [ fmcUi, 'handleFocalpointInputChangeDebounced' ]
     }),
     folderInButton: new FmcButtonUi({
-      action: 'browse',
       selector: '#folder-in-button',
       clickEventHandler: [ fmcUi, 'handleFolderInBrowse' ]
     }),
@@ -198,7 +191,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#folder-in'
     }),
     folderOutButton: new FmcButtonUi({
-      action: 'browse',
       selector: '#folder-out-button',
       clickEventHandler: [ fmcUi, 'handleFolderOutBrowse' ]
     }),
@@ -207,7 +199,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     folderOutInputDependent: document.querySelector('[data-dependent="folder-out"]'),
     folderWebsiteButton: new FmcButtonUi({
-      action: 'browse',
       selector: '#folder-website-button',
       clickEventHandler: [ fmcUi, 'handleFolderWebsiteBrowse' ]
     }),
@@ -234,13 +225,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickEventHandler: [ fmcUi, 'handleOptionsOpen' ]
     }),
     pathInLink: new FmcButtonUi({
-      action: 'openFinder', // href, title
       selector: '#link-path-in',
       updateEventName: 'updatePathIn',
       clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
     pathOutLink: new FmcButtonUi({
-      action: 'openFinder', // href, title
       selector: '#link-path-out',
       updateEventName: 'updatePathOut',
       clickEventHandler: [ FmcButtonUi, 'handleLinkToPath' ]
