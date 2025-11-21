@@ -4,6 +4,7 @@ import { FmcButtonUi } from './classes/FmcButtonUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
 import { FmcDialogUi } from './classes/FmcDialogUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
+import { FmcSelectUi } from './classes/FmcSelectUi.mjs';
 import { FmcTextDisplayUi } from './classes/FmcTextDisplayUi.mjs';
 import { FmcTextfieldUi } from './classes/FmcTextfieldUi.mjs';
 import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
@@ -247,7 +248,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     presetNameInput: new FmcTextfieldUi({
       selector: '#settings-preset-name'
     }),
-    presetNamesSelect: document.getElementById('preset-names'),
+    presetNamesSelect: new FmcSelectUi({
+      selector: '#preset-names'
+    }),
     settings: new FmcDialogUi({
       selector: '#settings'
     }),

@@ -978,7 +978,7 @@ export class FmcUi {
       thumbsFilterUncroppedRadios
     } = elements;
 
-    let presetName = presetNamesSelect.value;
+    let presetName = presetNamesSelect.element.value;
 
     if (presetName !== '') {
       await window.electronAPI.setActivePresetName({
@@ -1103,7 +1103,7 @@ export class FmcUi {
     const { name } = preset;
 
     // select the preset
-    presetNamesSelect.value = name;
+    presetNamesSelect.element.value = name;
   }
 
   /**
@@ -1366,10 +1366,10 @@ export class FmcUi {
 
     const optionsHtml = presetNames.map(item => `<option value="${item}">${item}</option>`).join('');
 
-    presetNamesSelect.innerHTML = '<option value="default">Select a preset</option>' + optionsHtml;
+    presetNamesSelect.element.innerHTML = '<option value="default">Select a preset</option>' + optionsHtml;
 
     // select item
-    presetNamesSelect.value = selectName;
+    presetNamesSelect.element.value = selectName;
   }
 
   /**
