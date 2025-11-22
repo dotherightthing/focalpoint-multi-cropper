@@ -7,7 +7,7 @@ dialog {
   /* margin: calc(var(--height-controls-outer) + var(--height-title)) auto 0; subtract var(--gutter) to sit flush */
 }
 
-dialog .cropper-console {
+dialog .status-bar {
   position: relative;
   padding: 0;
   margin: 0;

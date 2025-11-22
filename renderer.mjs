@@ -91,11 +91,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     activePresetName: new FmcTextDisplayUi({
       selector: '#active-preset-name'
     }),
-    consoleContainer: document.getElementById('console'),
-    consoleContainerOuter: document.getElementById('console-container'),
-    consoleType: new FmcTextDisplayUi({
-      selector: '#console-type'
-    }),
     copyLatLongButton: new FmcButtonUi({
       selector: '#copy-lat-long',
       updateListener: 'updateLatLng',
@@ -259,6 +254,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     settingsSaveButton: new FmcButtonUi({
       selector: '#settings-save',
       clickHandler: [ fmcUi, 'handleSettingsSave' ]
+    }),
+    statusBar: document.getElementById('status-bar'),
+    statusBarMsg: document.getElementById('status-bar-msg'),
+    statusBarMsgType: new FmcTextDisplayUi({
+      selector: '#status-bar-msg-type'
     }),
     thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
       selector: 'input[name="thumbs-autoselect-filtered"]',

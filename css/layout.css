@@ -30,16 +30,16 @@
   gap: calc(var(--gutter) * 3);
 }
 
-/* .l-cropper-console */
+/* .l-status-bar */
 
-.l-cropper-console {
+.l-status-bar {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   gap: var(--gutter);
 }
 
-.l-cropper-console > * {
+.l-status-bar > * {
   margin: 0;
 }
 

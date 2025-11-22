@@ -164,7 +164,7 @@ img {
 .thumbs {
   counter-reset: thumb-counter;
   background-color: var(--color-bg-primary);
-  padding-bottom: calc(var(--height-image-meta) + var(--height-cropper-console) - var(--gutter)); /* space for position:fixed elements */
+  padding-bottom: calc(var(--height-image-meta) + var(--height-status-bar) - var(--gutter)); /* space for position:fixed elements */
   border: var(--gutter) solid var(--color-bg-primary);
   border-width: calc(var(--gutter-half) - 1px) var(--gutter);
   scroll-behavior: auto;
@@ -286,7 +286,7 @@ img {
 .image-meta {
   position: fixed;
   right: 0;
-  bottom: var(--height-cropper-console);
+  bottom: var(--height-status-bar);
   left: 0;
   z-index: 2; /* overlap focalpoint circles */
   height: var(--height-image-meta);

@@ -894,12 +894,12 @@ export class FmcUi {
     } = this;
 
     const {
-      consoleContainerOuter,
+      statusBar,
       options,
       thumbsContainerOuter
     } = elements;
 
-    thumbsContainerOuter.appendChild(consoleContainerOuter);
+    thumbsContainerOuter.appendChild(statusBar);
 
     options.element.close();
   }
@@ -914,11 +914,11 @@ export class FmcUi {
     } = this;
 
     const {
-      consoleContainerOuter,
+      statusBar,
       options
     } = elements;
 
-    options.element.appendChild(consoleContainerOuter);
+    options.element.appendChild(statusBar);
 
     options.element.showModal();
   }
@@ -933,12 +933,12 @@ export class FmcUi {
     } = this;
 
     const {
-      consoleContainerOuter,
+      statusBar,
       settings,
       thumbsContainerOuter
     } = elements;
 
-    thumbsContainerOuter.appendChild(consoleContainerOuter);
+    thumbsContainerOuter.appendChild(statusBar);
 
     settings.element.close();
   }
@@ -1051,7 +1051,7 @@ export class FmcUi {
     } = this;
 
     const {
-      consoleContainerOuter,
+      statusBar,
       openPresetsInput,
       settings
     } = elements;
@@ -1065,7 +1065,7 @@ export class FmcUi {
 
     openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
 
-    settings.element.appendChild(consoleContainerOuter);
+    settings.element.appendChild(statusBar);
 
     settings.element.showModal();
   }
@@ -1306,8 +1306,8 @@ export class FmcUi {
     } = this;
 
     const {
-      consoleContainer,
-      consoleType
+      statusBarMsg,
+      statusBarMsgType
     } = elements;
 
     const {
@@ -1315,16 +1315,16 @@ export class FmcUi {
       type = 'message' // message|success|warning
     } = event.detail;
 
-    consoleContainer.textContent = (msg !== '') ? `${msg}.` : msg;
-    consoleType.element.classList.remove('msg-info', 'msg-success', 'msg-warning');
-    consoleType.element.classList.add(`msg-${type}`);
-    consoleType.element.textContent = type;
+    statusBarMsg.textContent = (msg !== '') ? `${msg}.` : msg;
+    statusBarMsgType.element.classList.remove('msg-info', 'msg-success', 'msg-warning');
+    statusBarMsgType.element.classList.add(`msg-${type}`);
+    statusBarMsgType.element.textContent = type;
 
     // ensure each message is displayed
     await new Promise(resolve => {
       // fires before the next repaint (when queued UI changes are applied)
       requestAnimationFrame(() => {
-        consoleContainer.textContent = (msg !== '') ? `${msg}.` : msg;
+        statusBarMsg.textContent = (msg !== '') ? `${msg}.` : msg;
 
         // fires before the _next_ next repaint
         // ...which is effectively _after_ the next repaint
