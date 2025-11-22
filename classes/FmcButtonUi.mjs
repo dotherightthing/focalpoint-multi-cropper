@@ -18,6 +18,7 @@ export class FmcButtonUi {
 
     Object.assign(this, {
       clickHandler,
+      element: document.querySelector(selector),
       selector,
       updateListener
     });
@@ -50,13 +51,15 @@ export class FmcButtonUi {
 
   /**
    * element
-   * @type {object}
+   * @type {HTMLElement}
    * @memberof FmcButtonUi
    */
   get element() {
-    this._element = document.querySelector(this.selector);
-
     return this._element;
+  }
+
+  set element(element) {
+    this._element = dtrtValidate.validate(element, 'htmlelement', 'FmcButtonUi.element');
   }
 
   /**

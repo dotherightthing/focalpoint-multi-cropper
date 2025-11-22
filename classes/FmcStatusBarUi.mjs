@@ -16,6 +16,7 @@ export class FmcStatusBarUi {
     } = config;
 
     Object.assign(this, {
+      element: document.querySelector(selector),
       selector,
       statusTypes,
       updateListener
@@ -30,11 +31,15 @@ export class FmcStatusBarUi {
 
   /**
    * element
-   * @type {object}
+   * @type {HTMLElement}
    * @memberof FmcStatusBarUi
    */
   get element() {
-    return document.querySelector(this.selector);
+    return this._element;
+  }
+
+  set element(element) {
+    this._element = dtrtValidate.validate(element, 'htmlelement', 'FmcStatusBarUi.element');
   }
 
   /**

@@ -18,6 +18,7 @@ export class FmcTextfieldUi {
 
     Object.assign(this, {
       changeHandler,
+      element: document.querySelector(selector),
       selector,
       updateListener
     });
@@ -50,13 +51,15 @@ export class FmcTextfieldUi {
 
   /**
    * element
-   * @type {object}
+   * @type {HTMLElement}
    * @memberof FmcTextfieldUi
    */
   get element() {
-    this._element = document.querySelector(this.selector);
-
     return this._element;
+  }
+
+  set element(element) {
+    this._element = dtrtValidate.validate(element, 'htmlelement', 'FmcTextfieldUi.element');
   }
 
   /**

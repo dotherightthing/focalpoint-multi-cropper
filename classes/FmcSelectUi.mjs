@@ -17,6 +17,7 @@ export class FmcSelectUi {
 
     Object.assign(this, {
       changeHandler,
+      element: document.querySelector(selector),
       selector,
       updateListener
     });
@@ -49,13 +50,15 @@ export class FmcSelectUi {
 
   /**
    * element
-   * @type {object}
+   * @type {HTMLElement}
    * @memberof FmcSelectUi
    */
   get element() {
-    this._element = document.querySelector(this.selector);
-
     return this._element;
+  }
+
+  set element(element) {
+    this._element = dtrtValidate.validate(element, 'htmlelement', 'FmcSelectUi.element');
   }
 
   /**
