@@ -353,32 +353,6 @@ export class FmcUi {
   }
 
   /**
-   * @function handleCopyPath
-   * @param {object} event - Click event
-   * @memberof FmcUi
-   */
-  handleCopyPath(event) {
-    event.preventDefault();
-
-    if (typeof window.electronAPI === 'undefined') {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
-        statusMessage: 'Error: Clipboard operations require Electron',
-        statusType: 'warning'
-      });
-
-      return;
-    }
-
-    const et = FmcUi.getTargetElementOfType(event, 'button');
-
-    const title = et.getAttribute('title');
-
-    window.electronAPI.copyToClipboard({
-      text: title
-    });
-  }
-
-  /**
    * @function handleEditPresets
    * @memberof FmcUi
    */
