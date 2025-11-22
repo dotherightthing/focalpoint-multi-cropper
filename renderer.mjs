@@ -210,15 +210,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#open-presets'
     }),
     options: new FmcDialogUi({
-      selector: '#options'
-    }),
-    optionsCloseButton: new FmcButtonUi({
-      selector: '#options-close',
-      clickHandler: [ fmcUi, 'handleOptionsClose' ]
-    }),
-    optionsOpenButton: new FmcButtonUi({
-      selector: '#options-open',
-      clickHandler: [ fmcUi, 'handleOptionsOpen' ]
+      selector: '#options',
+      appendedSelector: '#status-bar'
     }),
     pathInLink: new FmcButtonUi({
       selector: '#link-path-in',
@@ -238,19 +231,13 @@ window.addEventListener('DOMContentLoaded', async () => {
       updateListener: 'updatePresets'
     }),
     settings: new FmcDialogUi({
-      selector: '#settings'
-    }),
-    settingsCloseButton: new FmcButtonUi({
-      selector: '#settings-close',
-      clickHandler: [ fmcUi, 'handleSettingsClose' ]
+      selector: '#settings',
+      appendedSelector: '#status-bar',
+      openHandler: [ fmcUi, 'handleSettingsOpen' ]
     }),
     settingsLoadButton: new FmcButtonUi({
       selector: '#settings-load',
       clickHandler: [ fmcUi, 'handleSettingsLoad' ]
-    }),
-    settingsOpenButton: new FmcButtonUi({
-      selector: '#settings-open',
-      clickHandler: [ fmcUi, 'handleSettingsOpen' ]
     }),
     settingsSaveButton: new FmcButtonUi({
       selector: '#settings-save',

@@ -859,65 +859,6 @@ export class FmcUi {
   }
 
   /**
-   * @function handleOptionsClose
-   * @memberof FmcUi
-   */
-  handleOptionsClose() {
-    const {
-      elements
-    } = this;
-
-    const {
-      statusBar,
-      options,
-      thumbsContainerOuter
-    } = elements;
-
-    thumbsContainerOuter.appendChild(statusBar.element);
-
-    options.element.close();
-  }
-
-  /**
-   * @function handleOptionsOpen
-   * @memberof FmcUi
-   */
-  async handleOptionsOpen() {
-    const {
-      elements
-    } = this;
-
-    const {
-      statusBar,
-      options
-    } = elements;
-
-    options.element.appendChild(statusBar.element);
-
-    options.element.showModal();
-  }
-
-  /**
-   * @function handleSettingsClose
-   * @memberof FmcUi
-   */
-  handleSettingsClose() {
-    const {
-      elements
-    } = this;
-
-    const {
-      statusBar,
-      settings,
-      thumbsContainerOuter
-    } = elements;
-
-    thumbsContainerOuter.appendChild(statusBar.element);
-
-    settings.element.close();
-  }
-
-  /**
    * @function handleSettingsLoad
    * @summary Run when the Presets 'Load' button is pressed
    * @memberof FmcUi
@@ -1025,9 +966,7 @@ export class FmcUi {
     } = this;
 
     const {
-      statusBar,
-      openPresetsInput,
-      settings
+      openPresetsInput
     } = elements;
 
     FmcUi.emitElementEvent(window, 'updatePresets', {
@@ -1038,10 +977,6 @@ export class FmcUi {
     await this.selectActivePreset();
 
     openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
-
-    settings.element.appendChild(statusBar.element);
-
-    settings.element.showModal();
   }
 
   /**
