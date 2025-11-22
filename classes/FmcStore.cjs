@@ -145,13 +145,13 @@ class FmcStore {
       presetIndex = presets.findIndex(item => item.name === presetName);
 
       msgObj = {
-        msg: 'Loaded preset',
-        type: 'success'
+        statusMessage: 'Loaded preset',
+        statusType: 'success'
       };
     } else {
       msgObj = {
-        msg: 'Could not load preset',
-        type: 'warning'
+        statusMessage: 'Could not load preset',
+        statusType: 'warning'
       };
     }
 
@@ -350,8 +350,8 @@ class FmcStore {
 
     return new Promise(resolve => {
       resolve({
-        msg: 'Saved preset',
-        type: 'success'
+        statusMessage: 'Saved preset',
+        statusType: 'success'
       });
     });
   }

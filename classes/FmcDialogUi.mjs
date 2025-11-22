@@ -43,4 +43,10 @@ export class FmcDialogUi {
   set selector(selector) {
     this._selector = dtrtValidate.validate(selector, 'string', 'FmcDialogUi.selector');
   }
+
+  /* Instance methods */
+
+  open() {}
+
+  close() {}
 }

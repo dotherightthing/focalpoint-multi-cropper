@@ -481,8 +481,8 @@ module.exports = class FmcFile {
     }
 
     return {
-      msg: newFileName,
-      type: 'success'
+      statusMessage: newFileName,
+      statusType: 'success'
     };
   }
 
@@ -684,7 +684,7 @@ module.exports = class FmcFile {
    * @param {string} data.fileDescription - File description
    * @param {string} data.filePath - Path to website file
    * @param {string} data.folderPath - Path to website (workspace) folder
-   * @returns {string} message
+   * @returns {string} statusMessage
    * @memberof FmcFile
    * @static
    */
@@ -703,18 +703,18 @@ module.exports = class FmcFile {
       detached: true
     };
 
-    let message = `Opened ${fileDescription} in editor`;
+    let statusMessage = `Opened ${fileDescription} in editor`;
 
     commandExists(editorCommand, (error, exists) => {
       if (exists) {
         spawn(editorCommand, [ folderPath ], opts);
         spawn(editorCommand, [ filePath ], opts);
       } else {
-        message = `Could not open ${fileDescription} - the command '${editorCommand}' is not available.)`;
+        statusMessage = `Could not open ${fileDescription} - the command '${editorCommand}' is not available.)`;
       }
     });
 
-    return message;
+    return statusMessage;
   }
 
   /**

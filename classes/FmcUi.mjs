@@ -361,9 +361,9 @@ export class FmcUi {
     event.preventDefault();
 
     if (typeof window.electronAPI === 'undefined') {
-      FmcUi.emitElementEvent(window, 'message', {
-        msg: 'Error: Clipboard operations require Electron',
-        type: 'warning'
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'Error: Clipboard operations require Electron',
+        statusType: 'warning'
       });
 
       return;
@@ -395,15 +395,15 @@ export class FmcUi {
     const pathSeparator = filePath.lastIndexOf('/');
     const folderPath = filePath.slice(0, pathSeparator);
 
-    const msg = await window.electronAPI.openInEditor({
+    const statusMessage = await window.electronAPI.openInEditor({
       editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
       fileDescription: 'webpage',
       folderPath,
       filePath
     });
 
-    FmcUi.emitElementEvent(window, 'message', {
-      msg
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage
     });
   }
 
@@ -424,15 +424,15 @@ export class FmcUi {
     const { targetFolder } = folderWebsiteInput.element.dataset;
     const { targetFile } = fileWebpageInput.element.dataset;
 
-    const msg = await window.electronAPI.openInEditor({
+    const statusMessage = await window.electronAPI.openInEditor({
       editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
       fileDescription: 'webpage',
       folderPath: targetFolder,
       filePath: targetFile
     });
 
-    FmcUi.emitElementEvent(window, 'message', {
-      msg
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage
     });
   }
 
@@ -470,9 +470,9 @@ export class FmcUi {
       }
     }
 
-    FmcUi.emitElementEvent(window, 'message', {
-      msg: `Generated crops and sizes for ${exportedCount} thumbnails`,
-      type: 'success'
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage: `Generated crops and sizes for ${exportedCount} thumbnails`,
+      statusType: 'success'
     });
   }
 
@@ -596,10 +596,10 @@ export class FmcUi {
       radio.checked = (radio.value === 'default');
     });
 
-    const msg = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
+    const statusMessage = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
 
-    FmcUi.emitElementEvent(window, 'message', {
-      msg
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage
     });
 
     // input change listener calls setFocalpointSaveState
@@ -899,7 +899,7 @@ export class FmcUi {
       thumbsContainerOuter
     } = elements;
 
-    thumbsContainerOuter.appendChild(statusBar);
+    thumbsContainerOuter.appendChild(statusBar.element);
 
     options.element.close();
   }
@@ -918,7 +918,7 @@ export class FmcUi {
       options
     } = elements;
 
-    options.element.appendChild(statusBar);
+    options.element.appendChild(statusBar.element);
 
     options.element.showModal();
   }
@@ -938,7 +938,7 @@ export class FmcUi {
       thumbsContainerOuter
     } = elements;
 
-    thumbsContainerOuter.appendChild(statusBar);
+    thumbsContainerOuter.appendChild(statusBar.element);
 
     settings.element.close();
   }
@@ -1029,14 +1029,14 @@ export class FmcUi {
 
       fmcThumbsUiInstance.clickSelectedThumb(1);
 
-      FmcUi.emitElementEvent(window, 'message', {
-        msg: `Loaded preset ${name}`,
-        type: 'success'
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: `Loaded preset ${name}`,
+        statusType: 'success'
       });
     } catch (error) {
-      FmcUi.emitElementEvent(window, 'message', {
-        msg: 'No active preset to load',
-        type: 'info'
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'No active preset to load',
+        statusType: 'info'
       });
     }
   }
@@ -1065,7 +1065,7 @@ export class FmcUi {
 
     openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
 
-    settings.element.appendChild(statusBar);
+    settings.element.appendChild(statusBar.element);
 
     settings.element.showModal();
   }
@@ -1088,9 +1088,9 @@ export class FmcUi {
     const preset = await window.electronAPI.getActivePreset(null);
 
     if (typeof preset === 'undefined') {
-      FmcUi.emitElementEvent(window, 'message', {
-        msg: 'No active preset to select',
-        type: 'info'
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'No active preset to select',
+        statusType: 'info'
       });
 
       return;
@@ -1291,47 +1291,6 @@ export class FmcUi {
         fmcThumbsUiInstance.focusThumb('next');
       }
     }
-  }
-
-  /**
-   * @function handleWindowMessage
-   * @param {object} event - Message event
-   * @memberof FmcUi
-   * @see {link https://www.macarthur.me/posts/when-dom-updates-appear-to-be-asynchronous}
-   * @see {link https://stackoverflow.com/a/65144294}
-   */
-  async handleWindowMessage(event) {
-    const {
-      elements
-    } = this;
-
-    const {
-      statusBarMsg,
-      statusBarMsgType
-    } = elements;
-
-    const {
-      msg,
-      type = 'message' // message|success|warning
-    } = event.detail;
-
-    statusBarMsg.textContent = (msg !== '') ? `${msg}.` : msg;
-    statusBarMsgType.element.classList.remove('msg-info', 'msg-success', 'msg-warning');
-    statusBarMsgType.element.classList.add(`msg-${type}`);
-    statusBarMsgType.element.textContent = type;
-
-    // ensure each message is displayed
-    await new Promise(resolve => {
-      // fires before the next repaint (when queued UI changes are applied)
-      requestAnimationFrame(() => {
-        statusBarMsg.textContent = (msg !== '') ? `${msg}.` : msg;
-
-        // fires before the _next_ next repaint
-        // ...which is effectively _after_ the next repaint
-        // i.e. when the console has been updated
-        requestAnimationFrame(resolve);
-      });
-    });
   }
 
   /**

@@ -5,6 +5,7 @@ import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
 import { FmcDialogUi } from './classes/FmcDialogUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
 import { FmcSelectUi } from './classes/FmcSelectUi.mjs';
+import { FmcStatusBarUi } from './classes/FmcStatusBarUi.mjs';
 import { FmcTextDisplayUi } from './classes/FmcTextDisplayUi.mjs';
 import { FmcTextfieldUi } from './classes/FmcTextfieldUi.mjs';
 import { FmcThumbsUi } from './classes/FmcThumbsUi.mjs';
@@ -255,10 +256,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#settings-save',
       clickHandler: [ fmcUi, 'handleSettingsSave' ]
     }),
-    statusBar: document.getElementById('status-bar'),
-    statusBarMsg: document.getElementById('status-bar-msg'),
-    statusBarMsgType: new FmcTextDisplayUi({
-      selector: '#status-bar-msg-type'
+    statusBar: new FmcStatusBarUi({
+      selector: '#status-bar',
+      updateListener: 'updateStatus'
     }),
     thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
       selector: 'input[name="thumbs-autoselect-filtered"]',
@@ -287,7 +287,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   elements.lastCropperImg.addEventListener('ready', fmcUi.handleLastCropperImgReady.bind(fmcUi));
   elements.thumbsContainer.addEventListener('click', fmcUi.handleThumbClick.bind(fmcUi));
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));
-  elements.window.addEventListener('message', fmcUi.handleWindowMessage.bind(fmcUi));
   elements.window.addEventListener('resize', fmcUi.handleWindowResize.bind(fmcUi));
 
   await fmcUi.restoreSettings();

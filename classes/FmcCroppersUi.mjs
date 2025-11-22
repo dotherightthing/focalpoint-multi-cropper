@@ -559,8 +559,8 @@ export class FmcCroppersUi {
             pageY: pageYRaw
           });
 
-          FmcUi.emitElementEvent(window, 'message', {
-            msg: 'Rounding percentages for storage...'
+          FmcUi.emitElementEvent(window, 'updateStatus', {
+            statusMessage: 'Rounding percentages for storage...'
           });
 
           setTimeout(() => {
@@ -585,8 +585,8 @@ export class FmcCroppersUi {
 
             FmcUi.emitEvent(focalpointYInputId, 'change');
 
-            FmcUi.emitElementEvent(window, 'message', {
-              msg: ''
+            FmcUi.emitElementEvent(window, 'updateStatus', {
+              statusMessage: ''
             });
           }, updateDelay);
         }
@@ -634,9 +634,9 @@ export class FmcCroppersUi {
       focalpointWriteTitleRadios
     } = elements;
 
-    let msg;
     let state;
-    let type;
+    let statusMessage;
+    let statusType;
 
     const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
@@ -684,32 +684,32 @@ export class FmcCroppersUi {
     );
 
     if (isDefaultFocalpoint) {
-      msg = 'Default focalpoint';
+      statusMessage = 'Default focalpoint';
       state = 'default';
     } else if (isSavedFocalpoint) {
       state = 'saved';
 
       if (thumbIndex !== thumbIndexPrevious) {
-        msg = 'Focalpoint loaded' + msgLoadedFrom;
-        type = 'success';
+        statusMessage = 'Focalpoint loaded' + msgLoadedFrom;
+        statusType = 'success';
       } else if (focalpointReset) {
-        msg = 'Focalpoint reloaded' + msgLoadedFrom;
-        type = 'success';
+        statusMessage = 'Focalpoint reloaded' + msgLoadedFrom;
+        statusType = 'success';
       } else {
-        msg = 'Focalpoint saved' + msgSavedTo;
-        type = 'success';
+        statusMessage = 'Focalpoint saved' + msgSavedTo;
+        statusType = 'success';
       }
     } else {
-      msg = 'Focalpoint changed but not saved' + msgSavedTo;
+      statusMessage = 'Focalpoint changed but not saved' + msgSavedTo;
       state = 'dirty';
-      type = 'warning';
+      statusType = 'warning';
     }
 
     this.setSaveState(state);
 
-    FmcUi.emitElementEvent(window, 'message', {
-      msg,
-      type
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage,
+      statusType
     });
 
     return state;
@@ -853,9 +853,9 @@ export class FmcCroppersUi {
     });
 
     if (!this.croppers.length) {
-      FmcUi.emitElementEvent(window, 'message', {
-        msg: 'Croppers could not be initialised',
-        type: 'warning'
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'Croppers could not be initialised',
+        statusType: 'warning'
       });
 
       return;
@@ -1244,9 +1244,9 @@ export class FmcCroppersUi {
       cropsAndSizes
     });
 
-    FmcUi.emitElementEvent(window, 'message', {
-      msg: `Deleted ${counts.deletions} matching files. Generated ${counts.crops} crops and ${counts.resizes} sizes`,
-      type: 'success'
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage: `Deleted ${counts.deletions} matching files. Generated ${counts.crops} crops and ${counts.resizes} sizes`,
+      statusType: 'success'
     });
 
     return baseExportPath;
@@ -1275,7 +1275,7 @@ export class FmcCroppersUi {
     });
 
     const {
-      msg: newFileName
+      statusMessage: newFileName
     } = msgObj;
 
     return new Promise(resolve => {
@@ -1524,8 +1524,8 @@ export class FmcCroppersUi {
     return new Promise(resolve => {
       if (errorMsg !== '') {
         resolve({
-          msg: errorMsg,
-          type: 'warning'
+          statusMessage: errorMsg,
+          statusType: 'warning'
         });
       } else if (newFileName !== oldFileName) {
         // timeout prevents broken image
@@ -1540,13 +1540,13 @@ export class FmcCroppersUi {
 
           // TODO update to save to title or combine with setFocalpointSaveState
           resolve({
-            msg: 'Saved focalpoint to filename',
-            type: 'success'
+            statusMessage: 'Saved focalpoint to filename',
+            statusType: 'success'
           });
         }, 500);
       } else {
         resolve({
-          msg: 'Focalpoint already saved to filename'
+          statusMessage: 'Focalpoint already saved to filename'
         });
       }
     });
