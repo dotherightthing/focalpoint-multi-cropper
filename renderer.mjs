@@ -1,6 +1,7 @@
 // Electron's render process (web page)
 
 import { FmcButtonUi } from './classes/FmcButtonUi.mjs';
+import { FmcCropperImgUi } from './classes/FmcCropperImgUi.mjs';
 import { FmcCroppersUi } from './classes/FmcCroppersUi.mjs';
 import { FmcDialogUi } from './classes/FmcDialogUi.mjs';
 import { FmcRadiosUi } from './classes/FmcRadiosUi.mjs';
@@ -112,6 +113,11 @@ window.addEventListener('DOMContentLoaded', async () => {
       updateListener: 'updatePathWebEmbed',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
+    cropperLastImg: new FmcCropperImgUi({
+      selector: '#croppers .img-container-last img',
+      updateListener: 'updateLastCropperListener',
+      readyHandler: [ fmcUi, 'handleLastCropperImgReady' ]
+    }),
     croppersContainer: document.getElementById('croppers'),
     editWebpageButton: new FmcButtonUi({
       selector: '#edit-webpage',
@@ -208,7 +214,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#folder-website',
       updateListener: 'updateFolderWebsite'
     }),
-    lastCropperImg: document.querySelector('#croppers .img-container-last img'),
     openPresetsButton: new FmcButtonUi({
       selector: '#open-presets-button',
       clickHandler: [ fmcUi, 'handleEditPresets' ]
@@ -280,7 +285,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   elements.croppersContainer.addEventListener('imageRenamed', fmcUi.handleImageRenamed.bind(fmcUi));
   elements.focalpointProportionsRadios.forEach(el => el.addEventListener('change', fmcUi.handleFocalpointInputChange.bind(fmcUi)));
-  elements.lastCropperImg.addEventListener('ready', fmcUi.handleLastCropperImgReady.bind(fmcUi));
   elements.thumbsContainer.addEventListener('click', fmcUi.handleThumbClick.bind(fmcUi));
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));
   elements.window.addEventListener('resize', fmcUi.handleWindowResize.bind(fmcUi));
