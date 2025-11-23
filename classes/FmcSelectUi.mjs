@@ -116,7 +116,7 @@ export class FmcSelectUi {
       this.disable();
     }
 
-    this.select(selectedOptionValue);
+    this.element.value = selectedOptionValue;
   }
 
   /**
@@ -133,14 +133,5 @@ export class FmcSelectUi {
    */
   disable() {
     this.element.setAttribute('disabled', '');
-  }
-
-  /**
-   * @function select
-   * @param {string} value - Value to select
-   * @memberof FmcSelectUi
-   */
-  select(value) {
-    this.element.value = value;
   }
 }
