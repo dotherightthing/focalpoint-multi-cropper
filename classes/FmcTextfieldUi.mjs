@@ -105,12 +105,26 @@ export class FmcTextfieldUi {
     } = event;
 
     const {
+      targetFile, // for Finder browse
+      targetFolder, // for Finder browse
       value
     } = detail;
 
-    this.element.value = value;
+    const {
+      element
+    } = this;
+
+    if (targetFile) {
+      element.dataset.targetFile = targetFile;
+    }
+
+    if (targetFolder) {
+      element.dataset.targetFolder = targetFolder;
+    }
+
+    element.value = value;
 
     // fire 'change' event so that change is picked up by listener
-    FmcUi.emitElementEvent(this.element, 'change'); // for both X and Y
+    FmcUi.emitElementEvent(element, 'change');
   }
 }

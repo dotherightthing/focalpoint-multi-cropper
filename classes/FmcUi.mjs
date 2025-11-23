@@ -491,14 +491,6 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFileWebpageBrowse(event, restore = false) {
-    const {
-      elements
-    } = this;
-
-    const {
-      fileWebpageInput
-    } = elements;
-
     const { fileName, filePath, folderPath } = await window.electronAPI.selectFile({
       dialogTitle: 'Webpage file',
       restore,
@@ -510,10 +502,11 @@ export class FmcUi {
       return;
     }
 
-    fileWebpageInput.element.dataset.targetFile = filePath;
-    fileWebpageInput.element.dataset.targetFolder = folderPath;
-
-    FmcUi.emitElementEvent(window, 'updateWebpage', { value: fileName });
+    FmcUi.emitElementEvent(window, 'updateFileWebpage', {
+      targetFile: filePath,
+      targetFolder: folderPath,
+      value: fileName
+    });
   }
 
   /**
@@ -687,13 +680,8 @@ export class FmcUi {
    */
   async handleFolderInBrowse(event, restore = false) {
     const {
-      fmcThumbsUiInstance,
-      elements
+      fmcThumbsUiInstance
     } = this;
-
-    const {
-      folderInInput
-    } = elements;
 
     // folderPath = targetFolder
     const { folderName, folderPath, imagesData } = await window.electronAPI.selectFolder({
@@ -711,9 +699,10 @@ export class FmcUi {
     // if 'Browse' was clicked
     // capture data with the field (inside the 'Open Settings' dialog) until it is saved to a preset
     if (!restore) {
-      folderInInput.element.dataset.targetFolder = folderPath;
-
-      FmcUi.emitElementEvent(window, 'updateFolderIn', { value: folderName });
+      FmcUi.emitElementEvent(window, 'updateFolderIn', {
+        targetFolder: folderPath,
+        value: folderName
+      });
     }
 
     // add thumbs to UI
@@ -732,7 +721,6 @@ export class FmcUi {
     } = this;
 
     const {
-      folderOutInput,
       folderOutInputDependent
     } = elements;
 
@@ -748,9 +736,10 @@ export class FmcUi {
       return;
     }
 
-    folderOutInput.element.dataset.targetFolder = folderPath;
-
-    FmcUi.emitElementEvent(window, 'updateFolderOut', { value: folderName });
+    FmcUi.emitElementEvent(window, 'updateFolderOut', {
+      targetFolder: folderPath,
+      value: folderName
+    });
 
     // enables focalpoint controls
     // TODO controls are enabled before cropper is ready
@@ -764,14 +753,6 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFolderWebsiteBrowse(event, restore = false) {
-    const {
-      elements
-    } = this;
-
-    const {
-      folderWebsiteInput
-    } = elements;
-
     const { folderName, folderPath } = await window.electronAPI.selectFolder({
       dialogTitle: 'Website folder',
       retrieveImagesData: false,
@@ -784,9 +765,10 @@ export class FmcUi {
       return;
     }
 
-    folderWebsiteInput.element.dataset.targetFolder = folderPath;
-
-    FmcUi.emitElementEvent(window, 'updateFolderWebsite', { value: folderName });
+    FmcUi.emitElementEvent(window, 'updateFolderWebsite', {
+      targetFolder: folderPath,
+      value: folderName
+    });
   }
 
   /**
@@ -910,19 +892,30 @@ export class FmcUi {
         name
       } = preset;
 
-      fileWebpageInput.element.dataset.targetFile = fileWebpage.targetFile;
-      fileWebpageInput.element.dataset.targetFolder = fileWebpage.targetFolder;
+      FmcUi.emitElementEvent(window, 'updateFileWebpage', {
+        targetFile: fileWebpage.targetFile,
+        targetFolder: fileWebpage.targetFolder,
+        value: fileWebpage.value
+      });
 
-      FmcUi.emitElementEvent(window, 'updateWebpage', { value: fileWebpage.value });
       FmcUi.emitElementEvent(window, 'updateFilter', { value: '' });
-      FmcUi.emitElementEvent(window, 'updateFolderIn', { value: folderIn.value });
-      FmcUi.emitElementEvent(window, 'updateFolderOut', { value: folderOut.value });
-      FmcUi.emitElementEvent(window, 'updateFolderWebsite', { value: folderWebsite.value });
-      FmcUi.emitElementEvent(window, 'updatePresetName', { value: name });
 
-      folderInInput.element.dataset.targetFolder = folderIn.targetFolder;
-      folderOutInput.element.dataset.targetFolder = folderOut.targetFolder;
-      folderWebsiteInput.element.dataset.targetFolder = folderWebsite.targetFolder;
+      FmcUi.emitElementEvent(window, 'updateFolderIn', {
+        targetFolder: folderIn.targetFolder,
+        value: folderIn.value
+      });
+
+      FmcUi.emitElementEvent(window, 'updateFolderOut', {
+        targetFolder: folderOut.targetFolder,
+        value: folderOut.value
+      });
+
+      FmcUi.emitElementEvent(window, 'updateFolderWebsite', {
+        targetFolder: folderWebsite.targetFolder,
+        value: folderWebsite.value
+      });
+
+      FmcUi.emitElementEvent(window, 'updatePresetName', { value: name });
 
       const restore = true;
 

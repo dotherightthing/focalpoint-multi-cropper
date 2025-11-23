@@ -131,7 +131,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     fileWebpageInput: new FmcTextfieldUi({
       selector: '#file-webpage',
-      updateListener: 'updateWebpage'
+      updateListener: 'updateFileWebpage'
     }),
     filter: new FmcTextfieldUi({
       selector: '#thumb-filename-filter',
