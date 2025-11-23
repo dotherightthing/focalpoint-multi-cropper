@@ -102,7 +102,7 @@ export class FmcSelectUi {
     const {
       label = 'Select',
       options,
-      selectedOptionValue = 'default'
+      value = 'default'
     } = detail;
 
     let html = `<option value="default">${label}</option>`;
@@ -111,27 +111,8 @@ export class FmcSelectUi {
       html += options.map(item => `<option value="${item}">${item}</option>`).join('');
 
       this.element.innerHTML = html;
-      this.enable();
-    } else {
-      this.disable();
     }
 
-    this.element.value = selectedOptionValue;
-  }
-
-  /**
-   * @function enable
-   * @memberof FmcSelectUi
-   */
-  enable() {
-    this.element.removeAttribute('disabled');
-  }
-
-  /**
-   * @function disable
-   * @memberof FmcSelectUi
-   */
-  disable() {
-    this.element.setAttribute('disabled', '');
+    this.element.value = value;
   }
 }

@@ -512,7 +512,8 @@ export class FmcUi {
 
     fileWebpageInput.element.dataset.targetFile = filePath;
     fileWebpageInput.element.dataset.targetFolder = folderPath;
-    fileWebpageInput.element.value = fileName;
+
+    FmcUi.emitElementEvent(window, 'updateWebpage', { value: fileName });
   }
 
   /**
@@ -711,7 +712,8 @@ export class FmcUi {
     // capture data with the field (inside the 'Open Settings' dialog) until it is saved to a preset
     if (!restore) {
       folderInInput.element.dataset.targetFolder = folderPath;
-      folderInInput.element.value = folderName;
+
+      FmcUi.emitElementEvent(window, 'updateFolderIn', { value: folderName });
     }
 
     // add thumbs to UI
@@ -747,7 +749,8 @@ export class FmcUi {
     }
 
     folderOutInput.element.dataset.targetFolder = folderPath;
-    folderOutInput.element.value = folderName;
+
+    FmcUi.emitElementEvent(window, 'updateFolderOut', { value: folderName });
 
     // enables focalpoint controls
     // TODO controls are enabled before cropper is ready
@@ -782,7 +785,8 @@ export class FmcUi {
     }
 
     folderWebsiteInput.element.dataset.targetFolder = folderPath;
-    folderWebsiteInput.element.value = folderName;
+
+    FmcUi.emitElementEvent(window, 'updateFolderWebsite', { value: folderName });
   }
 
   /**
@@ -875,7 +879,6 @@ export class FmcUi {
       folderInInput,
       folderOutInput,
       folderWebsiteInput,
-      presetNameInput,
       presetNamesSelect,
       thumbsAutoSelectFilteredRadios,
       thumbsFilterUncroppedRadios
@@ -909,21 +912,17 @@ export class FmcUi {
 
       fileWebpageInput.element.dataset.targetFile = fileWebpage.targetFile;
       fileWebpageInput.element.dataset.targetFolder = fileWebpage.targetFolder;
-      fileWebpageInput.element.value = fileWebpage.value;
 
+      FmcUi.emitElementEvent(window, 'updateWebpage', { value: fileWebpage.value });
       FmcUi.emitElementEvent(window, 'updateFilter', { value: '' });
+      FmcUi.emitElementEvent(window, 'updateFolderIn', { value: folderIn.value });
+      FmcUi.emitElementEvent(window, 'updateFolderOut', { value: folderOut.value });
+      FmcUi.emitElementEvent(window, 'updateFolderWebsite', { value: folderWebsite.value });
+      FmcUi.emitElementEvent(window, 'updatePresetName', { value: name });
 
       folderInInput.element.dataset.targetFolder = folderIn.targetFolder;
-      folderInInput.element.value = folderIn.value;
-
-      folderOutInput.element.dataset.targetFolder = folderOut.targetFolder; // aka handleFolderOutBrowse folderPath
-      folderOutInput.element.value = folderOut.value; // aka handleFolderOutBrowse folderName
-      // folderOutInputDependent.removeAttribute('disabled');
-
+      folderOutInput.element.dataset.targetFolder = folderOut.targetFolder;
       folderWebsiteInput.element.dataset.targetFolder = folderWebsite.targetFolder;
-      folderWebsiteInput.element.value = folderWebsite.value;
-
-      presetNameInput.element.value = name;
 
       const restore = true;
 
@@ -957,14 +956,6 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleSettingsOpen() {
-    const {
-      elements
-    } = this;
-
-    const {
-      openPresetsInput
-    } = elements;
-
     FmcUi.emitElementEvent(window, 'updatePresets', {
       label: 'Select a preset',
       options: await window.electronAPI.getPresetNames()
@@ -972,7 +963,7 @@ export class FmcUi {
 
     await this.selectActivePreset();
 
-    openPresetsInput.element.value = await window.electronAPI.getStoreFilePath();
+    FmcUi.emitElementEvent(window, 'updatePresetsFile', { value: await window.electronAPI.getStoreFilePath() });
   }
 
   /**
@@ -982,14 +973,6 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async selectActivePreset() {
-    const {
-      elements
-    } = this;
-
-    const {
-      presetNamesSelect
-    } = elements;
-
     const preset = await window.electronAPI.getActivePreset(null);
 
     if (typeof preset === 'undefined') {
@@ -1001,10 +984,8 @@ export class FmcUi {
       return;
     }
 
-    const { name } = preset;
-
     // select the preset
-    presetNamesSelect.element.value = name;
+    FmcUi.emitElementEvent(window, 'updatePresets', { value: preset.name });
   }
 
   /**
@@ -1070,7 +1051,7 @@ export class FmcUi {
     FmcUi.emitElementEvent(window, 'updatePresets', {
       label: 'Select a preset',
       options: await window.electronAPI.getPresetNames(),
-      selectedOptionValue: name
+      value: name
     });
   }
 
@@ -1185,7 +1166,7 @@ export class FmcUi {
       if (key === 'Enter') {
         FmcUi.emitElementEvent(filterSubmitButton, 'click', {});
       } else if (metaKey && (key === 'v')) {
-        filter.element.value = await window.electronAPI.copyFromClipboard();
+        FmcUi.emitElementEvent(window, 'updateFilter', { value: await window.electronAPI.copyFromClipboard() });
       }
     } else if (document.activeElement.classList.contains(thumbButtonClass)) {
       if (key === 'ArrowLeft') {

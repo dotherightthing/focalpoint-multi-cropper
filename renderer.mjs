@@ -130,7 +130,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleFileWebpageBrowse' ]
     }),
     fileWebpageInput: new FmcTextfieldUi({
-      selector: '#file-webpage'
+      selector: '#file-webpage',
+      updateListener: 'updateWebpage'
     }),
     filter: new FmcTextfieldUi({
       selector: '#thumb-filename-filter',
@@ -187,14 +188,16 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleFolderInBrowse' ]
     }),
     folderInInput: new FmcTextfieldUi({
-      selector: '#folder-in'
+      selector: '#folder-in',
+      updateListener: 'updateFolderIn'
     }),
     folderOutButton: new FmcButtonUi({
       selector: '#folder-out-button',
       clickHandler: [ fmcUi, 'handleFolderOutBrowse' ]
     }),
     folderOutInput: new FmcTextfieldUi({
-      selector: '#folder-out'
+      selector: '#folder-out',
+      updateListener: 'updateFolderOut'
     }),
     folderOutInputDependent: document.querySelector('[data-dependent="folder-out"]'),
     folderWebsiteButton: new FmcButtonUi({
@@ -202,7 +205,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleFolderWebsiteBrowse' ]
     }),
     folderWebsiteInput: new FmcTextfieldUi({
-      selector: '#folder-website'
+      selector: '#folder-website',
+      updateListener: 'updateFolderWebsite'
     }),
     lastCropperImg: document.querySelector('#croppers .img-container-last img'),
     openPresetsButton: new FmcButtonUi({
@@ -210,7 +214,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleEditPresets' ]
     }),
     openPresetsInput: new FmcTextfieldUi({
-      selector: '#open-presets'
+      selector: '#open-presets',
+      updateListener: 'updatePresetsFile'
     }),
     options: new FmcDialogUi({
       selector: '#options',
@@ -227,7 +232,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
     presetNameInput: new FmcTextfieldUi({
-      selector: '#settings-preset-name'
+      selector: '#settings-preset-name',
+      updateListener: 'updatePresetName'
     }),
     presetNamesSelect: new FmcSelectUi({
       selector: '#preset-names',
