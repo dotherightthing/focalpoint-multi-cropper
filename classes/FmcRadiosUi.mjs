@@ -18,6 +18,7 @@ export class FmcRadiosUi {
 
     Object.assign(this, {
       changeHandler,
+      elements: document.querySelectorAll(selector),
       selector,
       storeKey
     });
@@ -45,14 +46,17 @@ export class FmcRadiosUi {
   }
 
   /**
-   * element
-   * @type {object}
-   * @memberof FmcRadiosUi
+   * elements
+   * @type {*}
+   * @memberof FmcButtonUi
+   * @todo Validation
    */
   get elements() {
-    this._elements = document.querySelectorAll(this.selector);
-
     return this._elements;
+  }
+
+  set elements(elements) {
+    this._elements = elements;
   }
 
   /**
