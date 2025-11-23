@@ -32,6 +32,10 @@ export class FmcTextfieldUi {
         this.element.addEventListener('change', instance[method].bind(instance));
       }
     }
+
+    if (this.updateListener !== '') {
+      window.addEventListener(this.updateListener, this.handleUpdate.bind(this));
+    }
   }
 
   /* Getters and Setters */
@@ -104,31 +108,9 @@ export class FmcTextfieldUi {
       value
     } = detail;
 
-    if (value.length) {
-      this.enable(value);
-    } else {
-      this.disable();
-    }
-  }
+    this.element.value = value;
 
-  /**
-   * @function enable
-   * @param {string} value - Value
-   * @memberof FmcTextfieldUi
-   */
-  enable(value) {
-    this.element.dataset.href = value;
-    this.element.setAttribute('title', value);
-    this.element.removeAttribute('disabled');
-  }
-
-  /**
-   * @function disable
-   * @memberof FmcTextfieldUi
-   */
-  disable() {
-    this.element.dataset.href = '#';
-    this.element.removeAttribute('title');
-    this.element.setAttribute('disabled', '');
+    // fire 'change' event so that change is picked up by listener
+    FmcUi.emitElementEvent(this.element, 'change'); // for both X and Y
   }
 }

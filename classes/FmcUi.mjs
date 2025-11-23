@@ -251,6 +251,9 @@ export class FmcUi {
       focalpointYInput
     } = elements;
 
+    const focalpointX = focalpointXInput.element.value;
+    const focalpointY = focalpointYInput.element.value;
+
     const autosaveState = event.target.value;
 
     await focalpointAutoSaveRadios.setStoredState(autosaveState);
@@ -262,8 +265,8 @@ export class FmcUi {
     await fmcCroppersUiInstance.setFocalpointSaveState({
       thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
       thumbIndex,
-      imagePercentXUi: focalpointXInput.element.value,
-      imagePercentYUi: focalpointYInput.element.value,
+      imagePercentXUi: focalpointX,
+      imagePercentYUi: focalpointY,
       imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
   }
@@ -561,9 +564,7 @@ export class FmcUi {
     } = this;
 
     const {
-      focalpointProportionsRadios,
-      focalpointXInput,
-      focalpointYInput
+      focalpointProportionsRadios
     } = elements;
 
     focalpointProportionsRadios.forEach(radio => {
@@ -572,16 +573,11 @@ export class FmcUi {
 
     const statusMessage = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
 
-    FmcUi.emitElementEvent(window, 'updateStatus', {
-      statusMessage
-    });
+    FmcUi.emitElementEvent(window, 'updateStatus', { statusMessage });
 
     // input change listener calls setFocalpointSaveState
-    focalpointXInput.element.value = 50;
-    focalpointYInput.element.value = 50;
-
-    // fire 'change' event so that change is picked up by listener
-    FmcUi.emitElementEvent(focalpointYInput, 'change'); // for both X and Y
+    FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: 50 });
+    FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: 50 });
   }
 
   /**
@@ -611,10 +607,13 @@ export class FmcUi {
       focalpointReset = false
     } = detail;
 
+    const focalpointX = focalpointXInput.element.value;
+    const focalpointY = focalpointYInput.element.value;
+
     // move cropbox
     fmcCroppersUiInstance.displayImagePercentXY({
-      imagePercentX: focalpointXInput.element.value, // string
-      imagePercentY: focalpointYInput.element.value // string
+      imagePercentX: focalpointX, // string
+      imagePercentY: focalpointY // string
     });
 
     if ((event.isTrusted) || (event.target === focalpointYInput.element)) {
@@ -626,8 +625,8 @@ export class FmcUi {
         focalpointReset,
         thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
         thumbIndex,
-        imagePercentXUi: focalpointXInput.element.value,
-        imagePercentYUi: focalpointYInput.element.value,
+        imagePercentXUi: focalpointX,
+        imagePercentYUi: focalpointY,
         imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
       });
 
@@ -667,6 +666,9 @@ export class FmcUi {
       focalpointYInput
     } = elements;
 
+    const focalpointX = focalpointXInput.element.value;
+    const focalpointY = focalpointYInput.element.value;
+
     const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
     await this.saveFocalpoint();
@@ -674,8 +676,8 @@ export class FmcUi {
     await fmcCroppersUiInstance.setFocalpointSaveState({
       thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
       thumbIndex,
-      imagePercentXUi: focalpointXInput.element.value,
-      imagePercentYUi: focalpointYInput.element.value,
+      imagePercentXUi: focalpointX,
+      imagePercentYUi: focalpointY,
       imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
   }
@@ -1240,6 +1242,9 @@ export class FmcUi {
       focalpointYInput
     } = elements;
 
+    const focalpointX = focalpointXInput.element.value;
+    const focalpointY = focalpointYInput.element.value;
+
     let msgObj;
 
     let flags = [];
@@ -1256,8 +1261,8 @@ export class FmcUi {
     } else {
       msgObj = await fmcCroppersUiInstance.writeImagePercentXYToImage({
         imageFlags: flags.join(','),
-        imagePercentX: focalpointXInput.element.value,
-        imagePercentY: focalpointYInput.element.value
+        imagePercentX: focalpointX,
+        imagePercentY: focalpointY
       });
 
       FmcUi.emitElementEvent(window, 'message', msgObj);

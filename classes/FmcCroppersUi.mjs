@@ -517,14 +517,8 @@ export class FmcCroppersUi {
    */
   getCropperOptions(exportWidth, exportHeight, role, action) {
     const {
-      croppersOptions,
-      elements
+      croppersOptions
     } = this;
-
-    const {
-      focalpointXInput,
-      focalpointYInput
-    } = elements;
 
     const options = { ...croppersOptions };
 
@@ -578,12 +572,8 @@ export class FmcCroppersUi {
               round: true
             });
 
-            focalpointXInput.element.value = imagePercentX;
-            focalpointYInput.element.value = imagePercentY;
-
-            const focalpointYInputId = focalpointYInput.element.getAttribute('id');
-
-            FmcUi.emitEvent(focalpointYInputId, 'change');
+            FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: imagePercentX });
+            FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: imagePercentY });
 
             FmcUi.emitElementEvent(window, 'updateStatus', {
               statusMessage: ''
@@ -1327,9 +1317,7 @@ export class FmcCroppersUi {
 
     const {
       focalpointProportionsRadios,
-      focalpointWriteTitleRadios,
-      focalpointXInput,
-      focalpointYInput
+      focalpointWriteTitleRadios
     } = elements;
 
     const { src } = masterCropper.cropperInstance.element;
@@ -1347,18 +1335,19 @@ export class FmcCroppersUi {
       panorama = false
     } = this.getFlagsFromImage(imagePath);
 
-    focalpointXInput.element.value = imagePercentX;
-    focalpointYInput.element.value = imagePercentY;
+    FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: imagePercentX });
+    FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: imagePercentY });
 
-    const focalpointYInputId = focalpointYInput.element.getAttribute('id');
+    // TODO reinstate as needed:
+    // const focalpointYInputId = focalpointYInput.element.getAttribute('id');
+    // FmcUi.emitEvent(focalpointYInputId, 'change', {
+    //   focalpointReset: !(this.isDefaultFocalpoint({ imagePercentX, imagePercentY }))
+    // });
+
     const proportionsSetting = panorama ? 'panorama' : 'default';
 
     focalpointProportionsRadios.forEach(radio => {
       radio.checked = (radio.value === proportionsSetting);
-    });
-
-    FmcUi.emitEvent(focalpointYInputId, 'change', {
-      focalpointReset: !(this.isDefaultFocalpoint({ imagePercentX, imagePercentY }))
     });
 
     setTimeout(() => {
