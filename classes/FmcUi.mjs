@@ -521,15 +521,10 @@ export class FmcUi {
    */
   async handleFilterClear() {
     const {
-      elements,
       fmcThumbsUiInstance
     } = this;
 
-    const {
-      filter
-    } = elements;
-
-    filter.element.value = '';
+    FmcUi.emitElementEvent(window, 'updateFilter', { value: '' });
 
     fmcThumbsUiInstance.filterByFilenameAndCropped('');
   }
@@ -874,7 +869,6 @@ export class FmcUi {
     const {
       activePresetName,
       fileWebpageInput,
-      filter,
       focalpointAutoSaveRadios,
       focalpointWriteFilenameRadios,
       focalpointWriteTitleRadios,
@@ -917,7 +911,7 @@ export class FmcUi {
       fileWebpageInput.element.dataset.targetFolder = fileWebpage.targetFolder;
       fileWebpageInput.element.value = fileWebpage.value;
 
-      filter.element.value = '';
+      FmcUi.emitElementEvent(window, 'updateFilter', { value: '' });
 
       folderInInput.element.dataset.targetFolder = folderIn.targetFolder;
       folderInInput.element.value = folderIn.value;

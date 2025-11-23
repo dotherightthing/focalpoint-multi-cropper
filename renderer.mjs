@@ -133,7 +133,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#file-webpage'
     }),
     filter: new FmcTextfieldUi({
-      selector: '#thumb-filename-filter'
+      selector: '#thumb-filename-filter',
+      updateListener: 'updateFilter'
     }),
     filterClearButton: new FmcButtonUi({
       selector: '#thumb-filename-filter-clear',
