@@ -68,9 +68,7 @@ class FmcStore {
       presetName = 'default';
     }
 
-    const { preset } = await FmcStore.getPreset(null, {
-      presetName
-    });
+    const { preset } = await FmcStore.getPreset(null, { presetName });
 
     return preset;
   }
@@ -346,7 +344,6 @@ class FmcStore {
    */
   static async setPresetKeys(event, data) {
     /*
-    "propX": "foo",
     "presets": [
       {
         "name": "preset 1",
@@ -354,7 +351,7 @@ class FmcStore {
           "propA": "bar",
           "propB": "baz"
         },
-        "prop1": "bar"
+        "prop2": "bar"
       }
     ]
     */
@@ -370,9 +367,7 @@ class FmcStore {
         preset = {},
         presetIndex = -1,
         presets = []
-      } = await FmcStore.getPreset(null, {
-        presetName
-      });
+      } = await FmcStore.getPreset(null, { presetName });
 
       if (presetIndex === -1) {
         preset.name = presetName;

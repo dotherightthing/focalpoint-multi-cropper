@@ -93,6 +93,7 @@ export class FmcThumbsUi {
   /**
    * @function changeSelectedImageSrc
    * @param {string} src - New src
+   * @memberof FmcThumbsUi
    */
   changeSelectedImageSrc(src) {
     const {
@@ -114,6 +115,7 @@ export class FmcThumbsUi {
    * @param {number} args.thumbIndex - Thumb index
    * @param {number} args.imagePercentX - Image percent X
    * @param {number} args.imagePercentY - Image percent Y
+   * @memberof FmcThumbsUi
    */
   setCssImagePercentXY({
     thumbButton,

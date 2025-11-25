@@ -805,6 +805,7 @@ export class FmcUi {
 
   /**
    * @function handleLastCropperImgReady
+   * @summary Runs each time an image is loaded
    * @memberof FmcUi
    */
   async handleLastCropperImgReady() {
@@ -955,7 +956,7 @@ export class FmcUi {
 
   /**
    * @function selectActivePreset
-   * @summary Select the active preset from the dropdown in the Settings modal
+   * @summary Get the active preset from FmcStore. Select this preset in the dropdown in the Settings modal.
    * @todo Consider renaming to selectStoredActivePreset ?
    * @memberof FmcUi
    */
@@ -1331,7 +1332,7 @@ export class FmcUi {
    * @param {number} wait - Wait time in ms
    * @param {boolean} immediate - Call the function immediately
    * @returns {Function} function
-   * @memberof FmcFile
+   * @memberof FmcUi
    * @static
    * @see {@link https://stackoverflow.com/a/65081210}
    * @see {@link https://www.freecodecamp.org/news/debounce-explained-how-to-make-your-javascript-wait-for-your-user-to-finish-typing-2/}
