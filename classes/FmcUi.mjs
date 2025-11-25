@@ -361,10 +361,10 @@ export class FmcUi {
   }
 
   /**
-   * @function handleEditWebpage
+   * @function handlePresetEditWebpage
    * @memberof FmcUi
    */
-  async handleEditWebpage() {
+  async handlePresetEditWebpage() {
     const {
       elements
     } = this;
@@ -461,12 +461,12 @@ export class FmcUi {
   }
 
   /**
-   * @function handleFileWebpageBrowse
+   * @function handlePresetFileWebpageBrowse
    * @param {object|null} event - Click event
    * @param {boolean} restore - Restore settings from store
    * @memberof FmcUi
    */
-  async handleFileWebpageBrowse(event, restore = false) {
+  async handlePresetFileWebpageBrowse(event, restore = false) {
     const { fileName, filePath, folderPath } = await window.FmcFile.selectFile({
       dialogTitle: 'Webpage file',
       restore,
@@ -478,7 +478,7 @@ export class FmcUi {
       return;
     }
 
-    FmcUi.emitElementEvent(window, 'updateFileWebpage', {
+    FmcUi.emitElementEvent(window, 'updatePresetFileWebpage', {
       targetFile: filePath,
       targetFolder: folderPath,
       value: fileName
@@ -649,7 +649,7 @@ export class FmcUi {
 
   /**
    * @function handleFolderInBrowse
-   * @summary Called on 'Browse' click, handleSettingsLoad, restoreSettings
+   * @summary Called on 'Browse' click, handlePresetLoad, restoreSettings
    * @param {object|null} event - Click event
    * @param {boolean} restore - Restore settings from store
    * @memberof FmcUi
@@ -818,7 +818,6 @@ export class FmcUi {
   }
 
   /**
-   * @function handleSettingsLoad
    * @function loadOptions
    * @summary Load options when the UI initialises to restore previous UI settings
    * @memberof FmcUi
@@ -858,10 +857,13 @@ export class FmcUi {
     }
   }
 
+  /**
+   * @function handlePresetLoad
+   * @param {object} event - change event
    * @summary Run when the Presets 'Load' button is pressed
    * @memberof FmcUi
    */
-  async handleSettingsLoad() {
+  async handlePresetLoad(event) {
     const {
       elements,
       fmcThumbsUiInstance
@@ -890,7 +892,7 @@ export class FmcUi {
         name
       } = preset;
 
-      FmcUi.emitElementEvent(window, 'updateFileWebpage', {
+      FmcUi.emitElementEvent(window, 'updatePresetFileWebpage', {
         targetFile: fileWebpage.targetFile,
         targetFolder: fileWebpage.targetFolder,
         value: fileWebpage.value
@@ -913,7 +915,7 @@ export class FmcUi {
         value: folderWebsite.value
       });
 
-      FmcUi.emitElementEvent(window, 'updatePresetName', { value: name });
+      FmcUi.emitElementEvent(window, 'updatePresetNameActive', { value: name }); // TODO presetName
 
       const restore = true;
 
@@ -937,10 +939,10 @@ export class FmcUi {
   }
 
   /**
-   * @function handleSettingsOpen
+   * @function handlePresetsOpen
    * @memberof FmcUi
    */
-  async handleSettingsOpen() {
+  async handlePresetsOpen() {
     FmcUi.emitElementEvent(window, 'updatePresets', {
       label: 'Select a preset',
       options: await window.FmcStore.getPresetNames()
@@ -974,10 +976,10 @@ export class FmcUi {
   }
 
   /**
-   * @function handleSettingsSave
+   * @function handlePresetSave
    * @memberof FmcUi
    */
-  async handleSettingsSave() {
+  async handlePresetSave() {
     const {
       elements,
       fmcThumbsUiInstance
@@ -1111,7 +1113,7 @@ export class FmcUi {
 
     const { latLong } = clickedButton.dataset;
 
-    FmcUi.emitElementEvent(window, 'updateLatLng', { value: latLong });
+    FmcUi.emitElementEvent(window, 'updateImageLatLong', { value: latLong });
 
     await this.setPaths(newImageSrc, pathOut);
 
@@ -1247,7 +1249,7 @@ export class FmcUi {
     const fileName = FmcUi.getFileNameFromPath(src);
     const pathIn = this.srcSafe(src);
 
-    FmcUi.emitElementEvent(window, 'updatePathIn', { value: pathIn });
+    FmcUi.emitElementEvent(window, 'updateImagePathIn', { value: pathIn });
 
     thumbFileName.element.textContent = fileName;
 
@@ -1264,8 +1266,8 @@ export class FmcUi {
           pathOutSafe = this.srcSafe(pathOut);
         }
 
-        FmcUi.emitElementEvent(window, 'updatePathWebEmbed', { value: pathWebEmbedSafe });
-        FmcUi.emitElementEvent(window, 'updatePathOut', { value: pathOutSafe });
+        FmcUi.emitElementEvent(window, 'updateWebEmbedPath', { value: pathWebEmbedSafe });
+        FmcUi.emitElementEvent(window, 'updateImagePathOut', { value: pathOutSafe });
 
         resolve();
       }, 500);

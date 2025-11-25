@@ -92,25 +92,26 @@ window.addEventListener('DOMContentLoaded', async () => {
   const elements = {
     activePresetName: new FmcTextDisplayUi({
       selector: '#preset-name-active',
+      updateListener: 'updatePresetNameActive'
     }),
     copyLatLongButton: new FmcButtonUi({
-      updateListener: 'updateLatLng',
       selector: '#image-copy-lat-long',
+      updateListener: 'updateImageLatLong',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathInButton: new FmcButtonUi({
-      updateListener: 'updatePathIn',
       selector: '#image-copy-path-in',
+      updateListener: 'updateImagePathIn',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathOutButton: new FmcButtonUi({
-      updateListener: 'updatePathOut',
       selector: '#image-copy-path-out',
+      updateListener: 'updateImagePathOut',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathWebEmbedButton: new FmcButtonUi({
-      updateListener: 'updatePathWebEmbed',
       selector: '#image-copy-path-web-embed',
+      updateListener: 'updateWebEmbedPath',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     cropperLastImg: new FmcCropperImgUi({
@@ -120,8 +121,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     croppersContainer: document.getElementById('croppers'),
     editWebpageButton: new FmcButtonUi({
-      clickHandler: [ fmcUi, 'handleEditWebpage' ]
       selector: '#preset-edit-webpage',
+      clickHandler: [ fmcUi, 'handlePresetEditWebpage' ]
     }),
     exportAllButton: new FmcButtonUi({
       selector: '#crop-all',
@@ -132,12 +133,12 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleExportSelected' ]
     }),
     fileWebpageButton: new FmcButtonUi({
-      clickHandler: [ fmcUi, 'handleFileWebpageBrowse' ]
       selector: '#preset-website-file-button',
+      clickHandler: [ fmcUi, 'handlePresetFileWebpageBrowse' ]
     }),
     fileWebpageInput: new FmcTextfieldUi({
-      updateListener: 'updateFileWebpage'
       selector: '#preset-website-file',
+      updateListener: 'updatePresetFileWebpage'
     }),
     filter: new FmcTextfieldUi({
       selector: '#thumb-filename-filter',
@@ -227,18 +228,18 @@ window.addEventListener('DOMContentLoaded', async () => {
       appendedSelector: '#status-bar'
     }),
     pathInLink: new FmcButtonUi({
-      updateListener: 'updatePathIn',
       selector: '#image-link-path-in',
+      updateListener: 'updateImagePathIn',
       clickHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
     pathOutLink: new FmcButtonUi({
-      updateListener: 'updatePathOut',
       selector: '#image-link-path-out',
+      updateListener: 'updateImagePathOut',
       clickHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
     presetNameInput: new FmcTextfieldUi({
-      updateListener: 'updatePresetName'
       selector: '#preset-name',
+      updateListener: 'updatePresetNameActive'
     }),
     presetNamesSelect: new FmcSelectUi({
       selector: '#preset-names',
@@ -247,15 +248,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     settings: new FmcDialogUi({
       selector: '#presets',
       appendedSelector: '#status-bar',
-      openHandler: [ fmcUi, 'handleSettingsOpen' ]
+      openHandler: [ fmcUi, 'handlePresetsOpen' ]
     }),
-    settingsLoadButton: new FmcButtonUi({
-      clickHandler: [ fmcUi, 'handleSettingsLoad' ]
+    presetLoadButton: new FmcButtonUi({
       selector: '#preset-load',
+      clickHandler: [ fmcUi, 'handlePresetLoad' ]
     }),
     settingsSaveButton: new FmcButtonUi({
-      clickHandler: [ fmcUi, 'handleSettingsSave' ]
       selector: '#preset-save',
+      clickHandler: [ fmcUi, 'handlePresetSave' ]
     }),
     statusBar: new FmcStatusBarUi({
       selector: '#status-bar',
