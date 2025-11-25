@@ -75,6 +75,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  FmcUi.debug = true;
+
   const fmcUi = new FmcUi({
     debounceDelay: 500,
     elements: {},
@@ -290,9 +292,17 @@ window.addEventListener('DOMContentLoaded', async () => {
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));
   elements.window.addEventListener('resize', fmcUi.handleWindowResize.bind(fmcUi));
 
+  if (FmcUi.debug) {
+    console.clear();
+  }
 
+  FmcUi.log('# 1 - CALL fmcUi.loadOptions');
   await fmcUi.loadOptions();
+
+  FmcUi.log('# 1.A - CALL fmcUi.selectActivePreset');
   await fmcUi.selectActivePreset();
+
+  FmcUi.log('# 2.A - CALL fmcUi.handlePresetLoad');
   await fmcUi.handlePresetLoad();
 
   if ((typeof window.FmcFile === 'undefined') || (typeof window.FmcStore === 'undefined')) {

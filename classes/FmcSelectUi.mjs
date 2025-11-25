@@ -95,6 +95,7 @@ export class FmcSelectUi {
    * @memberof FmcButtonUi
    */
   handleUpdate(event) {
+    FmcUi.log('# 1.F - EXEC handleUpdate / updatePresets');
     const {
       detail = {}
     } = event;

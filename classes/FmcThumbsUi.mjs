@@ -77,6 +77,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   applySelectedClass(target) {
+    FmcUi.log('FmcThumbsUi.applySelectedClass', target);
     const {
       selectors
     } = this;
@@ -96,6 +97,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   changeSelectedImageSrc(src) {
+    FmcUi.log('FmcThumbsUi.changeSelectedImageSrc', src);
     const {
       selectors
     } = this;
@@ -124,6 +126,13 @@ export class FmcThumbsUi {
     imagePercentX,
     imagePercentY
   }) {
+    FmcUi.log('FmcThumbsUi.setCssImagePercentXY', {
+      thumbButton,
+      thumbImg,
+      thumbIndex,
+      imagePercentX,
+      imagePercentY
+    });
     const x = (typeof imagePercentX !== 'undefined') ? imagePercentX : 50;
     const y = (typeof imagePercentY !== 'undefined') ? imagePercentY : 50;
 
@@ -146,6 +155,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   containsThumbs() {
+    FmcUi.log('FmcThumbsUi.containsThumbs');
     const {
       selectors
     } = this;
@@ -167,6 +177,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   displayCount({ thumbTotal, thumbIndex }) {
+    FmcUi.log('FmcThumbsUi.displayCount', { thumbTotal, thumbIndex });
     const {
       selectors
     } = this;
@@ -203,6 +214,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   filterByFilenameAndCropped(searchStr) {
+    FmcUi.log('FmcThumbsUi.filterByFilenameAndCropped', searchStr);
     const {
       elements,
       selectors
@@ -276,6 +288,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   focusThumb(position) {
+    FmcUi.log('FmcThumbsUi.focusThumb', position);
     const thumbsButtons = this.getButtons();
 
     if (!thumbsButtons.length) {
@@ -310,6 +323,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   generateThumbsHtml(imagesData, selectedThumbIndex) {
+    FmcUi.log('FmcThumbsUi.generateThumbsHtml', imagesData, selectedThumbIndex);
     const {
       fmcCroppersUiInstance,
       selectors
@@ -399,6 +413,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   clickSelectedThumb(selectedThumbIndex) {
+    FmcUi.log('FmcThumbsUi.clickSelectedThumb', selectedThumbIndex);
     const thumbsButtons = this.getButtons();
     const selectedThumb = thumbsButtons[selectedThumbIndex - 1];
 
@@ -414,6 +429,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   getButtons() {
+    FmcUi.log('FmcThumbsUi.getButtons');
     const {
       selectors
     } = this;
@@ -434,6 +450,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   getClickedButton(event) {
+    FmcUi.log('FmcThumbsUi.getClickedButton', event);
     const thumbsButtons = this.getButtons();
 
     if (!thumbsButtons.length) {
@@ -454,6 +471,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   getSelectedThumbIndex() {
+    FmcUi.log('FmcThumbsUi.getSelectedThumbIndex');
     const {
       selectors
     } = this;
@@ -478,6 +496,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   formatDateTimeOriginal(dateTimeOriginal) {
+    // FmcUi.log('FmcThumbsUi.formatDateTimeOriginal', dateTimeOriginal);
     let dayTimeStr = '-';
     let dateStr = '-';
 
@@ -509,6 +528,7 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   removeSelectedClass() {
+    FmcUi.log('FmcThumbsUi.removeSelectedClass');
     const {
       selectors
     } = this;
@@ -536,6 +556,7 @@ export class FmcThumbsUi {
    * @static
    */
   static getNextIndex(nodeList, selectedIndex) {
+    FmcUi.log('FmcThumbsUi.getNextIndex', nodeList, selectedIndex);
     let nextIndex = -1;
 
     if ((selectedIndex + 1) < nodeList.length) {
@@ -557,6 +578,7 @@ export class FmcThumbsUi {
    * @static
    */
   static getPreviousIndex(nodeList, selectedIndex) {
+    FmcUi.log('FmcThumbsUi.getPreviousIndex', nodeList, selectedIndex);
     let previousIndex = -1;
 
     if (selectedIndex > 0) {

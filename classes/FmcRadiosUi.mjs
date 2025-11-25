@@ -116,7 +116,7 @@ export class FmcRadiosUi {
    * @memberof FmcButtonUi
    */
   handleUpdate(event) {
-    console.log('# X.X - EXEC handleUpdate');
+    FmcUi.log('# X.X - EXEC handleUpdate');
     const {
       detail = {}
     } = event;

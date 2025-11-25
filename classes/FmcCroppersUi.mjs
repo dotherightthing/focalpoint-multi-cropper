@@ -200,6 +200,7 @@ export class FmcCroppersUi {
    * @see {@link cypress/e2e/electron-spec.cy.js}
    */
   calcCanvasOffsets() {
+    FmcUi.log('FmcCroppersUi.calcCanvasOffsets');
     const {
       masterCropper,
       selectors
@@ -235,6 +236,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   calcCropBoxXYFromPageXY({ pageX, pageY }) {
+    FmcUi.log('FmcCroppersUi.calcCropBoxXYFromPageXY', { pageX, pageY });
     const {
       masterCropper
     } = this;
@@ -276,6 +278,7 @@ export class FmcCroppersUi {
    * @see {@link cypress/e2e/electron-spec.cy.js}
    */
   calcImageXYFromImagePercentXY({ imagePercentX, imagePercentY }) {
+    FmcUi.log('FmcCroppersUi.calcImageXYFromImagePercentXY', { imagePercentX, imagePercentY });
     const {
       masterCropper
     } = this;
@@ -303,6 +306,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   calcImageXYFromPageXY({ pageX, pageY }) {
+    FmcUi.log('FmcCroppersUi.calcImageXYFromPageXY', { pageX, pageY });
     const {
       left: canvasOffsetLeft,
       top: canvasOffsetTop
@@ -327,6 +331,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   calcPageXYForRoundedImagePercentXY({ pageXRaw, pageYRaw }) {
+    FmcUi.log('FmcCroppersUi.calcPageXYForRoundedImagePercentXY', { pageXRaw, pageYRaw });
     const {
       imagePercentX,
       imagePercentY
@@ -362,6 +367,7 @@ export class FmcCroppersUi {
    * @see {@link cypress/e2e/electron-spec.cy.js}
    */
   calcPageXYFromImageXY({ imageX, imageY }) {
+    FmcUi.log('FmcCroppersUi.calcPageXYFromImageXY', { imageX, imageY });
     const {
       left: canvasOffsetLeft,
       top: canvasOffsetTop
@@ -388,6 +394,7 @@ export class FmcCroppersUi {
    * @see {@link cypress/e2e/electron-spec.cy.js}
    */
   calcImagePercentXYFromImageXorY({ imageXorY, dimensionLength, round = false }) {
+    FmcUi.log('FmcCroppersUi.calcImagePercentXYFromImageXorY', { imageXorY, dimensionLength, round });
     let percentage = imageXorY / dimensionLength;
 
     if (percentage < 0) {
@@ -415,6 +422,7 @@ export class FmcCroppersUi {
    * @see {@link cypress/e2e/electron-spec.cy.js}
    */
   calcImagePercentXYFromPageXY({ pageX, pageY, round = false }) {
+    FmcUi.log('FmcCroppersUi.calcImagePercentXYFromPageXY', { pageX, pageY, round });
     const {
       masterCropper
     } = this;
@@ -453,6 +461,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   changeSourceImage(newImageSrc) {
+    FmcUi.log('FmcCroppersUi.changeSourceImage', newImageSrc);
     // TODO if exists
     this.destroy();
 
@@ -466,6 +475,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   destroy() {
+    FmcUi.log('FmcCroppersUi.destroy');
     const {
       croppers
     } = this;
@@ -491,6 +501,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   displayImagePercentXY({ imagePercentY, imagePercentX }) {
+    FmcUi.log('FmcCroppersUi.displayImagePercentXY', { imagePercentY, imagePercentX });
     // simulate click event
     this.masterCropperCropBoxWasDragged = false;
 
@@ -517,6 +528,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   getCropperOptions(exportWidth, exportHeight, role, action) {
+    FmcUi.log('FmcCroppersUi.getCropperOptions', exportWidth, exportHeight, role, action);
     const {
       croppersOptions
     } = this;
@@ -573,6 +585,7 @@ export class FmcCroppersUi {
               round: true
             });
 
+            FmcUi.log('getCropperOptions');
             FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: imagePercentX });
             FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: imagePercentY });
 
@@ -615,6 +628,14 @@ export class FmcCroppersUi {
     imagePercentYUi,
     imageProportionsUi
   }) {
+    FmcUi.log('FmcCroppersUi.setFocalpointSaveState', {
+      focalpointReset,
+      thumbIndexPrevious,
+      thumbIndex,
+      imagePercentXUi,
+      imagePercentYUi,
+      imageProportionsUi
+    });
     const {
       elements,
       masterCropper
@@ -714,6 +735,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   getImagePercentXYFromImage(src) {
+    FmcUi.log('FmcCroppersUi.getImagePercentXYFromImage', src);
     if (!src) {
       console.error('FmcCroppersUi.getImagePercentXYFromImage expects a src argument');
     }
@@ -742,6 +764,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   getFlagsFromImage(src) {
+    FmcUi.log('FmcCroppersUi.getFlagsFromImage', src);
     let imageFlags = {};
 
     const regexp = /\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
@@ -767,6 +790,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   getResizedImageCenterXY(fileName, resizeW, resizeH) {
+    FmcUi.log('FmcCroppersUi.getResizedImageCenterXY', fileName, resizeW, resizeH);
     const {
       masterCropper
     } = this;
@@ -805,6 +829,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   init() {
+    FmcUi.log('FmcCroppersUi.init');
     const {
       imageSrc,
       selectors
@@ -873,6 +898,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   initCropper(cropperImage) {
+    FmcUi.log('FmcCroppersUi.initCropper', cropperImage);
     const {
       Cropper,
       imageSrc
@@ -923,6 +949,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   initResizer(resizerImage) {
+    FmcUi.log('FmcCroppersUi.initResizer', resizerImage);
     const {
       imageSrc
     } = this;
@@ -970,6 +997,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   injectHeading(cropperImage, label, exportWidth, exportHeight) {
+    // FmcUi.log('FmcCroppersUi.injectHeading', cropperImage, label, exportWidth, exportHeight);
     const parent = cropperImage.parentElement;
     let heading = parent.querySelector('h2');
 
@@ -1000,6 +1028,7 @@ export class FmcCroppersUi {
    * @todo Also support end of dragging
    */
   moveCropperCropBoxToPageXY({ pageX, pageY }) {
+    FmcUi.log('FmcCroppersUi.moveCropperCropBoxToPageXY', { pageX, pageY });
     const {
       croppers,
       masterCropper
@@ -1056,6 +1085,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   moveMasterCropperCropBoxToPageXY({ pageX, pageY }) {
+    FmcUi.log('FmcCroppersUi.moveMasterCropperCropBoxToPageXY', { pageX, pageY });
     const {
       masterCropper
     } = this;
@@ -1089,6 +1119,13 @@ export class FmcCroppersUi {
     pageX,
     pageY
   }) {
+    FmcUi.log('FmcCroppersUi.moveSlaveCropperCropBoxToPageXY', {
+      cropper,
+      masterCropperCanvasLeft,
+      masterCropperCanvasOffsetTop,
+      pageX,
+      pageY
+    });
     const {
       top: cropperCanvasTop // gap between top of column and start of slave image
     } = cropper.getCanvasData();
@@ -1116,6 +1153,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   async resizeAndCropImage(targetFolder) {
+    FmcUi.log('FmcCroppersUi.resizeAndCropImage', targetFolder);
     const {
       masterCropper,
       resizers,
@@ -1245,6 +1283,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   async deleteImagePercentXYFromImage() {
+    FmcUi.log('FmcCroppersUi.deleteImagePercentXYFromImage');
     const {
       croppers,
       masterCropper,
@@ -1293,6 +1332,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   isDefaultFocalpoint({ imagePercentX, imagePercentY, imageProportions }) {
+    FmcUi.log('FmcCroppersUi.isDefaultFocalpoint', { imagePercentX, imagePercentY, imageProportions });
     const nX = Number(imagePercentX);
     const nY = Number(imagePercentY);
 
@@ -1305,6 +1345,7 @@ export class FmcCroppersUi {
    * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
    */
   async reinstateImagePercentXYFromImage() {
+    FmcUi.log('FmcCroppersUi.reinstateImagePercentXYFromImage');
     const {
       elements,
       masterCropper
@@ -1359,6 +1400,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   scaleSlaveVal(slaveCropper, val) {
+    FmcUi.log('FmcCroppersUi.scaleSlaveVal', slaveCropper, val);
     const {
       masterCropper
     } = this;
@@ -1382,6 +1424,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   setLoadingState(loading) {
+    FmcUi.log('FmcCroppersUi.setLoadingState', loading);
     const {
       selectors
     } = this;
@@ -1405,6 +1448,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   setSaveState(state) {
+    FmcUi.log('FmcCroppersUi.setSaveState', state);
     const {
       selectors
     } = this;
@@ -1425,6 +1469,7 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   validateCroppersImage() {
+    FmcUi.log('FmcCroppersUi.validateCroppersImage');
     const {
       selectors
     } = this;
@@ -1467,6 +1512,11 @@ export class FmcCroppersUi {
     imagePercentX,
     imagePercentY
   }) {
+    FmcUi.log('FmcCroppersUi.writeImagePercentXYToImage', {
+      imageFlags,
+      imagePercentX,
+      imagePercentY
+    });
     const {
       croppers,
       elements,

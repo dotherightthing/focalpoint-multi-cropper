@@ -48,6 +48,20 @@ export class FmcUi {
   }
 
   /**
+   * debug
+   * @summary Flag used by FmcUi.log
+   * @type {boolean}
+   * @memberof FmcUi
+   */
+  get debug() {
+    return this._debug;
+  }
+
+  set debug(debug) {
+    this._debug = dtrtValidate.validate(debug, 'boolean', 'FmcUi.debug');
+  }
+
+  /**
    * elements
    * @type {object}
    * @memberof FmcUi
@@ -121,6 +135,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async autosaveFocalpoint(on) {
+    FmcUi.log('FmcUi.autosaveFocalpoint', on);
     const {
       elements
     } = this;
@@ -151,6 +166,7 @@ export class FmcUi {
    * @static
    */
   static getElementIndex(element, nodeList) {
+    FmcUi.log('FmcUi.getElementIndex', element, nodeList);
     return Array.from(nodeList).indexOf(element);
   }
 
@@ -162,6 +178,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   getPathOut(imgSrc) {
+    FmcUi.log('FmcUi.getPathOut', imgSrc);
     const {
       elements
     } = this;
@@ -188,6 +205,7 @@ export class FmcUi {
    * @static
    */
   static getTargetElementOfType(event, elementType) {
+    FmcUi.log('FmcUi.getTargetElementOfType', event, elementType);
     let targetElement = event.target; // event.currentTarget
 
     if (targetElement) {
@@ -207,6 +225,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async getPathWebEmbed(pathOut) {
+    FmcUi.log('FmcUi.getPathWebEmbed', pathOut);
     const {
       elements
     } = this;
@@ -238,6 +257,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleAutosaveRadioChange(event) {
+    FmcUi.log('FmcUi.handleAutosaveRadioChange', event);
     const {
       elements,
       fmcCroppersUiInstance,
@@ -277,6 +297,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleAutoSelectFilteredRadioChange(event) {
+    FmcUi.log('FmcUi.handleAutoSelectFilteredRadioChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsAutoSelectFiltered: state });
@@ -292,6 +313,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleThumbsFilterUncroppedRadiosChange(event) {
+    FmcUi.log('FmcUi.handleThumbsFilterUncroppedRadiosChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsFilterUncropped: state });
@@ -307,6 +329,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleWriteFilenameRadioChange(event) {
+    FmcUi.log('FmcUi.handleWriteFilenameRadioChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
@@ -322,6 +345,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleWriteTitleRadioChange(event) {
+    FmcUi.log('FmcUi.handleWriteTitleRadioChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });
@@ -336,6 +360,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleEditPresets() {
+    FmcUi.log('FmcUi.handleEditPresets');
     const {
       elements
     } = this;
@@ -365,6 +390,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handlePresetEditWebpage() {
+    FmcUi.log('FmcUi.handlePresetEditWebpage');
     const {
       elements
     } = this;
@@ -395,6 +421,7 @@ export class FmcUi {
    * @todo Replace exportDelay with more robust check
    */
   async handleExportAll() {
+    FmcUi.log('FmcUi.handleExportAll');
     const {
       exportDelay,
       fmcThumbsUiInstance
@@ -435,6 +462,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleExportSelected() {
+    FmcUi.log('FmcUi.handleExportSelected');
     const {
       elements,
       fmcCroppersUiInstance
@@ -467,6 +495,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handlePresetFileWebpageBrowse(event, restore = false) {
+    FmcUi.log('FmcUi.handlePresetFileWebpageBrowse', event, restore);
     const { fileName, filePath, folderPath } = await window.FmcFile.selectFile({
       dialogTitle: 'Webpage file',
       restore,
@@ -490,6 +519,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFilterClear() {
+    FmcUi.log('FmcUi.handleFilterClear');
     const {
       fmcThumbsUiInstance
     } = this;
@@ -504,6 +534,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFilterSubmit() {
+    FmcUi.log('FmcUi.handleFilterSubmit');
     const {
       elements,
       fmcThumbsUiInstance
@@ -523,6 +554,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFocalpointDelete() {
+    FmcUi.log('FmcUi.handleFocalpointDelete');
     const {
       elements,
       fmcCroppersUiInstance
@@ -551,6 +583,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFocalpointInputChange(event) {
+    FmcUi.log('FmcUi.handleFocalpointInputChange', event);
     const {
       elements,
       fmcCroppersUiInstance,
@@ -606,6 +639,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFocalpointReset(event) {
+    FmcUi.log('FmcUi.handleFocalpointReset', event);
     const {
       fmcCroppersUiInstance
     } = this;
@@ -619,6 +653,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFocalpointSave() {
+    FmcUi.log('FmcUi.handleFocalpointSave');
     const {
       elements,
       fmcCroppersUiInstance,
@@ -655,6 +690,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFolderInBrowse(event, restore = false) {
+    FmcUi.log('FmcUi.handleFolderInBrowse', event, restore);
     const {
       fmcThumbsUiInstance
     } = this;
@@ -692,6 +728,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFolderOutBrowse(event, restore = false) {
+    FmcUi.log('FmcUi.handleFolderOutBrowse', event, restore);
     const {
       elements
     } = this;
@@ -729,6 +766,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFolderWebsiteBrowse(event, restore = false) {
+    FmcUi.log('FmcUi.handleFolderWebsiteBrowse', event, restore);
     const { folderName, folderPath } = await window.FmcFile.selectFolder({
       dialogTitle: 'Website folder',
       retrieveImagesData: false,
@@ -753,6 +791,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleImageRenamed(event) {
+    FmcUi.log('FmcUi.handleImageRenamed', event);
     const {
       fmcCroppersUiInstance,
       fmcThumbsUiInstance,
@@ -800,6 +839,7 @@ export class FmcUi {
    * @see https://leapcell.io/blog/how-to-sleep-in-javascript-using-async-await
    */
   sleep(ms) {
+    FmcUi.log('FmcUi.sleep', ms);
     return new Promise(resolve => setTimeout(resolve, ms)); // eslint-disable-line no-promise-executor-return
   }
 
@@ -809,6 +849,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleLastCropperImgReady() {
+    FmcUi.log('FmcUi.handleLastCropperImgReady');
     const {
       fmcCroppersUiInstance
     } = this;
@@ -824,12 +865,12 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async loadOptions() {
-    console.log('# X.X - EXEC fmcUi.loadOptions');
+    FmcUi.log('# X.X - EXEC fmcUi.loadOptions');
 
     try {
       const { options } = await window.FmcStore.getOptions(null);
 
-      console.log('options', options);
+      FmcUi.log('options', options);
 
       const {
         focalpointAutoSave = 'off',
@@ -865,6 +906,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handlePresetLoad(event) {
+    FmcUi.log('# 2.B - EXEC fmcUi.handlePresetLoad');
     const {
       elements,
       fmcThumbsUiInstance
@@ -944,6 +986,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handlePresetsOpen() {
+    FmcUi.log('FmcUi.handlePresetsOpen');
     FmcUi.emitElementEvent(window, 'updatePresets', {
       label: 'Select a preset',
       options: await window.FmcStore.getPresetNames()
@@ -961,6 +1004,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async selectActivePreset() {
+    FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
     const preset = await window.FmcStore.getActivePreset(null);
 
     if (typeof preset === 'undefined') {
@@ -973,6 +1017,7 @@ export class FmcUi {
     }
 
     // select the preset
+    FmcUi.log('# 1.E - EMIT window.updatePresets');
     FmcUi.emitElementEvent(window, 'updatePresets', { value: preset.name });
   }
 
@@ -981,6 +1026,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handlePresetSave() {
+    FmcUi.log('FmcUi.handlePresetSave');
     const {
       elements,
       fmcThumbsUiInstance
@@ -1047,6 +1093,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleThumbClick(event) {
+    FmcUi.log('FmcUi.handleThumbClick', event);
     const {
       elements,
       fmcCroppersUiInstance,
@@ -1128,6 +1175,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleWindowKeydown(event) {
+    FmcUi.log('FmcUi.handleWindowKeydown', event);
     const {
       elements,
       fmcThumbsUiInstance,
@@ -1170,6 +1218,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   handleWindowResize() {
+    FmcUi.log('FmcUi.handleWindowResize');
     const {
       fmcThumbsUiInstance
     } = this;
@@ -1182,6 +1231,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async saveFocalpoint() {
+    FmcUi.log('FmcUi.saveFocalpoint');
     const {
       elements,
       fmcCroppersUiInstance
@@ -1229,6 +1279,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async setPaths(src, pathOut, checkPathExists = true) {
+    FmcUi.log('FmcUi.setPaths', src, pathOut, checkPathExists);
     const {
       elements
     } = this;
@@ -1272,6 +1323,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   srcSafe(src) {
+    FmcUi.log('FmcUi.srcSafe', src);
     return src.replace(/%20/g, ' ');
   }
 
@@ -1328,6 +1380,7 @@ export class FmcUi {
    * @see {@link https://www.freecodecamp.org/news/debounce-explained-how-to-make-your-javascript-wait-for-your-user-to-finish-typing-2/}
    */
   static debounce(func, wait, immediate) {
+    FmcUi.log('FmcUi.debounce', func, wait, immediate);
     let timeout;
 
     return function () {
@@ -1365,6 +1418,7 @@ export class FmcUi {
    * @static
    */
   static emitEvent(elementId, eventName, eventDetail = {}) {
+    FmcUi.log('FmcUi.emitEvent', elementId, eventName, eventDetail);
 
     const element = document.getElementById(elementId);
 
@@ -1383,6 +1437,7 @@ export class FmcUi {
    * @static
    */
   static emitElementEvent(element, eventName, eventDetail = {}) {
+    FmcUi.log('FmcUi.emitElementEvent', element, eventName, eventDetail);
     const event = new CustomEvent(eventName, {
       bubbles: true, // stop with event.stopPropagation()
       cancelable: true, // cancel with event.preventDefault()
@@ -1401,6 +1456,7 @@ export class FmcUi {
    * @static
    */
   static getFileNameFromPath(path) {
+    FmcUi.log('FmcUi.getFileNameFromPath', path);
     const pathSeparator = path.lastIndexOf('/');
     const fileName = path.slice(pathSeparator + 1);
 
@@ -1417,6 +1473,7 @@ export class FmcUi {
    * @static
    */
   static getOffset(el) {
+    FmcUi.log('FmcUi.getOffset', el);
     const rect = el.getBoundingClientRect();
     const offset = {
       top: rect.top + window.scrollY,
@@ -1424,5 +1481,19 @@ export class FmcUi {
     };
 
     return offset;
+  }
+
+  /**
+   * @function log
+   * @param {...*} args - Function arguments
+   * @memberof FmcUi
+   * @static
+   */
+  static log(args) { // eslint-disable-line no-unused-vars
+    if (FmcUi.debug) {
+      console.group('debug');
+      [ ...arguments ].forEach(arg => console.log(arg));
+      console.groupEnd();
+    }
   }
 }
