@@ -290,9 +290,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));
   elements.window.addEventListener('resize', fmcUi.handleWindowResize.bind(fmcUi));
 
-  await fmcUi.restoreSettings();
 
   await fmcUi.loadOptions();
+  await fmcUi.selectActivePreset();
+  await fmcUi.handlePresetLoad();
+
   if ((typeof window.FmcFile === 'undefined') || (typeof window.FmcStore === 'undefined')) {
     FmcUi.testData();
   }

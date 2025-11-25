@@ -1178,16 +1178,6 @@ export class FmcUi {
   }
 
   /**
-   * @function restoreSettings
-   * @summary Restore previous stored settings if they exist
-   * @memberof FmcUi
-   */
-  async restoreSettings() {
-    await this.selectActivePreset();
-    await this.handleSettingsLoad();
-  }
-
-  /**
    * @function saveFocalpoint
    * @memberof FmcUi
    */
