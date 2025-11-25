@@ -961,15 +961,6 @@ export class FmcCroppersUi {
   }
 
   /**
-   * @function initImagePercentXY
-   * @summary Initialise focal point
-   * @memberof FmcCroppersUi
-   */
-  async initImagePercentXY() {
-    await this.reinstateImagePercentXYFromImage();
-  }
-
-  /**
    * @function injectHeading
    * @param {HTMLElement} cropperImage - Cropper image
    * @param {string} label - Cropper label

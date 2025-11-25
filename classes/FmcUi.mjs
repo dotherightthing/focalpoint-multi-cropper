@@ -815,7 +815,7 @@ export class FmcUi {
 
     // prevents intermittent (browser) error from FmcCroppersUi.calcCanvasOffsets()
     await this.sleep(10);
-    await fmcCroppersUiInstance.initImagePercentXY();
+    await fmcCroppersUiInstance.reinstateImagePercentXYFromImage();
   }
 
   /**
