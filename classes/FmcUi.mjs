@@ -254,7 +254,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointAutoSave: state });
 
-    FmcUi.emitElementEvent(window, 'message', msgObj);
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     if (masterCropper) {
     const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
@@ -281,7 +281,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsAutoSelectFiltered: state });
 
-    FmcUi.emitElementEvent(window, 'message', msgObj);
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     await this.handleFilterSubmit();
   }
@@ -296,7 +296,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsFilterUncropped: state });
 
-    FmcUi.emitElementEvent(window, 'message', msgObj);
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     await this.handleFilterSubmit();
   }
@@ -311,7 +311,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
 
-    FmcUi.emitElementEvent(window, 'message', msgObj);
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     // TODO : Update Photos app etc
   }
@@ -326,7 +326,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });
 
-    FmcUi.emitElementEvent(window, 'message', msgObj);
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     // TODO : Update Photos app etc
   }
@@ -853,7 +853,7 @@ export class FmcUi {
     } catch (error) {
       FmcUi.emitElementEvent(window, 'updateStatus', {
         statusMessage: 'No options to load',
-        statusType: 'info'
+        statusType: 'warning'
       });
     }
   }
@@ -934,7 +934,7 @@ export class FmcUi {
     } catch (error) {
       FmcUi.emitElementEvent(window, 'updateStatus', {
         statusMessage: 'No active preset to load',
-        statusType: 'info'
+        statusType: 'warning'
       });
     }
   }
@@ -966,7 +966,7 @@ export class FmcUi {
     if (typeof preset === 'undefined') {
       FmcUi.emitElementEvent(window, 'updateStatus', {
         statusMessage: 'No active preset to select',
-        statusType: 'info'
+        statusType: 'warning'
       });
 
       return;
@@ -1026,7 +1026,7 @@ export class FmcUi {
       name
     });
 
-    FmcUi.emitElementEvent(window, 'message', msgObj);
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     await window.FmcStore.setActivePresetName({ presetName: name });
 
@@ -1216,7 +1216,7 @@ export class FmcUi {
         imagePercentY: focalpointY
       });
 
-      FmcUi.emitElementEvent(window, 'message', msgObj);
+      FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
     }
   }
 

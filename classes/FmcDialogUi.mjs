@@ -130,6 +130,13 @@ export class FmcDialogUi {
 
     element.appendChild(appendedElement);
     element.showModal();
+
+    const msgObj = {
+      statusMessage: '',
+      statusType: ''
+    };
+
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
   }
 
   /**
@@ -144,5 +151,12 @@ export class FmcDialogUi {
 
     document.body.appendChild(appendedElement);
     element.close();
+
+    const msgObj = {
+      statusMessage: '',
+      statusType: ''
+    };
+
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
   }
 }

@@ -117,7 +117,7 @@ export class FmcStatusBarUi {
 
     const {
       statusMessage,
-      statusType = 'message' // message|success|warning
+      statusType = 'info' // info|success|warning
     } = event.detail;
 
     const statusTypeClasses = statusTypes.map(st => `msg-${st}`).join('","');
