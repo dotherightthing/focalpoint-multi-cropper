@@ -225,7 +225,7 @@ class FmcStore {
       presetName
     } = data;
 
-    FmcStore.setKeys(null, {
+    FmcStore.setPresetKeys(null, {
       keyValuePairs: [
         {
           activePreset: presetName
@@ -235,15 +235,15 @@ class FmcStore {
   }
 
   /**
-   * @function setKeys
-   * @param {event|null} event - FmcStore:setKeys event captured by ipcMain.handle
+   * @function setPresetKeys
+   * @param {event|null} event - FmcStore:setPresetKeys event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {Array} data.keyValuePairs - Objects (key - val pairs)
    * @param {string} data.presetName - Preset name (to save keys with preset)
    * @memberof FmcStore
    * @static
    */
-  static async setKeys(event, data) {
+  static async setPresetKeys(event, data) {
     /*
     "propX": "foo",
     "presets": [
@@ -343,7 +343,7 @@ class FmcStore {
       lastModified: new Date().toLocaleString() // "13/08/2023, 8:52:55 pm"
     });
 
-    await FmcStore.setKeys(null, {
+    await FmcStore.setPresetKeys(null, {
       keyValuePairs,
       presetName: name
     });

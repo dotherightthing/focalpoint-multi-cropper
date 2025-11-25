@@ -123,7 +123,6 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:getImageTitle', FmcFile.getImageTitle);
   ipcMain.handle('FmcFile:saveImagePercentXYToImage', FmcFile.saveImagePercentXYToImage);
   ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
-  ipcMain.handle('FmcStore:setKeys', FmcStore.setKeys);
   ipcMain.handle('FmcStore:getActivePreset', FmcStore.getActivePreset);
   ipcMain.handle('FmcStore:getKeys', FmcStore.getKeys);
   ipcMain.handle('FmcStore:getPreset', FmcStore.getPreset);
@@ -131,6 +130,7 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcStore:getStoreFilePath', FmcStore.getStoreFilePath);
   ipcMain.handle('FmcStore:setActivePresetName', FmcStore.setActivePresetName);
   ipcMain.handle('FmcStore:setPreset', FmcStore.setPreset);
+  ipcMain.handle('FmcStore:setPresetKeys', FmcStore.setPresetKeys);
 
   createWindow();
 
