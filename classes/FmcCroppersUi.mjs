@@ -217,7 +217,7 @@ export class FmcCroppersUi {
     const cropperCanvasEl = cropperContainerEl.querySelector(`.${cropperCanvasClass}`);
 
     if (cropperCanvasEl === null) {
-      throw new Error('Cropper canvas not found - cropper was not injected');
+      throw new Error(`.${cropperCanvasClass} not found - cropper was not injected`);
     }
 
     const { top } = FmcUi.getOffset(cropperCanvasEl);
@@ -714,6 +714,10 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   getImagePercentXYFromImage(src) {
+    if (!src) {
+      console.error('FmcCroppersUi.getImagePercentXYFromImage expects a src argument');
+    }
+
     let imagePercentXY = {};
 
     const regexp = /\[([0-9]+)%,([0-9]+)%(,P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
