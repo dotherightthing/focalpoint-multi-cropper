@@ -241,34 +241,34 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance
+      fmcThumbsUiInstance,
+      masterCropper
     } = this;
 
     const {
-      focalpointAutoSaveRadios,
       focalpointProportionsRadios,
       focalpointXInput,
       focalpointYInput
     } = elements;
 
-    const focalpointX = focalpointXInput.element.value;
-    const focalpointY = focalpointYInput.element.value;
+    const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ focalpointAutoSave: state });
 
-    const autosaveState = event.target.value;
+    FmcUi.emitElementEvent(window, 'message', msgObj);
 
-    await focalpointAutoSaveRadios.setStoredState(autosaveState);
-
+    if (masterCropper) {
     const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
-    await this.autosaveFocalpoint(autosaveState === 'on');
+      await this.autosaveFocalpoint(state === 'on');
 
     await fmcCroppersUiInstance.setFocalpointSaveState({
       thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
       thumbIndex,
-      imagePercentXUi: focalpointX,
-      imagePercentYUi: focalpointY,
+        imagePercentXUi: focalpointXInput.element.value,
+        imagePercentYUi: focalpointYInput.element.value,
       imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
     });
+  }
   }
 
   /**
@@ -871,21 +871,16 @@ export class FmcUi {
       presetNamesSelect
     } = elements;
 
+    // get selected preset name from UI
     let presetName = presetNamesSelect.element.value;
 
-    if (presetName !== '') {
-
-      activePresetName.element.textContent = presetName;
-    }
+    // save the active preset name to indicate that this preset has been (is about to be) loaded
     await window.FmcStore.setActivePresetName({ presetName });
 
     try {
-      // gets the active preset set above or one previously set
+      // 1. get the active preset name from the store
+      // 2. get the preset with the active preset name from the store
       const preset = await window.FmcStore.getActivePreset(null);
-
-      ({ name: presetName } = preset);
-
-      activePresetName.element.textContent = presetName;
 
       const {
         fileWebpage,
