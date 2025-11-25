@@ -91,26 +91,26 @@ window.addEventListener('DOMContentLoaded', async () => {
   // once fmcUi exists
   const elements = {
     activePresetName: new FmcTextDisplayUi({
-      selector: '#active-preset-name'
+      selector: '#preset-name-active',
     }),
     copyLatLongButton: new FmcButtonUi({
-      selector: '#copy-lat-long',
       updateListener: 'updateLatLng',
+      selector: '#image-copy-lat-long',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathInButton: new FmcButtonUi({
-      selector: '#copy-path-in',
       updateListener: 'updatePathIn',
+      selector: '#image-copy-path-in',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathOutButton: new FmcButtonUi({
-      selector: '#copy-path-out',
       updateListener: 'updatePathOut',
+      selector: '#image-copy-path-out',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     copyPathWebEmbedButton: new FmcButtonUi({
-      selector: '#copy-path-web-embed',
       updateListener: 'updatePathWebEmbed',
+      selector: '#image-copy-path-web-embed',
       clickHandler: [ FmcButtonUi, 'handleCopyPath' ]
     }),
     cropperLastImg: new FmcCropperImgUi({
@@ -120,8 +120,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     croppersContainer: document.getElementById('croppers'),
     editWebpageButton: new FmcButtonUi({
-      selector: '#edit-webpage',
       clickHandler: [ fmcUi, 'handleEditWebpage' ]
+      selector: '#preset-edit-webpage',
     }),
     exportAllButton: new FmcButtonUi({
       selector: '#crop-all',
@@ -132,12 +132,12 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleExportSelected' ]
     }),
     fileWebpageButton: new FmcButtonUi({
-      selector: '#file-webpage-button',
       clickHandler: [ fmcUi, 'handleFileWebpageBrowse' ]
+      selector: '#preset-website-file-button',
     }),
     fileWebpageInput: new FmcTextfieldUi({
-      selector: '#file-webpage',
       updateListener: 'updateFileWebpage'
+      selector: '#preset-website-file',
     }),
     filter: new FmcTextfieldUi({
       selector: '#thumb-filename-filter',
@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleFilterSubmit' ]
     }),
     focalpointAutoSaveRadios: new FmcRadiosUi({
-      selector: 'input[name="focalpoint-autosave"]',
+      selector: 'input[name="options-autosave-focalpoint"]',
       updateListener: 'updateFocalpointAutoSave',
       changeHandler: [ fmcUi, 'handleAutosaveRadioChange' ]
     }),
@@ -170,12 +170,12 @@ window.addEventListener('DOMContentLoaded', async () => {
       clickHandler: [ fmcUi, 'handleFocalpointSave' ]
     }),
     focalpointWriteFilenameRadios: new FmcRadiosUi({
-      selector: 'input[name="focalpoint-write-filename"]',
+      selector: 'input[name="options-write-focalpoint-to-filename"]',
       updateListener: 'updateFocalpointWriteFilename',
       changeHandler: [ fmcUi, 'handleWriteFilenameRadioChange' ]
     }),
     focalpointWriteTitleRadios: new FmcRadiosUi({
-      selector: 'input[name="focalpoint-write-title"]',
+      selector: 'input[name="options-write-focalpoint-to-title"]',
       updateListener: 'updateFocalpointWriteTitle',
       changeHandler: [ fmcUi, 'handleWriteTitleRadioChange' ]
     }),
@@ -190,36 +190,36 @@ window.addEventListener('DOMContentLoaded', async () => {
       changeHandler: [ fmcUi, 'handleFocalpointInputChange', 500 ]
     }),
     folderInButton: new FmcButtonUi({
-      selector: '#folder-in-button',
+      selector: '#preset-source-folder-button',
       clickHandler: [ fmcUi, 'handleFolderInBrowse' ]
     }),
     folderInInput: new FmcTextfieldUi({
-      selector: '#folder-in',
+      selector: '#preset-source-folder',
       updateListener: 'updateFolderIn'
     }),
     folderOutButton: new FmcButtonUi({
-      selector: '#folder-out-button',
+      selector: '#preset-target-folder-button',
       clickHandler: [ fmcUi, 'handleFolderOutBrowse' ]
     }),
     folderOutInput: new FmcTextfieldUi({
-      selector: '#folder-out',
+      selector: '#preset-target-folder',
       updateListener: 'updateFolderOut'
     }),
-    folderOutInputDependent: document.querySelector('[data-dependent="folder-out"]'),
+    folderOutInputDependent: document.querySelector('[data-dependent="preset-target-folder"]'),
     folderWebsiteButton: new FmcButtonUi({
-      selector: '#folder-website-button',
+      selector: '#preset-website-folder-button',
       clickHandler: [ fmcUi, 'handleFolderWebsiteBrowse' ]
     }),
     folderWebsiteInput: new FmcTextfieldUi({
-      selector: '#folder-website',
+      selector: '#preset-website-folder',
       updateListener: 'updateFolderWebsite'
     }),
     openPresetsButton: new FmcButtonUi({
-      selector: '#open-presets-button',
+      selector: '#user-preferences-file-button',
       clickHandler: [ fmcUi, 'handleEditPresets' ]
     }),
     openPresetsInput: new FmcTextfieldUi({
-      selector: '#open-presets',
+      selector: '#user-preferences-file',
       updateListener: 'updatePresetsFile'
     }),
     options: new FmcDialogUi({
@@ -227,42 +227,42 @@ window.addEventListener('DOMContentLoaded', async () => {
       appendedSelector: '#status-bar'
     }),
     pathInLink: new FmcButtonUi({
-      selector: '#link-path-in',
       updateListener: 'updatePathIn',
+      selector: '#image-link-path-in',
       clickHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
     pathOutLink: new FmcButtonUi({
-      selector: '#link-path-out',
       updateListener: 'updatePathOut',
+      selector: '#image-link-path-out',
       clickHandler: [ FmcButtonUi, 'handleLinkToPath' ]
     }),
     presetNameInput: new FmcTextfieldUi({
-      selector: '#settings-preset-name',
       updateListener: 'updatePresetName'
+      selector: '#preset-name',
     }),
     presetNamesSelect: new FmcSelectUi({
       selector: '#preset-names',
       updateListener: 'updatePresets'
     }),
     settings: new FmcDialogUi({
-      selector: '#settings',
+      selector: '#presets',
       appendedSelector: '#status-bar',
       openHandler: [ fmcUi, 'handleSettingsOpen' ]
     }),
     settingsLoadButton: new FmcButtonUi({
-      selector: '#settings-load',
       clickHandler: [ fmcUi, 'handleSettingsLoad' ]
+      selector: '#preset-load',
     }),
     settingsSaveButton: new FmcButtonUi({
-      selector: '#settings-save',
       clickHandler: [ fmcUi, 'handleSettingsSave' ]
+      selector: '#preset-save',
     }),
     statusBar: new FmcStatusBarUi({
       selector: '#status-bar',
       updateListener: 'updateStatus'
     }),
     thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
-      selector: 'input[name="thumbs-autoselect-filtered"]',
+      selector: 'input[name="options-autoselect-first-filtered-result"]',
       updateListener: 'updateThumbsAutoSelectFiltered',
       changeHandler: [ fmcUi, 'handleAutoSelectFilteredRadioChange' ]
     }),
@@ -270,7 +270,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#thumb-filename'
     }),
     thumbsFilterUncroppedRadios: new FmcRadiosUi({
-      selector: 'input[name="thumbs-filter-uncropped"]',
+      selector: 'input[name="options-hide-uncropped-thumbnails"]',
       updateListener: 'updateThumbsFilterUncropped',
       changeHandler: [ fmcUi, 'handleThumbsFilterUncroppedRadiosChange' ]
     }),

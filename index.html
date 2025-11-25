@@ -17,9 +17,9 @@
       <div class="l-title title l-cols-3-2">
         <h1 class="h-title">Focalpoint Multi-Cropper tool</h1>
         <div class="l-horz-list">
-          <h2 class="h-preset-name">Active preset: <span id="active-preset-name">-</span></h2>
-          <button type="button" class="control-action" id="settings-open">
-            <span class="control-hint">Manage folder paths</span>
+          <h2 class="h-preset-name">Active preset: <span id="preset-name-active">-</span></h2>
+          <button type="button" class="control-action" id="presets-open">
+            <span class="control-hint">Manage presets</span>
           </button>
           <button type="button" class="control-action" id="options-open">
             <span class="control-hint">Manage options</span>
@@ -33,7 +33,7 @@
           </div>
           <div class="l-horz-list">
             <h2 class="l-visually-hidden">Focalpoint</h2>
-            <fieldset disabled data-dependent="folder-out">
+            <fieldset disabled data-dependent="preset-target-folder">
               <legend>
                 <span class="h-small uc l-horz-list-header">Focalpoint controls</span>
               </legend>
@@ -205,10 +205,10 @@
               <legend>
                 <span class="h-small uc l-horz-list-header">Import helpers</span>
               </legend>
-              <button type="button" class="control-action control-link" id="link-path-in" data-href="#">
+              <button type="button" class="control-action control-link" id="image-link-path-in" data-href="#">
                 <span class="control-hint">Show source in folder</span>
               </button>
-              <button type="button" class="control-action control-copy" id="copy-path-in">
+              <button type="button" class="control-action control-copy" id="image-copy-path-in">
                 <span class="control-hint">Copy source path</span>
               </button>
             </fieldset>
@@ -216,19 +216,19 @@
               <legend>
                 <span class="h-small uc l-horz-list-header">Export helpers</span>
               </legend>
-              <button type="button" class="control-action control-link" id="link-path-out" data-href="#">
+              <button type="button" class="control-action control-link" id="image-link-path-out" data-href="#">
                 <span class="control-hint">Show base export in folder</span>
               </button>
-              <button type="button" class="control-action control-copy" id="copy-path-out">
+              <button type="button" class="control-action control-copy" id="image-copy-path-out">
                 <span class="control-hint">Copy base export path</span>
               </button>
-              <button type="button" class="control-action control-copy" id="copy-path-web-embed">
+              <button type="button" class="control-action control-copy" id="image-copy-path-web-embed">
                 <span class="control-hint">Copy base embed path</span>
               </button>
-              <button type="button" class="control-action control-copy" id="copy-lat-long">
+              <button type="button" class="control-action control-copy" id="image-copy-lat-long">
                 <span class="control-hint">Copy lat/long</span>
               </button>
-              <button type="button" class="control-action control-edit" id="edit-webpage">
+              <button type="button" class="control-action control-edit" id="preset-edit-webpage">
                 <span class="control-hint">Edit webpage</span>
               </button>
             </fieldset>
@@ -255,68 +255,68 @@
             <span class="h-small uc l-horz-list-header">Options</span>
           </legend>
           <div class="control-param plain">
-            <label for="focalpoint-write-filename-off focalpoint-write-filename-on" class="radios-label">Write Focalpoint To Filename</label>
+            <label for="options-write-focalpoint-to-filename-off options-write-focalpoint-to-filename-on" class="radios-label">Write Focalpoint To Filename</label>
             <label class="l-radio-label">
-              <input type="radio" name="focalpoint-write-filename" value="off" id="focalpoint-write-filename-off" checked>
+              <input type="radio" name="options-write-focalpoint-to-filename" value="off" id="options-write-focalpoint-to-filename-off" checked>
               Off
             </label>
             <label class="l-radio-label">
-              <input type="radio" name="focalpoint-write-filename" value="on" id="focalpoint-write-filename-on">
+              <input type="radio" name="options-write-focalpoint-to-filename" value="on" id="options-write-focalpoint-to-filename-on">
               On
             </label>
           </div>
           <div class="control-param plain">
-            <label for="focalpoint-write-title-off focalpoint-write-title-on" class="radios-label">Write Focalpoint To EXIF/IPTC Title</label>
+            <label for="options-write-focalpoint-to-title-off options-write-focalpoint-to-title-on" class="radios-label">Write Focalpoint To EXIF/IPTC Title</label>
             <label class="l-radio-label">
-              <input type="radio" name="focalpoint-write-title" value="off" id="focalpoint-write-title-off" checked>
+              <input type="radio" name="options-write-focalpoint-to-title" value="off" id="options-write-focalpoint-to-title-off" checked>
               Off
             </label>
             <label class="l-radio-label">
-              <input type="radio" name="focalpoint-write-title" value="on" id="focalpoint-write-title-on">
+              <input type="radio" name="options-write-focalpoint-to-title" value="on" id="options-write-focalpoint-to-title-on">
               On
             </label>
           </div>
           <div class="control-param plain">
-            <label for="focalpoint-autosave-off focalpoint-autosave-on" class="radios-label">Auto-Save</label>
+            <label for="options-autosave-focalpoint-off options-autosave-focalpoint-on" class="radios-label">Auto-Save</label>
             <label class="l-radio-label">
-              <input type="radio" name="focalpoint-autosave" value="off" id="focalpoint-autosave-off" checked>
+              <input type="radio" name="options-autosave-focalpoint" value="off" id="options-autosave-focalpoint-off" checked>
               Off
             </label>
             <label class="l-radio-label">
-              <input type="radio" name="focalpoint-autosave" value="on" id="focalpoint-autosave-on">
+              <input type="radio" name="options-autosave-focalpoint" value="on" id="options-autosave-focalpoint-on">
               On
             </label>
           </div>
           <div class="control-param plain">
-            <label for="thumbs-autoselect-filtered-off thumbs-autoselect-filtered-on" class="radios-label">Auto-Select First Filter Result</label>
+            <label for="options-autoselect-first-filtered-result-off options-autoselect-first-filtered-result-on" class="radios-label">Auto-Select First Filter Result</label>
             <label class="l-radio-label">
-              <input type="radio" name="thumbs-autoselect-filtered" value="off" id="thumbs-autoselect-filtered-off" checked>
+              <input type="radio" name="options-autoselect-first-filtered-result" value="off" id="options-autoselect-first-filtered-result-off" checked>
               Off
             </label>
             <label class="l-radio-label">
-              <input type="radio" name="thumbs-autoselect-filtered" value="on" id="thumbs-autoselect-filtered-on">
+              <input type="radio" name="options-autoselect-first-filtered-result" value="on" id="options-autoselect-first-filtered-result-on">
               On
             </label>
           </div>
           <div class="control-param plain">
-            <label for="thumbs-filter-uncropped-off thumbs-filter-uncropped-on" class="radios-label">Hide Uncropped Thumbnails</label>
+            <label for="options-hide-uncropped-thumbnails-off options-hide-uncropped-thumbnails-on" class="radios-label">Hide Uncropped Thumbnails</label>
             <label class="l-radio-label">
-              <input type="radio" name="thumbs-filter-uncropped" value="off" id="thumbs-filter-uncropped-off" checked>
+              <input type="radio" name="options-hide-uncropped-thumbnails" value="off" id="options-hide-uncropped-thumbnails-off" checked>
               Off
             </label>
             <label class="l-radio-label">
-              <input type="radio" name="thumbs-filter-uncropped" value="on" id="thumbs-filter-uncropped-on">
+              <input type="radio" name="options-hide-uncropped-thumbnails" value="on" id="options-hide-uncropped-thumbnails-on">
               On
             </label>
           </div>
         </fieldset>
       </form>
     </dialog>
-    <dialog id="settings">
+    <dialog id="presets">
       <div class="l-title title l-cols-1-1">
-        <h2 class="h-title">Manage folder paths</h2>
+        <h2 class="h-title">Manage presets</h2>
         <div>
-          <button class="control-action control-close" value="cancel" formmethod="dialog" id="settings-close">
+          <button class="control-action control-close" value="cancel" formmethod="dialog" id="presets-close">
             <span class="control-hint">Close</span>
           </button>
         </div>
@@ -333,14 +333,14 @@
                 <option value="default">Choose</option>
               </select>
             </div>
-            <button type="button" class="control-action" id="settings-load" value="load">
+            <button type="button" class="control-action" id="preset-load" value="load">
               <span class="control-hint">Load</span>
             </button>
           </div>
           <div class="l-label-input-button">
-            <label for="open-presets">Presets file <span class="label-tip">(for manual editing)</span></label>
-            <input type="text" class="control-action control-source" id="open-presets" readonly>
-            <button type="button" class="control-action" id="open-presets-button">
+            <label for="user-preferences-file">User Preferences file <span class="label-tip">(for manual editing)</span></label>
+            <input type="text" class="control-action control-source" id="user-preferences-file" readonly>
+            <button type="button" class="control-action" id="user-preferences-file-button">
               <span class="control-hint">Open</span>
             </button>
           </div>
@@ -350,30 +350,30 @@
             <span class="h-small uc l-horz-list-header">Add / Edit Preset</span>
           </legend>
           <div class="l-label-input-button">
-            <label for="folder-in">Source folder</label>
-            <input type="text" class="control-action control-source" id="folder-in" readonly>
-            <button type="button" class="control-action" id="folder-in-button">
+            <label for="preset-source-folder">Source folder</label>
+            <input type="text" class="control-action control-source" id="preset-source-folder" readonly>
+            <button type="button" class="control-action" id="preset-source-folder-button">
               <span class="control-hint">Browse</span>
             </button>
           </div>
           <div class="l-label-input-button">
-            <label for="folder-out">Target folder</label>
-            <input type="text" class="control-action control-source" id="folder-out" readonly>
-            <button type="button" class="control-action" id="folder-out-button">
+            <label for="preset-target-folder">Target folder</label>
+            <input type="text" class="control-action control-source" id="preset-target-folder" readonly>
+            <button type="button" class="control-action" id="preset-target-folder-button">
               <span class="control-hint">Browse</span>
             </button>
           </div>
           <div class="l-label-input-button">
-            <label for="folder-website">Website folder</label>
-            <input type="text" class="control-action control-source" id="folder-website" readonly>
-            <button type="button" class="control-action" id="folder-website-button">
+            <label for="preset-website-folder">Website folder</label>
+            <input type="text" class="control-action control-source" id="preset-website-folder" readonly>
+            <button type="button" class="control-action" id="preset-website-folder-button">
               <span class="control-hint">Browse</span>
             </button>
           </div>
           <div class="l-label-input-button">
-            <label for="file-webpage">Webpage file</label>
-            <input type="text" class="control-action control-source" id="file-webpage" readonly>
-            <button type="button" class="control-action" id="file-webpage-button">
+            <label for="preset-website-file">Webpage file</label>
+            <input type="text" class="control-action control-source" id="preset-website-file" readonly>
+            <button type="button" class="control-action" id="preset-website-file-button">
               <span class="control-hint">Browse</span>
             </button>
           </div>
@@ -384,8 +384,8 @@
           </legend>
           <div class="l-label-input-button">
             <label for="save-name" class="label">Preset name</label>
-            <input type="text" class="control-action control-source" id="settings-preset-name" data-required-on="save">
-            <button type="button" class="control-action" id="settings-save" value="save">
+            <input type="text" class="control-action control-source" id="preset-name" data-required-on="save">
+            <button type="button" class="control-action" id="preset-save" value="save">
               <span class="control-hint">Save</span>
             </button>
           </div>
