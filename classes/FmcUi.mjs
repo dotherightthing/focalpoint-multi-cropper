@@ -277,17 +277,11 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleAutoSelectFilteredRadioChange(event) {
-    const {
-      elements
-    } = this;
-
-    const {
-      thumbsAutoSelectFilteredRadios
-    } = elements;
 
     const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ thumbsAutoSelectFiltered: state });
 
-    await thumbsAutoSelectFilteredRadios.setStoredState(state);
+    FmcUi.emitElementEvent(window, 'message', msgObj);
 
     await this.handleFilterSubmit();
   }
@@ -298,17 +292,11 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleThumbsFilterUncroppedRadiosChange(event) {
-    const {
-      elements
-    } = this;
-
-    const {
-      thumbsFilterUncroppedRadios
-    } = elements;
 
     const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ thumbsFilterUncropped: state });
 
-    await thumbsFilterUncroppedRadios.setStoredState(state);
+    FmcUi.emitElementEvent(window, 'message', msgObj);
 
     await this.handleFilterSubmit();
   }
@@ -319,17 +307,11 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleWriteFilenameRadioChange(event) {
-    const {
-      elements
-    } = this;
-
-    const {
-      focalpointWriteFilenameRadios
-    } = elements;
 
     const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
 
-    await focalpointWriteFilenameRadios.setStoredState(state);
+    FmcUi.emitElementEvent(window, 'message', msgObj);
 
     // TODO : Update Photos app etc
   }
@@ -340,17 +322,11 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleWriteTitleRadioChange(event) {
-    const {
-      elements
-    } = this;
-
-    const {
-      focalpointWriteTitleRadios
-    } = elements;
 
     const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });
 
-    await focalpointWriteTitleRadios.setStoredState(state);
+    FmcUi.emitElementEvent(window, 'message', msgObj);
 
     // TODO : Update Photos app etc
   }
@@ -843,6 +819,45 @@ export class FmcUi {
 
   /**
    * @function handleSettingsLoad
+   * @function loadOptions
+   * @summary Load options when the UI initialises to restore previous UI settings
+   * @memberof FmcUi
+   */
+  async loadOptions() {
+    console.log('# X.X - EXEC fmcUi.loadOptions');
+
+    try {
+      const { options } = await window.FmcStore.getOptions(null);
+
+      console.log('options', options);
+
+      const {
+        focalpointAutoSave = 'off',
+        focalpointWriteFilename = 'off',
+        focalpointWriteTitle = 'off',
+        thumbsAutoSelectFiltered = 'off',
+        thumbsFilterUncropped = 'off'
+      } = options;
+
+      // TODO: rename to update:foo to make more readable
+      FmcUi.emitElementEvent(window, 'updateFocalpointAutoSave', { value: focalpointAutoSave });
+      FmcUi.emitElementEvent(window, 'updateFocalpointWriteFilename', { value: focalpointWriteFilename });
+      FmcUi.emitElementEvent(window, 'updateFocalpointWriteTitle', { value: focalpointWriteTitle });
+      FmcUi.emitElementEvent(window, 'updateThumbsAutoSelectFiltered', { value: thumbsAutoSelectFiltered });
+      FmcUi.emitElementEvent(window, 'updateThumbsFilterUncropped', { value: thumbsFilterUncropped });
+
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'Loaded options',
+        statusType: 'success'
+      });
+    } catch (error) {
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'No options to load',
+        statusType: 'info'
+      });
+    }
+  }
+
    * @summary Run when the Presets 'Load' button is pressed
    * @memberof FmcUi
    */
@@ -853,17 +868,7 @@ export class FmcUi {
     } = this;
 
     const {
-      activePresetName,
-      fileWebpageInput,
-      focalpointAutoSaveRadios,
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios,
-      folderInInput,
-      folderOutInput,
-      folderWebsiteInput,
-      presetNamesSelect,
-      thumbsAutoSelectFilteredRadios,
-      thumbsFilterUncroppedRadios
+      presetNamesSelect
     } = elements;
 
     let presetName = presetNamesSelect.element.value;
@@ -922,13 +927,7 @@ export class FmcUi {
       await this.handleFolderInBrowse(null, restore);
       await this.handleFolderOutBrowse(null, restore);
       await this.handleFolderWebsiteBrowse(null, restore);
-      await this.handleFileWebpageBrowse(null, restore);
-
-      await focalpointAutoSaveRadios.restoreStoredState();
-      await focalpointWriteFilenameRadios.restoreStoredState();
-      await focalpointWriteTitleRadios.restoreStoredState();
-      await thumbsAutoSelectFilteredRadios.restoreStoredState();
-      await thumbsFilterUncroppedRadios.restoreStoredState();
+      await this.handlePresetFileWebpageBrowse(null, restore);
 
       fmcThumbsUiInstance.clickSelectedThumb(1);
 

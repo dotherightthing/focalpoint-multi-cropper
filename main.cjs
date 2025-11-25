@@ -125,10 +125,12 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
   ipcMain.handle('FmcStore:getActivePreset', FmcStore.getActivePreset);
   ipcMain.handle('FmcStore:getKeys', FmcStore.getKeys);
+  ipcMain.handle('FmcStore:getOptions', FmcStore.getOptions);
   ipcMain.handle('FmcStore:getPreset', FmcStore.getPreset);
   ipcMain.handle('FmcStore:getPresetNames', FmcStore.getPresetNames);
   ipcMain.handle('FmcStore:getStoreFilePath', FmcStore.getStoreFilePath);
   ipcMain.handle('FmcStore:setActivePresetName', FmcStore.setActivePresetName);
+  ipcMain.handle('FmcStore:setOptions', FmcStore.setOptions);
   ipcMain.handle('FmcStore:setPreset', FmcStore.setPreset);
   ipcMain.handle('FmcStore:setPresetKeys', FmcStore.setPresetKeys);
 

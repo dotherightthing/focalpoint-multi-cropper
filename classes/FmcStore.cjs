@@ -121,6 +121,36 @@ class FmcStore {
   }
 
   /**
+   * @function getOptions
+   * @param {event|null} event - FmcStore:getOptions event captured by ipcMain.handle
+   * @returns {object} options
+   * @memberof FmcStore
+   * @static
+   */
+  static async getOptions(event) {
+    let msgObj;
+
+    const options = await store.get('options') || {};
+
+    if ((typeof options !== 'undefined') && Object.keys(options).length > 0) {
+      msgObj = {
+        statusMessage: 'Loaded options',
+        statusType: 'success'
+      };
+    } else {
+      msgObj = {
+        statusMessage: 'Could not load options',
+        statusType: 'warning'
+      };
+    }
+
+    return {
+      msgObj,
+      options
+    };
+  }
+
+  /**
    * @function getPreset
    * @param {event|null} event - FmcStore:getPreset event captured by ipcMain.handle
    * @param {object} data - Data
@@ -235,6 +265,77 @@ class FmcStore {
   }
 
   /**
+   * @function setOrphanKeys
+   * @param {event|null} event - FmcStore:setOrphanKeys event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {Array} data.keyValuePairs - Objects (key - val pairs)
+   * @memberof FmcStore
+   * @static
+   */
+  static async setOrphanKeys(event, data) {
+    /*
+    "foo": "bar"
+    */
+
+    const {
+      keyValuePairs
+    } = data;
+
+    keyValuePairs.forEach(obj => {
+      const [
+        key,
+        value
+      ] = Object.entries(obj)[0];
+
+      store.set(key, value, (error) => {
+        if (error) {
+          throw error;
+        }
+      });
+    });
+  }
+
+  /**
+   * @function setOptionsKeys
+   * @param {event|null} event - FmcStore:setOptionsKeys event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {Array} data.keyValuePairs - Objects (key - val pairs)
+   * @memberof FmcStore
+   * @static
+   */
+  static async setOptionsKeys(event, data) {
+    /*
+    "options": [
+      {
+        "foo": "bar"
+        "bar": "baz"
+      }
+    ]
+    */
+
+    const {
+      keyValuePairs
+    } = data;
+
+    let { options = {} } = await FmcStore.getOptions(null);
+
+    keyValuePairs.forEach(obj => {
+      const [
+        key,
+        value // can be anything incl an object
+      ] = Object.entries(obj)[0];
+
+      options[key] = value;
+    });
+
+    store.set('options', options, (error) => {
+      if (error) {
+        throw error;
+      }
+    });
+  }
+
+  /**
    * @function setPresetKeys
    * @param {event|null} event - FmcStore:setPresetKeys event captured by ipcMain.handle
    * @param {object} data - Data
@@ -296,20 +397,44 @@ class FmcStore {
           throw error;
         }
       });
-    } else {
-      keyValuePairs.forEach(obj => {
-        const [
-          key,
-          value
-        ] = Object.entries(obj)[0];
-
-        store.set(key, value, (error) => {
-          if (error) {
-            throw error;
           }
+  }
+
+  /**
+   * @function setOptions
+   * @param {event} event - FmcStore:setOptions event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {string} data.name - Preset name
+   * @returns {object} msgObj
+   * @memberof FmcStore
+   * @static
+   */
+  static async setOptions(event, data) {
+    const keyValuePairs = [];
+
+    const entries = Object.entries(data);
+
+    entries.forEach(entry => {
+      const key = entry[0];
+      const val = entry[1];
+
+      keyValuePairs.push({
+        [key]: val
+      });
+    });
+
+    keyValuePairs.push({
+      lastModified: new Date().toLocaleString() // "13/08/2023, 8:52:55 pm"
+    });
+
+    await FmcStore.setOptionsKeys(null, { keyValuePairs });
+
+    return new Promise(resolve => {
+      resolve({
+        statusMessage: 'Saved options',
+        statusType: 'success'
         });
       });
-    }
   }
 
   /**

@@ -153,7 +153,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     focalpointAutoSaveRadios: new FmcRadiosUi({
       selector: 'input[name="focalpoint-autosave"]',
-      storeKey: 'focalpointAutoSave',
+      updateListener: 'updateFocalpointAutoSave',
       changeHandler: [ fmcUi, 'handleAutosaveRadioChange' ]
     }),
     focalpointDeleteButton: new FmcButtonUi({
@@ -171,12 +171,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     focalpointWriteFilenameRadios: new FmcRadiosUi({
       selector: 'input[name="focalpoint-write-filename"]',
-      storeKey: 'focalpointWriteFilename',
+      updateListener: 'updateFocalpointWriteFilename',
       changeHandler: [ fmcUi, 'handleWriteFilenameRadioChange' ]
     }),
     focalpointWriteTitleRadios: new FmcRadiosUi({
       selector: 'input[name="focalpoint-write-title"]',
-      storeKey: 'focalpointWriteTitle',
+      updateListener: 'updateFocalpointWriteTitle',
       changeHandler: [ fmcUi, 'handleWriteTitleRadioChange' ]
     }),
     focalpointXInput: new FmcTextfieldUi({
@@ -263,7 +263,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
       selector: 'input[name="thumbs-autoselect-filtered"]',
-      storeKey: 'thumbsAutoSelectFiltered',
+      updateListener: 'updateThumbsAutoSelectFiltered',
       changeHandler: [ fmcUi, 'handleAutoSelectFilteredRadioChange' ]
     }),
     thumbFileName: new FmcTextDisplayUi({
@@ -271,7 +271,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }),
     thumbsFilterUncroppedRadios: new FmcRadiosUi({
       selector: 'input[name="thumbs-filter-uncropped"]',
-      storeKey: 'thumbsFilterUncropped',
+      updateListener: 'updateThumbsFilterUncropped',
       changeHandler: [ fmcUi, 'handleThumbsFilterUncroppedRadiosChange' ]
     }),
     thumbsContainer: document.getElementById(thumbsContainerId),
@@ -292,6 +292,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   await fmcUi.restoreSettings();
 
   if (typeof window.electronAPI === 'undefined') {
+  await fmcUi.loadOptions();
     FmcUi.testData();
   }
 });

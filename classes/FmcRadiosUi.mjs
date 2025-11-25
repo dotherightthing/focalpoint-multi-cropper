@@ -13,20 +13,24 @@ export class FmcRadiosUi {
     const {
       changeHandler,
       selector,
-      storeKey
+      updateListener
     } = config;
 
     Object.assign(this, {
       changeHandler,
       elements: document.querySelectorAll(selector),
       selector,
-      storeKey
+      updateListener
     });
 
     if (this.changeHandler) {
       const [ instance, method ] = this.changeHandler;
 
       this.elements.forEach(el => el.addEventListener('change', instance[method].bind(instance)));
+    }
+
+    if (this.updateListener !== '') {
+      window.addEventListener(this.updateListener, this.handleUpdate.bind(this));
     }
   }
 
@@ -72,19 +76,6 @@ export class FmcRadiosUi {
     this._selector = dtrtValidate.validate(selector, 'string', 'FmcRadiosUi.selector');
   }
 
-  /**
-   * storeKey
-   * @type {object}
-   * @memberof FmcRadiosUi
-   */
-  get storeKey() {
-    return this._storeKey;
-  }
-
-  set storeKey(storeKey) {
-    this._storeKey = dtrtValidate.validate(storeKey, 'string', 'FmcRadiosUi.storeKey');
-  }
-
   /* Instance methods */
 
   /**
@@ -120,46 +111,22 @@ export class FmcRadiosUi {
   }
 
   /**
-   * @function getStoredState
-   * @returns {boolean} state
-   * @memberof FmcRadiosUi
+   * @function handleUpdate
+   * @param {object} event - Custom event
+   * @memberof FmcButtonUi
    */
-  async getStoredState() {
-    const keys = await window.electronAPI.getKeys({
-      keys: [ this.storeKey ]
-    });
+  handleUpdate(event) {
+    console.log('# X.X - EXEC handleUpdate');
+    const {
+      detail = {}
+    } = event;
 
-    return keys[this.storeKey];
-  }
+    const {
+      value
+    } = detail;
 
-  /**
-   * @function setStoredState
-   * @memberof FmcRadiosUi
-   */
-  async setStoredState() {
-    const kvPair = {};
+    this.setState(value);
 
-    kvPair[this.storeKey] = this.getState();
-
-    await window.electronAPI.setKeys({
-      keyValuePairs: [ kvPair ]
-    });
-  }
-
-  /**
-   * @function restoreStoredState
-   * @summary Sync UI to stored state
-   * @memberof FmcRadiosUi
-   */
-  async restoreStoredState() {
-    const storedState = await this.getStoredState();
-    const checkedRadio = this.setState(storedState);
-    const waitForFmcCroppersUiInstance = 2000;
-
-    if (storedState === 'on') {
-      setTimeout(() => {
-        FmcUi.emitElementEvent(checkedRadio, 'change');
-      }, waitForFmcCroppersUiInstance);
-    }
+    FmcUi.emitElementEvent(this.element, 'change');
   }
 }
