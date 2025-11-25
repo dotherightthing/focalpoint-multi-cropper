@@ -103,7 +103,7 @@ export class FmcCropperImgUi {
     if (addListener) {
       this.element.addEventListener('ready', instance[method].bind(instance));
     } else if (removeListener) {
-      this.element.removeListener('ready', instance[method].bind(instance));
+      this.element.removeEventListener('ready', instance[method].bind(instance));
     }
   }
 }

@@ -478,6 +478,7 @@ export class FmcCroppersUi {
       }
     });
 
+    FmcUi.emitElementEvent(window, 'updateLastCropperListener', { removeListener: true });
     this.croppers = [];
   }
 
@@ -854,6 +855,7 @@ export class FmcCroppersUi {
     this.masterCropper = this.croppers.filter(cropper => cropper.role === 'master')[0];
     this.slaveCroppers = this.croppers.filter(cropper => cropper.role === 'slave');
 
+    FmcUi.emitElementEvent(window, 'updateLastCropperListener', { addListener: true });
     // if (typeof document.createElement('cropper').style.transition === 'undefined') {
     //   rotateEl.prop('disabled', true);
     // }
