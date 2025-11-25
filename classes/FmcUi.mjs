@@ -905,7 +905,7 @@ export class FmcUi {
    * @summary Run when the Presets 'Load' button is pressed
    * @memberof FmcUi
    */
-  async handlePresetLoad(event) {
+  async handlePresetLoad(event) { // eslint-disable-line no-unused-vars
     FmcUi.log('# 2.B - EXEC fmcUi.handlePresetLoad');
     const {
       elements,

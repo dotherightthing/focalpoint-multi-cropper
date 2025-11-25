@@ -125,7 +125,7 @@ class FmcStore {
    * @memberof FmcStore
    * @static
    */
-  static async getOptions(event) {
+  static async getOptions(event) { // eslint-disable-line no-unused-vars
     let msgObj;
 
     const options = await store.get('options') || {};
