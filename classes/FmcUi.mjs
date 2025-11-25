@@ -222,7 +222,7 @@ export class FmcUi {
     let path = '';
 
     if ((pathWebEmbed !== '') && (pathOut !== '')) {
-      path = await window.electronAPI.getRelativePath({
+      path = await window.FmcFile.getRelativePath({
         base: pathWebsite,
         from: pathWebEmbed,
         to: pathOut
@@ -348,7 +348,7 @@ export class FmcUi {
     const pathSeparator = filePath.lastIndexOf('/');
     const folderPath = filePath.slice(0, pathSeparator);
 
-    const statusMessage = await window.electronAPI.openInEditor({
+    const statusMessage = await window.FmcFile.openInEditor({
       editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
       fileDescription: 'webpage',
       folderPath,
@@ -377,7 +377,7 @@ export class FmcUi {
     const { targetFolder } = folderWebsiteInput.element.dataset;
     const { targetFile } = fileWebpageInput.element.dataset;
 
-    const statusMessage = await window.electronAPI.openInEditor({
+    const statusMessage = await window.FmcFile.openInEditor({
       editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
       fileDescription: 'webpage',
       folderPath: targetFolder,
@@ -467,7 +467,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFileWebpageBrowse(event, restore = false) {
-    const { fileName, filePath, folderPath } = await window.electronAPI.selectFile({
+    const { fileName, filePath, folderPath } = await window.FmcFile.selectFile({
       dialogTitle: 'Webpage file',
       restore,
       storeKey: 'fileWebpage'
@@ -660,7 +660,7 @@ export class FmcUi {
     } = this;
 
     // folderPath = targetFolder
-    const { folderName, folderPath, imagesData } = await window.electronAPI.selectFolder({
+    const { folderName, folderPath, imagesData } = await window.FmcFile.selectFolder({
       dialogTitle: 'Source folder',
       retrieveImagesData: true,
       restore, // loads folderName and folderPath from preset
@@ -700,7 +700,7 @@ export class FmcUi {
       folderOutInputDependent
     } = elements;
 
-    const { folderName, folderPath } = await window.electronAPI.selectFolder({
+    const { folderName, folderPath } = await window.FmcFile.selectFolder({
       dialogTitle: 'Export folder',
       retrieveImagesData: false,
       restore,
@@ -729,7 +729,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handleFolderWebsiteBrowse(event, restore = false) {
-    const { folderName, folderPath } = await window.electronAPI.selectFolder({
+    const { folderName, folderPath } = await window.FmcFile.selectFolder({
       dialogTitle: 'Website folder',
       retrieveImagesData: false,
       restore,
@@ -874,16 +874,14 @@ export class FmcUi {
     let presetName = presetNamesSelect.element.value;
 
     if (presetName !== '') {
-      await window.electronAPI.setActivePresetName({
-        presetName
-      });
 
       activePresetName.element.textContent = presetName;
     }
+    await window.FmcStore.setActivePresetName({ presetName });
 
     try {
       // gets the active preset set above or one previously set
-      const preset = await window.electronAPI.getActivePreset(null);
+      const preset = await window.FmcStore.getActivePreset(null);
 
       ({ name: presetName } = preset);
 
@@ -950,12 +948,12 @@ export class FmcUi {
   async handleSettingsOpen() {
     FmcUi.emitElementEvent(window, 'updatePresets', {
       label: 'Select a preset',
-      options: await window.electronAPI.getPresetNames()
+      options: await window.FmcStore.getPresetNames()
     });
 
     await this.selectActivePreset();
 
-    FmcUi.emitElementEvent(window, 'updatePresetsFile', { value: await window.electronAPI.getStoreFilePath() });
+    FmcUi.emitElementEvent(window, 'updatePresetsFile', { value: await window.FmcStore.getStoreFilePath() });
   }
 
   /**
@@ -965,7 +963,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async selectActivePreset() {
-    const preset = await window.electronAPI.getActivePreset(null);
+    const preset = await window.FmcStore.getActivePreset(null);
 
     if (typeof preset === 'undefined') {
       FmcUi.emitElementEvent(window, 'updateStatus', {
@@ -1022,7 +1020,7 @@ export class FmcUi {
 
     const name = presetNameInput.element.value;
 
-    const msgObj = await window.electronAPI.setPreset({
+    const msgObj = await window.FmcStore.setPreset({
       fileWebpage,
       folderIn,
       folderOut,
@@ -1032,9 +1030,7 @@ export class FmcUi {
 
     FmcUi.emitElementEvent(window, 'message', msgObj);
 
-    await window.electronAPI.setActivePresetName({
-      presetName: name
-    });
+    await window.FmcStore.setActivePresetName({ presetName: name });
 
     activePresetName.element.textContent = name;
 
@@ -1042,7 +1038,7 @@ export class FmcUi {
 
     FmcUi.emitElementEvent(window, 'updatePresets', {
       label: 'Select a preset',
-      options: await window.electronAPI.getPresetNames(),
+      options: await window.FmcStore.getPresetNames(),
       value: name
     });
   }
@@ -1158,7 +1154,7 @@ export class FmcUi {
       if (key === 'Enter') {
         FmcUi.emitElementEvent(filterSubmitButton, 'click', {});
       } else if (metaKey && (key === 'v')) {
-        FmcUi.emitElementEvent(window, 'updateFilter', { value: await window.electronAPI.copyFromClipboard() });
+        FmcUi.emitElementEvent(window, 'updateFilter', { value: await window.FmcFile.copyFromClipboard() });
       }
     } else if (document.activeElement.classList.contains(thumbButtonClass)) {
       if (key === 'ArrowLeft') {
@@ -1263,7 +1259,7 @@ export class FmcUi {
     await new Promise(resolve => {
       // timeout prevents generic crops
       setTimeout(async () => {
-        const pathOutExists = checkPathExists ? await window.electronAPI.pathExists({ path: pathOut }) : true;
+        const pathOutExists = checkPathExists ? await window.FmcFile.pathExists({ path: pathOut }) : true;
         let pathOutSafe = '';
         let pathWebEmbedSafe = '';
 

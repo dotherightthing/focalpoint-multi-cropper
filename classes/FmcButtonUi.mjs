@@ -143,7 +143,7 @@ export class FmcButtonUi {
   static handleCopyPath(event) {
     event.preventDefault();
 
-    if (typeof window.electronAPI === 'undefined') {
+    if (typeof window.FmcFile === 'undefined') {
       FmcUi.emitElementEvent(window, 'updateStatus', {
         statusMessage: 'Error: Clipboard operations require Electron',
         statusType: 'warning'
@@ -158,9 +158,7 @@ export class FmcButtonUi {
       const title = eventTarget.getAttribute('title');
 
       if (title) {
-        window.electronAPI.copyToClipboard({
-          text: title
-        });
+        window.FmcFile.copyToClipboard({ text: title });
 
         FmcUi.emitElementEvent(window, 'updateStatus', {
           statusMessage: 'Value copied to clipboard',
@@ -180,7 +178,7 @@ export class FmcButtonUi {
   static async handleLinkToPath(event) {
     event.preventDefault();
 
-    if (typeof window.electronAPI === 'undefined') {
+    if (typeof window.FmcFile === 'undefined') {
       FmcUi.emitElementEvent(window, 'updateStatus', {
         statusMessage: 'Error: Finder links require Electron',
         statusType: 'warning'
@@ -195,9 +193,7 @@ export class FmcButtonUi {
       const { href } = eventTarget.dataset;
 
       if (href && (href !== '#')) {
-        window.electronAPI.openInFinder({
-          href
-        });
+        window.FmcFile.openInFinder({ href });
       }
     }
   }

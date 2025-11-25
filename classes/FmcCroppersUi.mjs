@@ -648,7 +648,7 @@ export class FmcCroppersUi {
     const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
 
     const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await window.electronAPI.getImageTitle({ imagePath: src });
+    const { Title } = await window.FmcFile.getImageTitle({ imagePath: src });
 
     const imagePath = writeTitle ? Title : src;
 
@@ -1227,7 +1227,7 @@ export class FmcCroppersUi {
     const {
       baseExportPath,
       counts
-    } = await window.electronAPI.resizeAndCropImage({
+    } = await window.FmcFile.resizeAndCropImage({
       fileName,
       quality: 75,
       targetFolder,
@@ -1260,9 +1260,7 @@ export class FmcCroppersUi {
 
     const fileName = masterCropper.cropperInstance.element.src;
 
-    const msgObj = await window.electronAPI.deleteImagePercentXYFromImage({
-      fileName
-    });
+    const msgObj = await window.FmcFile.deleteImagePercentXYFromImage({ fileName });
 
     const {
       statusMessage: newFileName
@@ -1321,7 +1319,7 @@ export class FmcCroppersUi {
     } = elements;
 
     const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await window.electronAPI.getImageTitle({ imagePath: src });
+    const { Title } = await window.FmcFile.getImageTitle({ imagePath: src });
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
     const imagePath = writeTitle ? Title : src;
@@ -1500,7 +1498,7 @@ export class FmcCroppersUi {
       errorMsg = 'Input out of range - focalpoint not saved to filename';
     } else {
       // cannot place await inside promise
-      newFileName = await window.electronAPI.saveImagePercentXYToImage({
+      newFileName = await window.FmcFile.saveImagePercentXYToImage({
         fileName,
         imageFlags,
         imagePercentX,

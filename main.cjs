@@ -112,17 +112,17 @@ app.whenReady().then(() => {
 
   ipcMain.handle('FmcFile:copyFromClipboard', FmcFile.copyFromClipboard);
   ipcMain.handle('FmcFile:copyToClipboard', FmcFile.copyToClipboard);
+  ipcMain.handle('FmcFile:deleteImagePercentXYFromImage', FmcFile.deleteImagePercentXYFromImage);
   ipcMain.handle('FmcFile:getFileNameParts', FmcFile.getFileNameParts);
+  ipcMain.handle('FmcFile:getImageTitle', FmcFile.getImageTitle);
   ipcMain.handle('FmcFile:getRelativePath', FmcFile.getRelativePath);
   ipcMain.handle('FmcFile:openInEditor', FmcFile.openInEditor);
   ipcMain.handle('FmcFile:openInFinder', FmcFile.openInFinder);
   ipcMain.handle('FmcFile:pathExists', FmcFile.pathExists);
+  ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
+  ipcMain.handle('FmcFile:saveImagePercentXYToImage', FmcFile.saveImagePercentXYToImage);
   ipcMain.handle('FmcFile:selectFile', FmcFile.selectFile);
   ipcMain.handle('FmcFile:selectFolder', FmcFile.selectFolder);
-  ipcMain.handle('FmcFile:deleteImagePercentXYFromImage', FmcFile.deleteImagePercentXYFromImage);
-  ipcMain.handle('FmcFile:getImageTitle', FmcFile.getImageTitle);
-  ipcMain.handle('FmcFile:saveImagePercentXYToImage', FmcFile.saveImagePercentXYToImage);
-  ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
   ipcMain.handle('FmcStore:getActivePreset', FmcStore.getActivePreset);
   ipcMain.handle('FmcStore:getKeys', FmcStore.getKeys);
   ipcMain.handle('FmcStore:getOptions', FmcStore.getOptions);

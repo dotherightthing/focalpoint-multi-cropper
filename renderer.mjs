@@ -291,8 +291,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   await fmcUi.restoreSettings();
 
-  if (typeof window.electronAPI === 'undefined') {
   await fmcUi.loadOptions();
+  if ((typeof window.FmcFile === 'undefined') || (typeof window.FmcStore === 'undefined')) {
     FmcUi.testData();
   }
 });
