@@ -125,8 +125,19 @@ export class FmcRadiosUi {
       value
     } = detail;
 
+    const {
+      elements
+    } = this;
+
     this.setState(value);
 
-    FmcUi.emitElementEvent(this.element, 'change');
+    const elementsArray = Array.from(elements);
+    let checkedElement = elementsArray.filter(el => el.checked);
+
+    if (!checkedElement.length) {
+      checkedElement = elementsArray[0];
+    }
+
+    FmcUi.emitElementEvent(checkedElement[0], 'change');
   }
 }
