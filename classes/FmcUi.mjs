@@ -1381,14 +1381,10 @@ export class FmcUi {
    * @static
    */
   static emitEvent(elementId, eventName, eventDetail = {}) {
-    const event = new CustomEvent(eventName, {
-      bubbles: true, // stop with event.stopPropagation()
-      cancelable: true, // cancel with event.preventDefault()
-      // composed // web components only
-      detail: eventDetail
-    });
 
-    document.getElementById(elementId).dispatchEvent(event);
+    const element = document.getElementById(elementId);
+
+    FmcUi.emitElementEvent(element, eventName, eventDetail);
   }
 
   /**
