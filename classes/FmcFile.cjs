@@ -523,12 +523,14 @@ module.exports = class FmcFile {
       fileName
     } = data;
 
+    const regex = FmcFile.getFocalpointRegex();
+    const extName = path.extname(fileName); // .ext
     const fileNameAndExt = path.basename(fileName); // Filename.ext | Filename__[nn%,nn%].ext
     const fileNameAndExtClean = fileNameAndExt.replace(/%20/g, ' ');
-    const extName = path.extname(fileName); // .ext
+    const fileNameClean = fileName.replace('file://', '').replace(/%20/g, ' '); // /Volumes/Foo/Bar/Baz/Filename.ext
     const fileNameOnly = fileNameAndExt.replace(extName, ''); // Filename | Filename__[nn%,nn%]
     const fileNameOnlyClean = fileNameOnly.replace(/%20/g, ' ');
-    const fileNameClean = fileName.replace('file://', '').replace(/%20/g, ' '); // /Volumes/Foo/Bar/Baz/Filename.ext
+    const fileNameOnlyCleanNoRegex = fileNameOnlyClean.replace(regex, ''); // foo
     const folderPath = path.dirname(fileNameClean); // /Volumes/Foo/Bar/Baz
     const relativeFilePath = path.relative(process.cwd(), folderPath + '/' + fileNameAndExtClean);
 
@@ -539,6 +541,7 @@ module.exports = class FmcFile {
       fileNameClean,
       fileNameOnly,
       fileNameOnlyClean,
+      fileNameOnlyCleanNoRegex,
       folderPath,
       relativeFilePath
     };
