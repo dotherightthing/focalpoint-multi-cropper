@@ -253,7 +253,7 @@ class FmcStore {
       presetName
     } = data;
 
-    FmcStore.setPresetKeys(null, {
+    FmcStore.setOrphanKeys(null, {
       keyValuePairs: [
         {
           activePreset: presetName
