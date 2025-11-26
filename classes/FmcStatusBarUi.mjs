@@ -120,13 +120,15 @@ export class FmcStatusBarUi {
       statusType = 'info' // info|success|warning
     } = event.detail;
 
-    const statusTypeClasses = statusTypes.map(st => `msg-${st}`).join('","');
+    const statusTypeClasses = statusTypes.map(st => `msg-${st}`);
 
     // ensure each message is displayed
     await new Promise(resolve => {
       // fires before the next repaint (when queued UI changes are applied)
       requestAnimationFrame(() => {
-        statusTypeElement.classList.remove(statusTypeClasses);
+        statusTypeClasses.forEach(stc => {
+          statusTypeElement.classList.remove(stc);
+        });
         statusTypeElement.classList.add(`msg-${statusType}`);
         statusTypeElement.textContent = statusType;
         statusMessageElement.textContent = (statusMessage !== '') ? `${statusMessage}.` : statusMessage;
