@@ -1490,8 +1490,15 @@ export class FmcUi {
    */
   static log(args) { // eslint-disable-line no-unused-vars
     if (FmcUi.debug) {
-      console.group('debug');
-      [ ...arguments ].forEach(arg => console.log(arg));
+      const argsArray = [ ...arguments ];
+      const firstArgIsStr = typeof argsArray[0] === 'string';
+      const label = firstArgIsStr ? argsArray[0] : 'debug';
+      if (firstArgIsStr) {
+        argsArray.shift();
+      }
+
+      console.groupCollapsed(label);
+      argsArray.forEach(arg => console.log(arg));
       console.groupEnd();
     }
   }
