@@ -1033,7 +1033,6 @@ export class FmcUi {
     } = this;
 
     const {
-      activePresetName,
       fileWebpageInput,
       folderInInput,
       folderOutInput,
@@ -1076,7 +1075,7 @@ export class FmcUi {
 
     await window.FmcStore.setActivePresetName({ presetName: name });
 
-    activePresetName.element.textContent = name;
+    FmcUi.emitElementEvent(window, 'updatePresetNameActive', { value: name });
 
     fmcThumbsUiInstance.clickSelectedThumb(1);
 

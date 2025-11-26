@@ -19,6 +19,10 @@ export class FmcTextDisplayUi {
       selector,
       updateListener
     });
+
+    if (this.updateListener !== '') {
+      window.addEventListener(this.updateListener, this.handleUpdate.bind(this));
+    }
   }
 
   /* Getters and Setters */
