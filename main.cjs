@@ -113,6 +113,7 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:copyFromClipboard', FmcFile.copyFromClipboard);
   ipcMain.handle('FmcFile:copyToClipboard', FmcFile.copyToClipboard);
   ipcMain.handle('FmcFile:deleteImagePercentXYFromImage', FmcFile.deleteImagePercentXYFromImage);
+  ipcMain.handle('FmcFile:exiftool', FmcFile.exiftool);
   ipcMain.handle('FmcFile:getFileNameParts', FmcFile.getFileNameParts);
   ipcMain.handle('FmcFile:getImageTitle', FmcFile.getImageTitle);
   ipcMain.handle('FmcFile:getRelativePath', FmcFile.getRelativePath);

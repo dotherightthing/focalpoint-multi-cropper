@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld('FmcFile', {
   copyFromClipboard: (data) => ipcRenderer.invoke('FmcFile:copyFromClipboard', data),
   copyToClipboard: (data) => ipcRenderer.invoke('FmcFile:copyToClipboard', data),
   deleteImagePercentXYFromImage: (data) => ipcRenderer.invoke('FmcFile:deleteImagePercentXYFromImage', data),
+  exiftool: (data) => ipcRenderer.invoke('FmcFile:exiftool', data),
   getFileNameParts: (data) => ipcRenderer.invoke('FmcFile:getFileNameParts', data),
   getImageTitle: (data) => ipcRenderer.invoke('FmcFile:getImageTitle', data),
   getRelativePath: (data) => ipcRenderer.invoke('FmcFile:getRelativePath', data),
