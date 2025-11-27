@@ -685,6 +685,7 @@ export class FmcCroppersUi {
     const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
+    // TODO when XY is sourced from image (for pre-writeTitle files), "Focalpoint changed but not saved to title" appears
     const msgTarget = (() => {
       switch (true) {
       case writeFilename && writeTitle:
