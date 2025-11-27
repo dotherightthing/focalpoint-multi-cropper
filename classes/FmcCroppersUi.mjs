@@ -1723,7 +1723,7 @@ export class FmcCroppersUi {
           });
 
           // TODO what does this do?
-          FmcUi.emitEvent(croppersId, 'imageRenamed', { newFileNameWithPath });
+          FmcUi.emitEvent(croppersId, 'imageRenamed', { newFileName: newFileNameWithPath });
 
           // TODO update to save to title or combine with setFocalpointSaveState
           resolve({
