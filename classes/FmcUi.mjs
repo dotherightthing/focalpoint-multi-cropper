@@ -804,7 +804,8 @@ export class FmcUi {
     } = selectors;
 
     const { newFileName: src } = event.detail;
-    const { selectedClass } = fmcThumbsUiInstance;
+    const { selectors: fmcThumbsUiSelectors } = fmcThumbsUiInstance;
+    const { selectedClass } = fmcThumbsUiSelectors;
     const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromImage(src);
     const thumbButton = document.querySelector(`.${selectedClass}`);
     const thumbImg = document.querySelector(`.${selectedClass} .${thumbImgClass}`);
