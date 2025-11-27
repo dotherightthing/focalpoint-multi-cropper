@@ -804,7 +804,11 @@ export class FmcUi {
       thumbImgClass
     } = selectors;
 
-    const { newFileName: src } = event.detail;
+    const {
+      detail
+    } = event;
+
+    const { newFileName: src } = detail;
     const { selectors: fmcThumbsUiSelectors } = fmcThumbsUiInstance;
     const { selectedClass } = fmcThumbsUiSelectors;
     const { Title } = await FmcCroppersUi.getImageTitle(src);
