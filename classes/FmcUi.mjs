@@ -217,12 +217,13 @@ export class FmcUi {
   }
 
   /**
-   * @function handleAutosaveRadioChange
+   * @function handleAutosaveRadiosChange
+   * @summary Actions to run after a "Auto-Save" radio button is checked
    * @param {object} event - Change event
    * @memberof FmcUi
    */
-  async handleAutosaveRadioChange(event) {
-    FmcUi.log('FmcUi.handleAutosaveRadioChange', event);
+  async handleAutosaveRadiosChange(event) {
+    FmcUi.log('FmcUi.handleAutosaveRadiosChange', event);
     const {
       elements,
       fmcCroppersUiInstance,
@@ -257,12 +258,13 @@ export class FmcUi {
   }
 
   /**
-   * @function handleAutoSelectFilteredRadioChange
+   * @function handleAutoSelectFilteredRadiosChange
+   * @summary Actions to run after a "Auto-Select First Filter Result" radio button is checked
    * @param {object} event - Change event
    * @memberof FmcUi
    */
-  async handleAutoSelectFilteredRadioChange(event) {
-    FmcUi.log('FmcUi.handleAutoSelectFilteredRadioChange', event);
+  async handleAutoSelectFilteredRadiosChange(event) {
+    FmcUi.log('FmcUi.handleAutoSelectFilteredRadiosChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsAutoSelectFiltered: state });
@@ -882,6 +884,7 @@ export class FmcUi {
 
   /**
    * @function handlePresetSave
+   * @summary Actions to run after the "Preset name" "Save" button is clicked
    * @memberof FmcUi
    */
   async handlePresetSave() {
@@ -947,6 +950,7 @@ export class FmcUi {
 
   /**
    * @function handleThumbClick
+   * @summary Actions to run after the thumbnails list element is clicked
    * @param {object} event - Click event
    * @memberof FmcUi
    */
@@ -1029,6 +1033,7 @@ export class FmcUi {
 
   /**
    * @function handleThumbsFilterUncroppedRadiosChange
+   * @summary Actions to run after a "Hide Uncropped Thumbnails" radio button is checked
    * @param {object} event - Change event
    * @memberof FmcUi
    */
@@ -1045,6 +1050,7 @@ export class FmcUi {
 
   /**
    * @function handleWindowKeydown
+   * @summary Actions to run after a key is pressed down when the app window has focus
    * @param {object} event - Keydown event
    * @memberof FmcUi
    */
@@ -1089,6 +1095,7 @@ export class FmcUi {
 
   /**
    * @function handleWindowResize
+   * @summary Actions to run after the app window is resized
    * @memberof FmcUi
    */
   handleWindowResize() {
@@ -1101,12 +1108,13 @@ export class FmcUi {
   }
 
   /**
-   * @function handleWriteFilenameRadioChange
+   * @function handleWriteFilenameRadiosChange
+   * @summary Actions to run after a "Write Focalpoint To Filename" radio button is checked
    * @param {object} event - Change event
    * @memberof FmcUi
    */
-  async handleWriteFilenameRadioChange(event) {
-    FmcUi.log('FmcUi.handleWriteFilenameRadioChange', event);
+  async handleWriteFilenameRadiosChange(event) {
+    FmcUi.log('FmcUi.handleWriteFilenameRadiosChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
@@ -1117,12 +1125,13 @@ export class FmcUi {
   }
 
   /**
-   * @function handleWriteTitleRadioChange
+   * @function handleWriteTitleRadiosChange
+   * @summary Actions to run after a "Write Focalpoint To EXIF/IPTC Title" radio button is checked
    * @param {object} event - Change event
    * @memberof FmcUi
    */
-  async handleWriteTitleRadioChange(event) {
-    FmcUi.log('FmcUi.handleWriteTitleRadioChange', event);
+  async handleWriteTitleRadiosChange(event) {
+    FmcUi.log('FmcUi.handleWriteTitleRadiosChange', event);
 
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });

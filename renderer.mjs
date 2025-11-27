@@ -157,7 +157,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     focalpointAutoSaveRadios: new FmcRadiosUi({
       selector: 'input[name="options-autosave-focalpoint"]',
       updateListener: 'updateFocalpointAutoSave',
-      changeHandler: [ fmcUi, 'handleAutosaveRadioChange' ]
+      changeHandler: [ fmcUi, 'handleAutosaveRadiosChange' ]
     }),
     focalpointDeleteButton: new FmcButtonUi({
       selector: '#delete-focalpoint',
@@ -175,12 +175,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     focalpointWriteFilenameRadios: new FmcRadiosUi({
       selector: 'input[name="options-write-focalpoint-to-filename"]',
       updateListener: 'updateFocalpointWriteFilename',
-      changeHandler: [ fmcUi, 'handleWriteFilenameRadioChange' ]
+      changeHandler: [ fmcUi, 'handleWriteFilenameRadiosChange' ]
     }),
     focalpointWriteTitleRadios: new FmcRadiosUi({
       selector: 'input[name="options-write-focalpoint-to-title"]',
       updateListener: 'updateFocalpointWriteTitle',
-      changeHandler: [ fmcUi, 'handleWriteTitleRadioChange' ]
+      changeHandler: [ fmcUi, 'handleWriteTitleRadiosChange' ]
     }),
     focalpointXInput: new FmcTextfieldUi({
       selector: '#focalpoint-x',
@@ -267,7 +267,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     thumbsAutoSelectFilteredRadios: new FmcRadiosUi({
       selector: 'input[name="options-autoselect-first-filtered-result"]',
       updateListener: 'updateThumbsAutoSelectFiltered',
-      changeHandler: [ fmcUi, 'handleAutoSelectFilteredRadioChange' ]
+      changeHandler: [ fmcUi, 'handleAutoSelectFilteredRadiosChange' ]
     }),
     thumbFileName: new FmcTextDisplayUi({
       selector: '#thumb-filename'
