@@ -123,6 +123,7 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
   ipcMain.handle('FmcFile:selectFile', FmcFile.selectFile);
   ipcMain.handle('FmcFile:selectFolder', FmcFile.selectFolder);
+  ipcMain.handle('FmcFile:setTitleInPhotosApp', FmcFile.setTitleInPhotosApp);
   ipcMain.handle('FmcStore:getActivePreset', FmcStore.getActivePreset);
   ipcMain.handle('FmcStore:getKeys', FmcStore.getKeys);
   ipcMain.handle('FmcStore:getOptions', FmcStore.getOptions);

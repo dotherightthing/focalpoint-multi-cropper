@@ -29,6 +29,7 @@ contextBridge.exposeInMainWorld('FmcFile', {
   renameSync: (data) => ipcRenderer.invoke('FmcFile:renameSync', data),
   selectFile: (data) => ipcRenderer.invoke('FmcFile:selectFile', data),
   selectFolder: (data) => ipcRenderer.invoke('FmcFile:selectFolder', data),
+  setTitleInPhotosApp: (data) => ipcRenderer.invoke('FmcFile:setTitleInPhotosApp', data),
   resizeAndCropImage: (data) => ipcRenderer.invoke('FmcFile:resizeAndCropImage', data),
   resizeImage: (data) => ipcRenderer.invoke('FmcFile:resizeImage', data)
 });

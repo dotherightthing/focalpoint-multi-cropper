@@ -513,13 +513,22 @@ module.exports = class FmcFile {
   /**
    * @function setTitleInPhotosApp
    * @summary Locate matching image in Photos app library and amend its title with the focalpoint settings
-   * @param {string} imageName - Image name
-   * @param {string} title - EXIF/IPTC title
-   * @param {string} date - Date created
+   * @param {event} event - FmcFile:setTitleInPhotosApp event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {string} data.imageName - Image name
+   * @param {string} data.title - EXIF/IPTC title
+   * @param {string} data.date - Date created
+   * @returns {object} msgObj
    * @memberof FmcFile
    * @static
    */
-  static async setTitleInPhotosApp(imageName, title, date) {
+  static async setTitleInPhotosApp(event, data) {
+    const {
+      imageName,
+      title,
+      date
+    } = data;
+
     // Available commands: Script Editor > Window > Library > Photos Suite.
     // If editing use Apple's Script Editor to test the output
     // Alternative: set searchResults to (every media item whose name contains "${imageName}")
@@ -538,31 +547,50 @@ module.exports = class FmcFile {
 
         if resultCount > 1 then
           repeat with theItem in resultItems
-            set itemDate to date of theItem
-            if itemDate = date exifDate then
+            set itemDate to date of theItem as string
+            if itemDate = exifDate then
               tell theItem
                 set its name to newTitle
                 spotlight theItem
               end tell
+              return theItem
             end if
           end repeat
-        else
+        else if resultCount = 1 then
           set theItem to item 1 of resultItems
           tell theItem
             set its name to newTitle
             spotlight theItem
           end tell
+          return theItem
+        else
+          return {}
         end if
       end tell
       `;
 
     // console.log(applescript);
 
-    try {
-      await osascript.execute(applescript);
-    } catch (err) {
-      console.error('Error updating Photos app:', err);
+    let statusMessage;
+    let statusType;
+
+    // try {
+    await osascript.execute(applescript, function (err, result, raw) {
+      console.log(err, result, raw);
+
+      if (err) {
+        statusMessage = err;
+        statusType = 'warn';
+      } else {
+        statusMessage = result;
+        statusType = 'success';
     }
+    });
+
+    return {
+      statusMessage,
+      statusType
+    };
   }
 
   /**
