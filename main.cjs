@@ -121,7 +121,6 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:pathExists', FmcFile.pathExists);
   ipcMain.handle('FmcFile:renameSync', FmcFile.renameSync);
   ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
-  ipcMain.handle('FmcFile:saveImagePercentXYToImage', FmcFile.saveImagePercentXYToImage);
   ipcMain.handle('FmcFile:selectFile', FmcFile.selectFile);
   ipcMain.handle('FmcFile:selectFolder', FmcFile.selectFolder);
   ipcMain.handle('FmcStore:getActivePreset', FmcStore.getActivePreset);
