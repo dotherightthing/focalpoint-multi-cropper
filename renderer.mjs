@@ -286,7 +286,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   fmcThumbsUiInstance.elements = elements;
   fmcUi.elements = elements;
 
-  elements.croppersContainer.addEventListener('imageRenamed', fmcUi.handleImageRenamed.bind(fmcUi));
+  elements.croppersContainer.addEventListener('imageRenamed', await fmcUi.handleImageRenamed.bind(fmcUi));
   elements.focalpointProportionsRadios.forEach(el => el.addEventListener('change', fmcUi.handleFocalpointInputChange.bind(fmcUi)));
   elements.thumbsContainer.addEventListener('click', fmcUi.handleThumbClick.bind(fmcUi));
   elements.window.addEventListener('keydown', fmcUi.handleWindowKeydown.bind(fmcUi));
