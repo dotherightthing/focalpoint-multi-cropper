@@ -67,33 +67,6 @@ module.exports = class FmcFile {
   }
 
   /**
-   * @function getImageTitle
-   * @param {event} event - FmcFile:getImageTitle event captured by ipcMain.handle
-   * @param {object} data - Data
-   * @param {string} data.imagePath - Image path
-   * @returns {object} { Title }
-   * @memberof FmcFile
-   * @static
-   */
-  static async getImageTitle(event, data) {
-    const {
-      imagePath
-    } = data;
-
-    const fileNameParts = await FmcFile.getFileNameParts(null, { fileName: imagePath });
-    const { relativeFilePath } = fileNameParts;
-    const tags = await exiftool.read(relativeFilePath);
-
-    const {
-      Title = ''
-    } = tags;
-
-    return {
-      Title
-    };
-  }
-
-  /**
    * @function resizeAndCropImage
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
@@ -129,6 +102,7 @@ module.exports = class FmcFile {
 
     // TODO use FmcFile.getFileNameParts
     const currentDir = process.cwd();
+    // TODO see also FmcFile.getRelativePath
     const targetPath = path.relative(currentDir, targetFolder);
     const baseExportPath = `${targetPath}/${fileNameOnly}${extName}`;
 
@@ -588,7 +562,7 @@ module.exports = class FmcFile {
       } else {
         statusMessage = result;
         statusType = 'success';
-    }
+      }
     });
 
     return {
