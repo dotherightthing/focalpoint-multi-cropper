@@ -306,6 +306,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   await fmcUi.handlePresetLoad();
 
   if ((typeof window.FmcFile === 'undefined') || (typeof window.FmcStore === 'undefined')) {
-    FmcUi.testData();
+    await FmcUi.testData();
   }
 });

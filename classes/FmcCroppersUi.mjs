@@ -611,8 +611,9 @@ export class FmcCroppersUi {
    * @param {string} imagePath - Image path
    * @returns {object} { Title }
    * @memberof FmcCroppersUi
+   * @static
    */
-  async getImageTitle(imagePath) {
+  static async getImageTitle(imagePath) {
     const fileNameParts = await window.FmcFile.getFileNameParts({ fileName: imagePath });
 
     const {
@@ -701,18 +702,16 @@ export class FmcCroppersUi {
     const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
 
     const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await this.getImageTitle(src);
-
-    const imagePath = writeTitle ? Title : src;
+    const { Title } = await FmcCroppersUi.getImageTitle(src);
 
     const {
       imagePercentX: savedImagePercentX, // string
       imagePercentY: savedImagePercentY // string
-    } = this.getImagePercentXYFromImage(imagePath);
+    } = this.getImagePercentXYFromSrc({ src, title: Title });
 
     const {
       panorama: savedPanorama = false
-    } = this.getFlagsFromImage(imagePath);
+    } = this.getFlagsFromSrc({ src, title: Title });
 
     const isDefaultFocalpoint = this.isDefaultFocalpoint({
       imagePercentX: imagePercentXUi,
@@ -759,22 +758,22 @@ export class FmcCroppersUi {
   }
 
   /**
-   * @function getImagePercentXYFromImage
+   * @function getImagePercentXYFromSrc
    * @summary Get the values stored in the filename
-   * @param {string} src - Image src
+   * @param {object} args - Arguments
+   * @param {string} args.src - Image src
+   * @param {string} args.title - Image title
    * @returns {object} imagePercentXY
    * @memberof FmcCroppersUi
    */
-  getImagePercentXYFromImage(src) {
-    FmcUi.log('FmcCroppersUi.getImagePercentXYFromImage', src);
-    if (!src) {
-      console.error('FmcCroppersUi.getImagePercentXYFromImage expects a src argument');
-    }
+  getImagePercentXYFromSrc({ src, title }) {
+    FmcUi.log('FmcCroppersUi.getImagePercentXYFromSrc', { src, title });
 
+    const str = src || title;
     let imagePercentXY = {};
 
     const regexp = /\[([0-9]+)%,([0-9]+)%(,P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    const matches = src.matchAll(regexp);
+    const matches = str.matchAll(regexp);
     const matchesArr = [ ...matches ];
 
     if (matchesArr.length) {
@@ -788,18 +787,22 @@ export class FmcCroppersUi {
   }
 
   /**
-   * @function getFlagsFromImage
+   * @function getFlagsFromSrc
    * @summary Get any flags stored in the filename
-   * @param {string} src - Image src
+   * @param {object} args - Arguments
+   * @param {string} args.src - Image src
+   * @param {string} args.title - Image title
    * @returns {object} imageFlags
    * @memberof FmcCroppersUi
    */
-  getFlagsFromImage(src) {
-    FmcUi.log('FmcCroppersUi.getFlagsFromImage', src);
+  getFlagsFromSrc({ src, title }) {
+    FmcUi.log('FmcCroppersUi.getFlagsFromSrc', { src, title });
+
+    const str = src || title;
     let imageFlags = {};
 
     const regexp = /\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    const matches = src.matchAll(regexp);
+    const matches = str.matchAll(regexp);
     const matchesArr = [ ...matches ];
 
     if (matchesArr.length) {
@@ -820,16 +823,18 @@ export class FmcCroppersUi {
    * @returns {object} { centerX, centerY }
    * @memberof FmcCroppersUi
    */
-  getResizedImageCenterXY(fileName, resizeW, resizeH) {
-    FmcUi.log('FmcCroppersUi.getResizedImageCenterXY', fileName, resizeW, resizeH);
+  async getResizedImageCenterXY(fileName, resizeW, resizeH) {
+    FmcUi.log('FmcCroppersUi.await getResizedImageCenterXY', fileName, resizeW, resizeH);
     const {
       masterCropper
     } = this;
 
+    const { Title } = await FmcCroppersUi.getImageTitle(fileName);
+
     const {
       imagePercentX = 50,
       imagePercentY = 50
-    } = this.getImagePercentXYFromImage(fileName);
+    } = this.getImagePercentXYFromSrc({ src: fileName, title: Title });
 
     // calculate length of the missing side
     let _resizeW = resizeW;
@@ -1193,13 +1198,14 @@ export class FmcCroppersUi {
 
     const cropsAndSizes = [];
     const fileName = masterCropper.cropperInstance.element.src;
-    const flags = this.getFlagsFromImage(fileName);
+    const { Title } = await FmcCroppersUi.getImageTitle(fileName);
+    const flags = this.getFlagsFromSrc({ src: fileName, title: Title });
 
     const {
       panorama = false
     } = flags;
 
-    slaveCroppers.forEach(cropper => {
+    slaveCroppers.forEach(async cropper => {
       const {
         exportWidth: resizeW,
         exportHeight: resizeH,
@@ -1230,7 +1236,7 @@ export class FmcCroppersUi {
         ({
           centerX,
           centerY
-        } = this.getResizedImageCenterXY(fileName, resizeW, resizeH));
+        } = await this.getResizedImageCenterXY(fileName, resizeW, resizeH));
       }
 
       cropsAndSizes.push({
@@ -1250,7 +1256,7 @@ export class FmcCroppersUi {
       });
     });
 
-    resizers.forEach(resizer => {
+    resizers.forEach(async resizer => {
       const {
         exportWidth: resizeW,
         exportHeight: resizeH,
@@ -1274,7 +1280,7 @@ export class FmcCroppersUi {
         ({
           centerX,
           centerY
-        } = this.getResizedImageCenterXY(fileName, resizeW, resizeH));
+        } = await this.getResizedImageCenterXY(fileName, resizeW, resizeH));
       }
 
       cropsAndSizes.push({
@@ -1383,24 +1389,25 @@ export class FmcCroppersUi {
     } = this;
 
     const {
-      focalpointProportionsRadios,
-      focalpointWriteTitleRadios
+      focalpointProportionsRadios
     } = elements;
 
     const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await this.getImageTitle(src);
-    const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
+    const { Title } = await FmcCroppersUi.getImageTitle(src);
 
-    const imagePath = writeTitle ? Title : src;
+    if (src === '') {
+      console.error(masterCropper.cropperInstance.element);
+      throw new Error('masterCropper.cropperInstance.element has no src');
+    }
 
     const {
-      imagePercentX = 50,
-      imagePercentY = 50
-    } = this.getImagePercentXYFromImage(imagePath);
+      imagePercentX,
+      imagePercentY
+    } = this.getImagePercentXYFromSrc({ src, title: Title });
 
     const {
       panorama = false
-    } = this.getFlagsFromImage(imagePath);
+    } = this.getFlagsFromSrc({ src, title: Title });
 
     FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: imagePercentX });
     FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: imagePercentY });

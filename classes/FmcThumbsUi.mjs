@@ -4,6 +4,7 @@
 
 import dtrtValidate from 'dtrt-type-validate';
 import { FmcUi } from './FmcUi.mjs';
+import { FmcCroppersUi } from './FmcCroppersUi.mjs';
 
 export class FmcThumbsUi {
   /**
@@ -322,8 +323,8 @@ export class FmcThumbsUi {
    * @param {number} selectedThumbIndex - Selected thumb index
    * @memberof FmcThumbsUi
    */
-  generateThumbsHtml(imagesData, selectedThumbIndex) {
-    FmcUi.log('FmcThumbsUi.generateThumbsHtml', imagesData, selectedThumbIndex);
+  async generateThumbsHtml(imagesData, selectedThumbIndex) {
+    FmcUi.log('FmcThumbsUi.await generateThumbsHtml', imagesData, selectedThumbIndex);
     const {
       fmcCroppersUiInstance,
       selectors
@@ -385,10 +386,11 @@ export class FmcThumbsUi {
 
     // add focalpoint overlays to thumbs
     setTimeout(() => {
-      thumbButtons.forEach((thumbButton, index) => {
+      thumbButtons.forEach(async (thumbButton, index) => {
         const thumbImg = thumbImgs[index];
         const { src } = thumbImg;
-        const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromImage(src);
+        const { Title } = await FmcCroppersUi.getImageTitle(src);
+        const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
 
         this.setCssImagePercentXY({
           thumbButton,

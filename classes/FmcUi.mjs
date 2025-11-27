@@ -3,6 +3,7 @@
  */
 
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcCroppersUi } from './FmcCroppersUi.mjs';
 
 export class FmcUi {
   /**
@@ -718,7 +719,7 @@ export class FmcUi {
     }
 
     // add thumbs to UI
-    fmcThumbsUiInstance.generateThumbsHtml(imagesData, 1);
+    await fmcThumbsUiInstance.generateThumbsHtml(imagesData, 1);
   }
 
   /**
@@ -806,7 +807,8 @@ export class FmcUi {
     const { newFileName: src } = event.detail;
     const { selectors: fmcThumbsUiSelectors } = fmcThumbsUiInstance;
     const { selectedClass } = fmcThumbsUiSelectors;
-    const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromImage(src);
+    const { Title } = await FmcCroppersUi.getImageTitle(src);
+    const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
     const thumbButton = document.querySelector(`.${selectedClass}`);
     const thumbImg = document.querySelector(`.${selectedClass} .${thumbImgClass}`);
     const thumbIndex = 0;
@@ -1337,12 +1339,12 @@ export class FmcUi {
    * @function useTestData
    * @memberof FmcUi
    */
-  testData() {
+  async testData() {
     const {
       fmcThumbsUiInstance
     } = this;
 
-    fmcThumbsUiInstance.generateThumbsHtml({
+    await fmcThumbsUiInstance.generateThumbsHtml({
       imagesData: [
         {
           src: './cypress/fixtures/landscape.jpeg',
