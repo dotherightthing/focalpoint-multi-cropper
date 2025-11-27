@@ -1623,7 +1623,6 @@ export class FmcCroppersUi {
 
     const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
-
     const fileName = masterCropper.cropperInstance.element.src;
 
     let errorMsg = '';
@@ -1671,7 +1670,6 @@ export class FmcCroppersUi {
 
           const { DateTimeOriginal = {} } = tags;
           const { dateTimeOriginalAsDate } = extras;
-
           const date = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
 
           if (date.length) {

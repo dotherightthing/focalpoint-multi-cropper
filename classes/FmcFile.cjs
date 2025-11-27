@@ -80,8 +80,8 @@ module.exports = class FmcFile {
       imagePath
     } = data;
 
-    const { relativeFilePath } = await FmcFile.getFileNameParts(null, { fileName: imagePath });
-
+    const fileNameParts = await FmcFile.getFileNameParts(null, { fileName: imagePath });
+    const { relativeFilePath } = fileNameParts;
     const tags = await exiftool.read(relativeFilePath);
 
     const {
@@ -113,11 +113,13 @@ module.exports = class FmcFile {
       cropsAndSizes
     } = data;
 
+    const fileNameParts = await FmcFile.getFileNameParts(null, { fileName });
+
     const {
       extName,
       fileNameOnly,
-      fileNameClean
-    } = await FmcFile.getFileNameParts(null, { fileName });
+      fileNameClean // includes path
+    } = fileNameParts;
 
     const counts = {
       deletions: 0,
@@ -398,10 +400,12 @@ module.exports = class FmcFile {
   static async deleteImagePercentXYFromImage(event, data) {
     const { fileName } = data;
 
+    const fileNameParts = await FmcFile.getFileNameParts(null, { fileName });
+
     const {
       fileNameAndExt,
       folderPath
-    } = await FmcFile.getFileNameParts(null, { fileName });
+    } = fileNameParts;
 
     const regex = FmcFile.getFocalpointRegex();
 
