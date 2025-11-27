@@ -277,18 +277,18 @@ export class FmcUi {
     FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
     if (masterCropper) {
-    const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
+      const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
       await this.autosaveFocalpoint(state === 'on');
 
-    await fmcCroppersUiInstance.setFocalpointSaveState({
-      thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
-      thumbIndex,
+      await fmcCroppersUiInstance.setFocalpointSaveState({
+        thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
+        thumbIndex,
         imagePercentXUi: focalpointXInput.element.value,
         imagePercentYUi: focalpointYInput.element.value,
-      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
-    });
-  }
+        imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
+      });
+    }
   }
 
   /**
@@ -926,7 +926,7 @@ export class FmcUi {
 
     // save the active preset name to indicate that this preset has been (is about to be) loaded
     if (notInit) {
-    await window.FmcStore.setActivePresetName({ presetName });
+      await window.FmcStore.setActivePresetName({ presetName });
     }
 
     try {
@@ -1012,9 +1012,9 @@ export class FmcUi {
    */
   async selectActivePreset() {
     FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
-    const preset = await window.FmcStore.getActivePreset();
+    const activePreset = await window.FmcStore.getActivePreset();
 
-    if (typeof preset === 'undefined') {
+    if (typeof activePreset === 'undefined') {
       FmcUi.emitElementEvent(window, 'updateStatus', {
         statusMessage: 'No active preset to select',
         statusType: 'warning'
@@ -1025,7 +1025,7 @@ export class FmcUi {
 
     // select the preset
     FmcUi.log('# 1.E - EMIT window.updatePresets');
-    FmcUi.emitElementEvent(window, 'updatePresets', { value: preset.name });
+    FmcUi.emitElementEvent(window, 'updatePresets', { value: activePreset.name });
   }
 
   /**
