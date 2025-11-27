@@ -613,10 +613,15 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   async getImageTitle(imagePath) {
-    const { relativeFilePath } = await window.FmcFile.getFileNameParts({ fileName: imagePath });
+    const fileNameParts = await window.FmcFile.getFileNameParts({ fileName: imagePath });
+
+    const {
+      fileNameClean // includes path
+    } = fileNameParts;
+
     const data = await window.FmcFile.exiftool({
       method: 'read',
-      fileNameWithPath: relativeFilePath
+      fileNameWithPath: fileNameClean
     });
 
     const {
