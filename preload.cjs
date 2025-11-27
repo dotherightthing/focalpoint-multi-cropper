@@ -27,6 +27,7 @@ contextBridge.exposeInMainWorld('FmcFile', {
   openInFinder: (data) => ipcRenderer.invoke('FmcFile:openInFinder', data),
   pathExists: (data) => ipcRenderer.invoke('FmcFile:pathExists', data),
   saveImagePercentXYToImage: (data) => ipcRenderer.invoke('FmcFile:saveImagePercentXYToImage', data),
+  renameSync: (data) => ipcRenderer.invoke('FmcFile:renameSync', data),
   selectFile: (data) => ipcRenderer.invoke('FmcFile:selectFile', data),
   selectFolder: (data) => ipcRenderer.invoke('FmcFile:selectFolder', data),
   resizeAndCropImage: (data) => ipcRenderer.invoke('FmcFile:resizeAndCropImage', data),

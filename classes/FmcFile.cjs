@@ -1043,4 +1043,32 @@ module.exports = class FmcFile {
       extras
     };
   }
+
+  /**
+   * @function renameSync
+   * @param {event} event - FmcFile:renameSync event captured by ipcMain.handle
+   * @param {object} data - Data
+   * @param {string} data.oldFileNameWithPath - Old file name with path
+   * @param {string} data.newFileNameWithPath - New file name with path
+   * @returns {object} { statusMessage, statusType }
+   * @memberof FmcFile
+   * @static
+   */
+  static async renameSync(event, data) {
+    const {
+      oldFileNameWithPath,
+      newFileNameWithPath
+    } = data;
+
+    const result = fs.renameSync(oldFileNameWithPath, newFileNameWithPath, (error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+    return {
+      statusMessage: result
+      // statusType
+    };
+  }
 };

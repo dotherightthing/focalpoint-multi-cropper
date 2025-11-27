@@ -119,6 +119,7 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:openInEditor', FmcFile.openInEditor);
   ipcMain.handle('FmcFile:openInFinder', FmcFile.openInFinder);
   ipcMain.handle('FmcFile:pathExists', FmcFile.pathExists);
+  ipcMain.handle('FmcFile:renameSync', FmcFile.renameSync);
   ipcMain.handle('FmcFile:resizeAndCropImage', FmcFile.resizeAndCropImage);
   ipcMain.handle('FmcFile:saveImagePercentXYToImage', FmcFile.saveImagePercentXYToImage);
   ipcMain.handle('FmcFile:selectFile', FmcFile.selectFile);
