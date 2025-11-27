@@ -616,12 +616,12 @@ export class FmcCroppersUi {
     const fileNameParts = await window.FmcFile.getFileNameParts({ fileName: imagePath });
 
     const {
-      fileNameClean // includes path
+      folderPathAndFileNameAndExtClean
     } = fileNameParts;
 
     const data = await window.FmcFile.exiftool({
       method: 'read',
-      fileNameWithPath: fileNameClean
+      fileNameWithPath: folderPathAndFileNameAndExtClean
     });
 
     const {
@@ -1643,7 +1643,7 @@ export class FmcCroppersUi {
       const {
         extName,
         fileNameAndExtClean,
-        fileNameClean, // includes path
+        folderPathAndFileNameAndExtClean,
         fileNameOnlyCleanNoRegex,
         folderPath
       } = fileNameParts;
@@ -1651,7 +1651,7 @@ export class FmcCroppersUi {
       newFileNameAndExtClean = `${fileNameOnlyCleanNoRegex}__[${imagePercentX}%,${imagePercentY}%${imageFlagsPrefix}${imageFlags}]${extName}`;
       newFileNameWithPath = `${folderPath}/${newFileNameAndExtClean}`;
       oldFileNameAndExtClean = fileNameAndExtClean;
-      oldFileNameWithPath = fileNameClean;
+      oldFileNameWithPath = folderPathAndFileNameAndExtClean;
 
       if (writeTitle) {
         const data = await window.FmcFile.exiftool({

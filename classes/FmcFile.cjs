@@ -91,7 +91,7 @@ module.exports = class FmcFile {
     const {
       extName,
       fileNameOnly,
-      fileNameClean // includes path
+      folderPathAndFileNameAndExtClean
     } = fileNameParts;
 
     const counts = {
@@ -173,7 +173,7 @@ module.exports = class FmcFile {
         quality,
         resizeW: _resizeW,
         resizeH,
-        sourceFileName: fileNameClean,
+        sourceFileName: folderPathAndFileNameAndExtClean,
         targetFilename
       });
 
@@ -441,18 +441,18 @@ module.exports = class FmcFile {
     const extName = path.extname(fileName); // .ext
     const fileNameAndExt = path.basename(fileName); // Filename.ext | Filename__[nn%,nn%].ext
     const fileNameAndExtClean = fileNameAndExt.replace(/%20/g, ' ');
-    const fileNameClean = fileName.replace('file://', '').replace(/%20/g, ' '); // /Volumes/Foo/Bar/Baz/Filename.ext
+    const folderPathAndFileNameAndExtClean = fileName.replace('file://', '').replace(/%20/g, ' '); // /Volumes/Foo/Bar/Baz/Filename.ext
     const fileNameOnly = fileNameAndExt.replace(extName, ''); // Filename | Filename__[nn%,nn%]
     const fileNameOnlyClean = fileNameOnly.replace(/%20/g, ' ');
     const fileNameOnlyCleanNoRegex = fileNameOnlyClean.replace(regex, ''); // foo
-    const folderPath = path.dirname(fileNameClean); // /Volumes/Foo/Bar/Baz
+    const folderPath = path.dirname(folderPathAndFileNameAndExtClean); // /Volumes/Foo/Bar/Baz
     const relativeFilePath = path.relative(process.cwd(), folderPath + '/' + fileNameAndExtClean);
 
     return {
       extName,
       fileNameAndExt,
       fileNameAndExtClean,
-      fileNameClean,
+      folderPathAndFileNameAndExtClean,
       fileNameOnly,
       fileNameOnlyClean,
       fileNameOnlyCleanNoRegex,
