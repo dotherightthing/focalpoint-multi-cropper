@@ -158,20 +158,6 @@ export class FmcUi {
   }
 
   /**
-   * @function getElementIndex
-   * @summary Get the index of the selected node in a nodelist
-   * @param {HTMLElement} element = Element
-   * @param {NodeList} nodeList = NodeList
-   * @returns {number} selectedIndex || -1
-   * @memberof FmcUi
-   * @static
-   */
-  static getElementIndex(element, nodeList) {
-    FmcUi.log('FmcUi.getElementIndex', element, nodeList);
-    return Array.from(nodeList).indexOf(element);
-  }
-
-  /**
    * @function getPathOut
    * @summary Set the target path in the footer
    * @param {string} imgSrc = Cropper image src
@@ -194,28 +180,6 @@ export class FmcUi {
     const pathOut = `${targetFolder}/${fileName}`;
 
     return pathOut;
-  }
-
-  /**
-   * @function getTargetElementOfType
-   * @summary Ensures that the target element matches the expected element type
-   * @param {object} event - Event
-   * @param {string} elementType - Element type (tagName)
-   * @returns {HTMLElement} targetElement
-   * @memberof FmcUi
-   * @static
-   */
-  static getTargetElementOfType(event, elementType) {
-    FmcUi.log('FmcUi.getTargetElementOfType', event, elementType);
-    let targetElement = event.target; // event.currentTarget
-
-    if (targetElement) {
-      while (targetElement && targetElement.tagName.toLowerCase() !== elementType) {
-        targetElement = targetElement.parentElement;
-      }
-    }
-
-    return targetElement;
   }
 
   /**
@@ -309,54 +273,6 @@ export class FmcUi {
   }
 
   /**
-   * @function handleThumbsFilterUncroppedRadiosChange
-   * @param {object} event - Change event
-   * @memberof FmcUi
-   */
-  async handleThumbsFilterUncroppedRadiosChange(event) {
-    FmcUi.log('FmcUi.handleThumbsFilterUncroppedRadiosChange', event);
-
-    const state = event.target.value;
-    const msgObj = await window.FmcStore.setOptions({ thumbsFilterUncropped: state });
-
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
-
-    await this.handleFilterSubmit();
-  }
-
-  /**
-   * @function handleWriteFilenameRadioChange
-   * @param {object} event - Change event
-   * @memberof FmcUi
-   */
-  async handleWriteFilenameRadioChange(event) {
-    FmcUi.log('FmcUi.handleWriteFilenameRadioChange', event);
-
-    const state = event.target.value;
-    const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
-
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
-
-    // TODO : Update Photos app etc
-  }
-
-  /**
-   * @function handleWriteTitleRadioChange
-   * @param {object} event - Change event
-   * @memberof FmcUi
-   */
-  async handleWriteTitleRadioChange(event) {
-    FmcUi.log('FmcUi.handleWriteTitleRadioChange', event);
-
-    const state = event.target.value;
-    const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });
-
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
-
-    // TODO : Update Photos app etc
-  }
-
-  /**
    * @function handleEditPresets
    * @memberof FmcUi
    */
@@ -379,33 +295,6 @@ export class FmcUi {
       fileDescription: 'webpage',
       folderPath,
       filePath
-    });
-
-    FmcUi.emitElementEvent(window, 'updateStatus', {
-      statusMessage
-    });
-  }
-
-  /**
-   * @function handlePresetEditWebpage
-   * @memberof FmcUi
-   */
-  async handlePresetEditWebpage() {
-    FmcUi.log('FmcUi.handlePresetEditWebpage');
-    const {
-      elements
-    } = this;
-
-    const {
-      fileWebpageInput
-    } = elements;
-
-    const { targetFile } = fileWebpageInput.element.dataset;
-
-    const statusMessage = await window.FmcFile.openInEditor({
-      editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
-      fileDescription: 'webpage',
-      filePath: targetFile
     });
 
     FmcUi.emitElementEvent(window, 'updateStatus', {
@@ -484,33 +373,6 @@ export class FmcUi {
     copyPathWebEmbedButton.element.click();
 
     return baseExportPath;
-  }
-
-  /**
-   * @function handlePresetFileWebpageBrowse
-   * @summary Actions to run after the "Webpage file" "Browse" button is clicked - and when handlePresetLoad is called
-   * @param {object|null} event - Click event
-   * @param {boolean} restore - Restore settings from store
-   * @memberof FmcUi
-   */
-  async handlePresetFileWebpageBrowse(event, restore = false) {
-    FmcUi.log('FmcUi.handlePresetFileWebpageBrowse', event, restore);
-    const { fileName, filePath, folderPath } = await window.FmcFile.selectFile({
-      dialogTitle: 'Webpage file',
-      restore,
-      storeKey: 'fileWebpage'
-    });
-
-    // if folder select was cancelled
-    if ((typeof fileName === 'undefined') || (typeof filePath === 'undefined')) {
-      return;
-    }
-
-    FmcUi.emitElementEvent(window, 'updatePresetFileWebpage', {
-      targetFile: filePath,
-      targetFolder: folderPath,
-      value: fileName
-    });
   }
 
   /**
@@ -843,19 +705,6 @@ export class FmcUi {
   }
 
   /**
-   * @function sleep
-   * @summary Pause code execution for a specified duration
-   * @param {number} ms - Milliseconds
-   * @memberof FmcUi
-   * @returns {Promise} promise
-   * @see https://leapcell.io/blog/how-to-sleep-in-javascript-using-async-await
-   */
-  sleep(ms) {
-    FmcUi.log('FmcUi.sleep', ms);
-    return new Promise(resolve => setTimeout(resolve, ms)); // eslint-disable-line no-promise-executor-return
-  }
-
-  /**
    * @function handleLastCropperImgReady
    * @summary Actions to run after cropperjs fires a "ready" event for the last cropper image - each time an image is loaded into the cropper
    * @memberof FmcUi
@@ -872,43 +721,57 @@ export class FmcUi {
   }
 
   /**
-   * @function loadOptions
-   * @summary Restore previous UI settings when the UI initialises
+   * @function handlePresetEditWebpage
    * @memberof FmcUi
    */
-  async loadOptions() {
-    FmcUi.log('# X.X - EXEC fmcUi.loadOptions');
+  async handlePresetEditWebpage() {
+    FmcUi.log('FmcUi.handlePresetEditWebpage');
+    const {
+      elements
+    } = this;
 
-    try {
-      const { options } = await window.FmcStore.getOptions(null);
+    const {
+      fileWebpageInput
+    } = elements;
 
-      FmcUi.log('options', options);
+    const { targetFile } = fileWebpageInput.element.dataset;
 
-      const {
-        focalpointAutoSave = 'off',
-        focalpointWriteFilename = 'off',
-        focalpointWriteTitle = 'off',
-        thumbsAutoSelectFiltered = 'off',
-        thumbsFilterUncropped = 'off'
-      } = options;
+    const statusMessage = await window.FmcFile.openInEditor({
+      editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
+      fileDescription: 'webpage',
+      filePath: targetFile
+    });
 
-      // TODO: rename to update:foo to make more readable
-      FmcUi.emitElementEvent(window, 'updateFocalpointAutoSave', { value: focalpointAutoSave });
-      FmcUi.emitElementEvent(window, 'updateFocalpointWriteFilename', { value: focalpointWriteFilename });
-      FmcUi.emitElementEvent(window, 'updateFocalpointWriteTitle', { value: focalpointWriteTitle });
-      FmcUi.emitElementEvent(window, 'updateThumbsAutoSelectFiltered', { value: thumbsAutoSelectFiltered });
-      FmcUi.emitElementEvent(window, 'updateThumbsFilterUncropped', { value: thumbsFilterUncropped });
+    FmcUi.emitElementEvent(window, 'updateStatus', {
+      statusMessage
+    });
+  }
 
-      FmcUi.emitElementEvent(window, 'updateStatus', {
-        statusMessage: 'Loaded options',
-        statusType: 'success'
-      });
-    } catch (error) {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
-        statusMessage: 'No options to load',
-        statusType: 'warning'
-      });
+  /**
+   * @function handlePresetFileWebpageBrowse
+   * @summary Actions to run after the "Webpage file" "Browse" button is clicked - and when handlePresetLoad is called
+   * @param {object|null} event - Click event
+   * @param {boolean} restore - Restore settings from store
+   * @memberof FmcUi
+   */
+  async handlePresetFileWebpageBrowse(event, restore = false) {
+    FmcUi.log('FmcUi.handlePresetFileWebpageBrowse', event, restore);
+    const { fileName, filePath, folderPath } = await window.FmcFile.selectFile({
+      dialogTitle: 'Webpage file',
+      restore,
+      storeKey: 'fileWebpage'
+    });
+
+    // if folder select was cancelled
+    if ((typeof fileName === 'undefined') || (typeof filePath === 'undefined')) {
+      return;
     }
+
+    FmcUi.emitElementEvent(window, 'updatePresetFileWebpage', {
+      targetFile: filePath,
+      targetFolder: folderPath,
+      value: fileName
+    });
   }
 
   /**
@@ -1015,30 +878,6 @@ export class FmcUi {
     await this.selectActivePreset();
 
     FmcUi.emitElementEvent(window, 'updatePresetsFile', { value: await window.FmcStore.getStoreFilePath() });
-  }
-
-  /**
-   * @function selectActivePreset
-   * @summary Get the active preset from FmcStore. Select this preset in the dropdown in the Settings modal.
-   * @todo Consider renaming to selectStoredActivePreset ?
-   * @memberof FmcUi
-   */
-  async selectActivePreset() {
-    FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
-    const activePreset = await window.FmcStore.getActivePreset();
-
-    if (typeof activePreset === 'undefined') {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
-        statusMessage: 'No active preset to select',
-        statusType: 'warning'
-      });
-
-      return;
-    }
-
-    // select the preset
-    FmcUi.log('# 1.E - EMIT window.updatePresets');
-    FmcUi.emitElementEvent(window, 'updatePresets', { value: activePreset.name });
   }
 
   /**
@@ -1189,6 +1028,22 @@ export class FmcUi {
   }
 
   /**
+   * @function handleThumbsFilterUncroppedRadiosChange
+   * @param {object} event - Change event
+   * @memberof FmcUi
+   */
+  async handleThumbsFilterUncroppedRadiosChange(event) {
+    FmcUi.log('FmcUi.handleThumbsFilterUncroppedRadiosChange', event);
+
+    const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ thumbsFilterUncropped: state });
+
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+
+    await this.handleFilterSubmit();
+  }
+
+  /**
    * @function handleWindowKeydown
    * @param {object} event - Keydown event
    * @memberof FmcUi
@@ -1246,6 +1101,78 @@ export class FmcUi {
   }
 
   /**
+   * @function handleWriteFilenameRadioChange
+   * @param {object} event - Change event
+   * @memberof FmcUi
+   */
+  async handleWriteFilenameRadioChange(event) {
+    FmcUi.log('FmcUi.handleWriteFilenameRadioChange', event);
+
+    const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
+
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+
+    // TODO : Update Photos app etc
+  }
+
+  /**
+   * @function handleWriteTitleRadioChange
+   * @param {object} event - Change event
+   * @memberof FmcUi
+   */
+  async handleWriteTitleRadioChange(event) {
+    FmcUi.log('FmcUi.handleWriteTitleRadioChange', event);
+
+    const state = event.target.value;
+    const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });
+
+    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+
+    // TODO : Update Photos app etc
+  }
+
+  /**
+   * @function loadOptions
+   * @summary Restore previous UI settings when the UI initialises
+   * @memberof FmcUi
+   */
+  async loadOptions() {
+    FmcUi.log('# X.X - EXEC fmcUi.loadOptions');
+
+    try {
+      const { options } = await window.FmcStore.getOptions(null);
+
+      FmcUi.log('options', options);
+
+      const {
+        focalpointAutoSave = 'off',
+        focalpointWriteFilename = 'off',
+        focalpointWriteTitle = 'off',
+        thumbsAutoSelectFiltered = 'off',
+        thumbsFilterUncropped = 'off'
+      } = options;
+
+      // TODO: rename to update:foo to make more readable
+      FmcUi.emitElementEvent(window, 'updateFocalpointAutoSave', { value: focalpointAutoSave });
+      FmcUi.emitElementEvent(window, 'updateFocalpointWriteFilename', { value: focalpointWriteFilename });
+      FmcUi.emitElementEvent(window, 'updateFocalpointWriteTitle', { value: focalpointWriteTitle });
+      FmcUi.emitElementEvent(window, 'updateThumbsAutoSelectFiltered', { value: thumbsAutoSelectFiltered });
+      FmcUi.emitElementEvent(window, 'updateThumbsFilterUncropped', { value: thumbsFilterUncropped });
+
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'Loaded options',
+        statusType: 'success'
+      });
+    } catch (error) {
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'No options to load',
+        statusType: 'warning'
+      });
+    }
+  }
+
+  /**
    * @function saveFocalpoint
    * @memberof FmcUi
    */
@@ -1287,6 +1214,30 @@ export class FmcUi {
 
       FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
     }
+  }
+
+  /**
+   * @function selectActivePreset
+   * @summary Get the active preset from FmcStore. Select this preset in the dropdown in the Settings modal.
+   * @todo Consider renaming to selectStoredActivePreset ?
+   * @memberof FmcUi
+   */
+  async selectActivePreset() {
+    FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
+    const activePreset = await window.FmcStore.getActivePreset();
+
+    if (typeof activePreset === 'undefined') {
+      FmcUi.emitElementEvent(window, 'updateStatus', {
+        statusMessage: 'No active preset to select',
+        statusType: 'warning'
+      });
+
+      return;
+    }
+
+    // select the preset
+    FmcUi.log('# 1.E - EMIT window.updatePresets');
+    FmcUi.emitElementEvent(window, 'updatePresets', { value: activePreset.name });
   }
 
   /**
@@ -1333,6 +1284,19 @@ export class FmcUi {
         resolve();
       }, 500);
     });
+  }
+
+  /**
+   * @function sleep
+   * @summary Pause code execution for a specified duration
+   * @param {number} ms - Milliseconds
+   * @memberof FmcUi
+   * @returns {Promise} promise
+   * @see https://leapcell.io/blog/how-to-sleep-in-javascript-using-async-await
+   */
+  sleep(ms) {
+    FmcUi.log('FmcUi.sleep', ms);
+    return new Promise(resolve => setTimeout(resolve, ms)); // eslint-disable-line no-promise-executor-return
   }
 
   /**
@@ -1468,6 +1432,20 @@ export class FmcUi {
   }
 
   /**
+   * @function getElementIndex
+   * @summary Get the index of the selected node in a nodelist
+   * @param {HTMLElement} element = Element
+   * @param {NodeList} nodeList = NodeList
+   * @returns {number} selectedIndex || -1
+   * @memberof FmcUi
+   * @static
+   */
+  static getElementIndex(element, nodeList) {
+    FmcUi.log('FmcUi.getElementIndex', element, nodeList);
+    return Array.from(nodeList).indexOf(element);
+  }
+
+  /**
    * @function getFileNameFromPath
    * @param {string} path - File path
    * @returns {string} fileName
@@ -1500,6 +1478,28 @@ export class FmcUi {
     };
 
     return offset;
+  }
+
+  /**
+   * @function getTargetElementOfType
+   * @summary Ensures that the target element matches the expected element type
+   * @param {object} event - Event
+   * @param {string} elementType - Element type (tagName)
+   * @returns {HTMLElement} targetElement
+   * @memberof FmcUi
+   * @static
+   */
+  static getTargetElementOfType(event, elementType) {
+    FmcUi.log('FmcUi.getTargetElementOfType', event, elementType);
+    let targetElement = event.target; // event.currentTarget
+
+    if (targetElement) {
+      while (targetElement && targetElement.tagName.toLowerCase() !== elementType) {
+        targetElement = targetElement.parentElement;
+      }
+    }
+
+    return targetElement;
   }
 
   /**
