@@ -1539,6 +1539,10 @@ export class FmcCroppersUi {
       second
     } = DateTimeOriginal;
 
+    const hour12 = hour > 12 ? (hour - 12) : hour;
+    const minuteStr = minute.toString().padStart(2, '0');
+    const secondStr = second.toString().padStart(2, '0');
+
     const date = dateTimeOriginalAsDate;
 
     const dayIndex = date.getDay();
@@ -1572,7 +1576,7 @@ export class FmcCroppersUi {
 
     // AppleScript retrieves photo "date" in this format:
     // "Friday, 12 May 2017 at 11:55:19 AM"
-    return `${dayName}, ${day} ${monthName} ${year} at ${hour}:${minute}:${second} ${ampm}`;
+    return `${dayName}, ${day} ${monthName} ${year} at ${hour12}:${minuteStr}:${secondStr} ${ampm}`;
   }
 
   /**
