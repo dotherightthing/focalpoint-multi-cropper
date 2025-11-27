@@ -397,17 +397,14 @@ export class FmcUi {
     } = this;
 
     const {
-      fileWebpageInput,
-      folderWebsiteInput
+      fileWebpageInput
     } = elements;
 
-    const { targetFolder } = folderWebsiteInput.element.dataset;
     const { targetFile } = fileWebpageInput.element.dataset;
 
     const statusMessage = await window.FmcFile.openInEditor({
       editorCommand: 'code', // see https://code.visualstudio.com/docs/editor/command-line
       fileDescription: 'webpage',
-      folderPath: targetFolder,
       filePath: targetFile
     });
 

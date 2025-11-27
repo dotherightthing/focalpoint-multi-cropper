@@ -647,8 +647,13 @@ module.exports = class FmcFile {
 
     commandExists(editorCommand, (error, exists) => {
       if (exists) {
-        spawn(editorCommand, [ folderPath ], opts);
-        spawn(editorCommand, [ filePath ], opts);
+        if (folderPath) {
+          spawn(editorCommand, [ folderPath ], opts);
+        }
+
+        if (filePath) {
+          spawn(editorCommand, [ filePath ], opts);
+        }
       } else {
         statusMessage = `Could not open ${fileDescription} - the command '${editorCommand}' is not available.)`;
       }
