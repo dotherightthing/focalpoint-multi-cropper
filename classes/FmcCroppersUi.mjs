@@ -1625,9 +1625,12 @@ export class FmcCroppersUi {
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
     const fileName = masterCropper.cropperInstance.element.src;
 
+    let imageFlagsPrefix = imageFlags.length ? ',' : '';
+    let newFileNameAndExtClean;
+    let newFileNameWithPath;
+    let oldFileNameAndExtClean;
+    let oldFileNameWithPath;
     let errorMsg = '';
-    let newFileName;
-    let oldFileName;
 
     // an 'out of range' user input such as 'xx' will be input as ''
     // although the change event may not actually fire in this case
@@ -1640,65 +1643,57 @@ export class FmcCroppersUi {
       const {
         extName,
         fileNameAndExtClean,
+        fileNameClean, // includes path
         fileNameOnlyCleanNoRegex,
-        folderPath,
-        relativeFilePath
+        folderPath
       } = fileNameParts;
 
-      oldFileName = fileNameAndExtClean;
+      newFileNameAndExtClean = `${fileNameOnlyCleanNoRegex}__[${imagePercentX}%,${imagePercentY}%${imageFlagsPrefix}${imageFlags}]${extName}`;
+      newFileNameWithPath = `${folderPath}/${newFileNameAndExtClean}`;
+      oldFileNameAndExtClean = fileNameAndExtClean;
+      oldFileNameWithPath = fileNameClean;
 
-      const imageFlagsPrefix = imageFlags.length ? ',' : '';
+      if (writeTitle) {
+        const data = await window.FmcFile.exiftool({
+          method: 'read',
+          fileNameWithPath: oldFileNameWithPath,
+          dateTimeOriginalAsDate: true
+        });
 
-      const oldFileNameWithPath = `${folderPath}/${fileNameAndExtClean}`;
-      newFileName = `${fileNameOnlyCleanNoRegex}__[${imagePercentX}%,${imagePercentY}%${imageFlagsPrefix}${imageFlags}]${extName}`;
-      const newFileNameWithPath = `${folderPath}/${newFileName}`;
+        const {
+          tags,
+          extras
+        } = data;
 
-      let result;
+        const { DateTimeOriginal = {} } = tags;
+        const { dateTimeOriginalAsDate } = extras;
+        const date = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
 
-      if (newFileName !== oldFileName) {
-        if (writeTitle) {
-          const data = await window.FmcFile.exiftool({
-            method: 'read',
-            fileNameWithPath: relativeFilePath,
-            dateTimeOriginalAsDate: true
+        if (date.length) {
+          await window.FmcFile.exiftool({
+            method: 'write',
+            fileNameWithPath: oldFileNameWithPath,
+            exifData: { Title: newFileNameAndExtClean }
           });
 
-          const {
-            tags,
-            extras
-          } = data;
-
-          const { DateTimeOriginal = {} } = tags;
-          const { dateTimeOriginalAsDate } = extras;
-          const date = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
-
-          if (date.length) {
-            const exifData = { Title: newFileName };
-
-            await window.FmcFile.exiftool({
-              method: 'write',
-              fileNameWithPath: oldFileNameWithPath,
-              exifData
-            });
-
-            result = await window.FmcFile.setTitleInPhotosApp({
-              imageName: fileNameOnlyCleanNoRegex,
-              title: newFileName,
-              date
-            });
-          }
+          await window.FmcFile.setTitleInPhotosApp({
+            imageName: fileNameOnlyCleanNoRegex,
+            title: newFileNameAndExtClean,
+            date
+          });
         }
-
-        if (writeFilename) {
-          result = await window.FmcFile.renameSync({ oldFileNameWithPath, newFileNameWithPath });
-        }
-
-        console.log(result);
-
-        // if (newFileName === '') {
-        //   errorMsg = 'Input out of range - focalpoint not saved to filename'; // TODO
-        // }
       }
+
+      if (writeFilename && (newFileNameAndExtClean !== oldFileNameAndExtClean)) {
+        // TODO this one might not be an error
+        await window.FmcFile.renameSync({ oldFileNameWithPath, newFileNameWithPath });
+
+        // TODO emit to update fields
+      }
+
+      // if (newFileName === '') {
+      //   errorMsg = 'Input out of range - focalpoint not saved to filename'; // TODO
+      // }
     }
 
     return new Promise(resolve => {
@@ -1707,16 +1702,21 @@ export class FmcCroppersUi {
           statusMessage: errorMsg,
           statusType: 'warning'
         });
-      } else if (newFileName !== oldFileName) {
+      } else if (writeTitle && (newFileNameAndExtClean !== oldFileNameAndExtClean)) {
+        resolve({
+          statusMessage: 'Saved focalpoint to file title and Photos App',
+          statusType: 'success'
+        });
+      } else if (writeFilename && (newFileNameAndExtClean !== oldFileNameAndExtClean)) {
         // timeout prevents broken image
         setTimeout(() => {
           croppers.forEach(cropper => {
-            cropper.cropperInstance.replace(newFileName, true); // hasSameSize = true
+            console.log('Change cropper src to ', newFileNameWithPath);
+            cropper.cropperInstance.replace(newFileNameWithPath, true); // hasSameSize = true
           });
 
-          FmcUi.emitEvent(croppersId, 'imageRenamed', {
-            newFileName
-          });
+          // TODO what does this do?
+          FmcUi.emitEvent(croppersId, 'imageRenamed', { newFileNameWithPath });
 
           // TODO update to save to title or combine with setFocalpointSaveState
           resolve({
