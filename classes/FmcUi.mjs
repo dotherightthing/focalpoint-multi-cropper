@@ -488,6 +488,7 @@ export class FmcUi {
 
   /**
    * @function handlePresetFileWebpageBrowse
+   * @summary Actions to run after the "Webpage file" "Browse" button is clicked - and when handlePresetLoad is called
    * @param {object|null} event - Click event
    * @param {boolean} restore - Restore settings from store
    * @memberof FmcUi
@@ -514,6 +515,7 @@ export class FmcUi {
 
   /**
    * @function handleFilterClear
+   * @summary Actions to run after the "Thumbnail filter" "Clear" button is clicked
    * @memberof FmcUi
    */
   async handleFilterClear() {
@@ -529,6 +531,7 @@ export class FmcUi {
 
   /**
    * @function handleFilterSubmit
+   * @summary Actions to run after the "Thumbnail filter" "Go" button is clicked
    * @memberof FmcUi
    */
   async handleFilterSubmit() {
@@ -682,7 +685,7 @@ export class FmcUi {
 
   /**
    * @function handleFolderInBrowse
-   * @summary Called on 'Browse' click, handlePresetLoad, restoreSettings
+   * @summary Actions to run after the "Source folder" "Browse" button is clicked - and when handlePresetLoad is called
    * @param {object|null} event - Click event
    * @param {boolean} restore - Restore settings from store
    * @memberof FmcUi
@@ -721,6 +724,7 @@ export class FmcUi {
 
   /**
    * @function handleFolderOutBrowse
+   * @summary Actions to run after the "Target folder" "Browse" button is clicked - and when handlePresetLoad is called
    * @param {object|null} event - Click event
    * @param {boolean} restore - Restore settings from store
    * @memberof FmcUi
@@ -759,6 +763,7 @@ export class FmcUi {
 
   /**
    * @function handleFolderWebsiteBrowse
+   * @summary Actions to run after the "Website folder" "Browse" button is clicked - and when handlePresetLoad is called
    * @param {object|null} event - Click event
    * @param {boolean} restore - Restore settings from store
    * @memberof FmcUi
@@ -785,8 +790,10 @@ export class FmcUi {
 
   /**
    * @function handleImageRenamed
+   * @summary Actions to run after the cropper source is changed - due to a focalpoint being written to or deleted from the filename
    * @param {object} event - imageRenamed event
    * @memberof FmcUi
+   * @todo Rename to something more intuitive
    */
   async handleImageRenamed(event) {
     FmcUi.log('FmcUi.handleImageRenamed', event);
@@ -837,6 +844,7 @@ export class FmcUi {
 
   /**
    * @function sleep
+   * @summary Pause code execution for a specified duration
    * @param {number} ms - Milliseconds
    * @memberof FmcUi
    * @returns {Promise} promise
@@ -849,7 +857,7 @@ export class FmcUi {
 
   /**
    * @function handleLastCropperImgReady
-   * @summary Runs each time an image is loaded
+   * @summary Actions to run after cropperjs fires a "ready" event for the last cropper image - each time an image is loaded into the cropper
    * @memberof FmcUi
    */
   async handleLastCropperImgReady() {
@@ -865,7 +873,7 @@ export class FmcUi {
 
   /**
    * @function loadOptions
-   * @summary Load options when the UI initialises to restore previous UI settings
+   * @summary Restore previous UI settings when the UI initialises
    * @memberof FmcUi
    */
   async loadOptions() {
@@ -905,7 +913,8 @@ export class FmcUi {
 
   /**
    * @function handlePresetLoad
-   * @param {object} event - change event
+   * @summary Actions to run after the preset "Load" button is clicked
+   * @param {object} event - click event
    * @summary Runs on init and when the Presets 'Load' button is pressed
    * @memberof FmcUi
    */
@@ -993,6 +1002,7 @@ export class FmcUi {
 
   /**
    * @function handlePresetsOpen
+   * @summary Actions to run after the presets modal is opened.
    * @memberof FmcUi
    */
   async handlePresetsOpen() {
