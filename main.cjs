@@ -115,7 +115,6 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:deleteImagePercentXYFromImage', FmcFile.deleteImagePercentXYFromImage);
   ipcMain.handle('FmcFile:exiftool', FmcFile.exiftool);
   ipcMain.handle('FmcFile:getFileNameParts', FmcFile.getFileNameParts);
-  ipcMain.handle('FmcFile:getImageTitle', FmcFile.getImageTitle);
   ipcMain.handle('FmcFile:getRelativePath', FmcFile.getRelativePath);
   ipcMain.handle('FmcFile:openInEditor', FmcFile.openInEditor);
   ipcMain.handle('FmcFile:openInFinder', FmcFile.openInFinder);

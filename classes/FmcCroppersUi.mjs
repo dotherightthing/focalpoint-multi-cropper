@@ -607,6 +607,32 @@ export class FmcCroppersUi {
   }
 
   /**
+   * @function getImageTitle
+   * @param {string} imagePath - Image path
+   * @returns {object} { Title }
+   * @memberof FmcCroppersUi
+   */
+  async getImageTitle(imagePath) {
+    const { relativeFilePath } = await window.FmcFile.getFileNameParts({ fileName: imagePath });
+    const data = await window.FmcFile.exiftool({
+      method: 'read',
+      fileNameWithPath: relativeFilePath
+    });
+
+    const {
+      tags
+    } = data;
+
+    const {
+      Title = ''
+    } = tags;
+
+    return {
+      Title
+    };
+  }
+
+  /**
    * @function setFocalpointSaveState
    * @summary Determine whether the current focalpoint settings have been saved to the current image
    * @param {object} args - Arguments
@@ -670,7 +696,7 @@ export class FmcCroppersUi {
     const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
 
     const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await window.FmcFile.getImageTitle({ imagePath: src });
+    const { Title } = await this.getImageTitle(src);
 
     const imagePath = writeTitle ? Title : src;
 
@@ -1357,7 +1383,7 @@ export class FmcCroppersUi {
     } = elements;
 
     const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await window.FmcFile.getImageTitle({ imagePath: src });
+    const { Title } = await this.getImageTitle(src);
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
     const imagePath = writeTitle ? Title : src;

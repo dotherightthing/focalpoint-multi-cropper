@@ -22,7 +22,6 @@ contextBridge.exposeInMainWorld('FmcFile', {
   deleteImagePercentXYFromImage: (data) => ipcRenderer.invoke('FmcFile:deleteImagePercentXYFromImage', data),
   exiftool: (data) => ipcRenderer.invoke('FmcFile:exiftool', data),
   getFileNameParts: (data) => ipcRenderer.invoke('FmcFile:getFileNameParts', data),
-  getImageTitle: (data) => ipcRenderer.invoke('FmcFile:getImageTitle', data),
   getRelativePath: (data) => ipcRenderer.invoke('FmcFile:getRelativePath', data),
   openInEditor: (data) => ipcRenderer.invoke('FmcFile:openInEditor', data),
   openInFinder: (data) => ipcRenderer.invoke('FmcFile:openInFinder', data),
