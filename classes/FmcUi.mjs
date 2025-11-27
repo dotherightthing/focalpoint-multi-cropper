@@ -903,10 +903,10 @@ export class FmcUi {
   /**
    * @function handlePresetLoad
    * @param {object} event - change event
-   * @summary Run when the Presets 'Load' button is pressed
+   * @summary Runs on init and when the Presets 'Load' button is pressed
    * @memberof FmcUi
    */
-  async handlePresetLoad(event) { // eslint-disable-line no-unused-vars
+  async handlePresetLoad(event = {}) {
     FmcUi.log('# 2.B - EXEC fmcUi.handlePresetLoad');
     const {
       elements,
@@ -917,11 +917,17 @@ export class FmcUi {
       presetNamesSelect
     } = elements;
 
+    const {
+      isTrusted: notInit
+    } = event;
+
     // get selected preset name from UI
     let presetName = presetNamesSelect.element.value;
 
     // save the active preset name to indicate that this preset has been (is about to be) loaded
+    if (notInit) {
     await window.FmcStore.setActivePresetName({ presetName });
+    }
 
     try {
       // 1. get the active preset name from the store
