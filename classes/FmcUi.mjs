@@ -926,7 +926,7 @@ export class FmcUi {
     try {
       // 1. get the active preset name from the store
       // 2. get the preset with the active preset name from the store
-      const preset = await window.FmcStore.getActivePreset(null);
+      const preset = await window.FmcStore.getActivePreset();
 
       const {
         fileWebpage,
@@ -1006,7 +1006,7 @@ export class FmcUi {
    */
   async selectActivePreset() {
     FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
-    const preset = await window.FmcStore.getActivePreset(null);
+    const preset = await window.FmcStore.getActivePreset();
 
     if (typeof preset === 'undefined') {
       FmcUi.emitElementEvent(window, 'updateStatus', {
