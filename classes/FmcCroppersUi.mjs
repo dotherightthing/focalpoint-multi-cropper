@@ -607,38 +607,6 @@ export class FmcCroppersUi {
   }
 
   /**
-   * @function getImageTitle
-   * @param {string} imagePath - Image path
-   * @returns {object} { Title }
-   * @memberof FmcCroppersUi
-   * @static
-   */
-  static async getImageTitle(imagePath) {
-    const fileNameParts = await window.FmcFile.getFileNameParts({ fileName: imagePath });
-
-    const {
-      folderPathAndFileNameAndExtClean
-    } = fileNameParts;
-
-    const data = await window.FmcFile.exiftool({
-      method: 'read',
-      fileNameWithPath: folderPathAndFileNameAndExtClean
-    });
-
-    const {
-      tags
-    } = data;
-
-    const {
-      Title = ''
-    } = tags;
-
-    return {
-      Title
-    };
-  }
-
-  /**
    * @function setFocalpointSaveState
    * @summary Determine whether the current focalpoint settings have been saved to the current image
    * @param {object} args - Arguments
@@ -1741,4 +1709,36 @@ export class FmcCroppersUi {
   }
 
   /* Static methods */
+
+  /**
+   * @function getImageTitle
+   * @param {string} imagePath - Image path
+   * @returns {object} { Title }
+   * @memberof FmcCroppersUi
+   * @static
+   */
+  static async getImageTitle(imagePath) {
+    const fileNameParts = await window.FmcFile.getFileNameParts({ fileName: imagePath });
+
+    const {
+      folderPathAndFileNameAndExtClean
+    } = fileNameParts;
+
+    const data = await window.FmcFile.exiftool({
+      method: 'read',
+      fileNameWithPath: folderPathAndFileNameAndExtClean
+    });
+
+    const {
+      tags
+    } = data;
+
+    const {
+      Title = ''
+    } = tags;
+
+    return {
+      Title
+    };
+  }
 }
