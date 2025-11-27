@@ -247,16 +247,16 @@ window.addEventListener('DOMContentLoaded', async () => {
       selector: '#preset-names',
       updateListener: 'updatePresets'
     }),
-    settings: new FmcDialogUi({
-      selector: '#presets',
-      appendedSelector: '#status-bar',
-      openHandler: [ fmcUi, 'handlePresetsOpen' ]
-    }),
     presetLoadButton: new FmcButtonUi({
       selector: '#preset-load',
       clickHandler: [ fmcUi, 'handlePresetLoad' ]
     }),
-    settingsSaveButton: new FmcButtonUi({
+    presets: new FmcDialogUi({
+      selector: '#presets',
+      appendedSelector: '#status-bar',
+      openHandler: [ fmcUi, 'handlePresetsOpen' ]
+    }),
+    presetSaveButton: new FmcButtonUi({
       selector: '#preset-save',
       clickHandler: [ fmcUi, 'handlePresetSave' ]
     }),

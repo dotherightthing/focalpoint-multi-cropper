@@ -1102,7 +1102,7 @@ export class FmcUi {
 
     const {
       croppersContainer,
-      settings
+      presets
     } = elements;
 
     const {
@@ -1141,7 +1141,7 @@ export class FmcUi {
 
     clickedButton.setAttribute('tabindex', '0');
 
-    if (settings.element.hasAttribute('open')) {
+    if (presets.element.hasAttribute('open')) {
       clickedButton.scrollIntoView();
     } else {
       clickedButton.focus();
