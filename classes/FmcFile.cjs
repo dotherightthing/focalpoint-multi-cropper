@@ -58,7 +58,7 @@ module.exports = class FmcFile {
 
   /**
    * getFocalpointRegex
-   * @returns {string} regex
+   * @returns {RegExp} regex
    * @memberof FmcFile
    * @static
    */
@@ -424,7 +424,7 @@ module.exports = class FmcFile {
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.fileName - File name
-   * @returns {Promise<object>} parts
+   * @returns {Promise<object>} fileNameParts
    * @memberof FmcFile
    * @static
    */
@@ -469,7 +469,7 @@ module.exports = class FmcFile {
   /**
    * @function getImageFiles
    * @param {string} dir - Directory path
-   * @returns {Promise<Array>} files
+   * @returns {Promise<string[]>} files
    * @memberof FmcFile
    * @static
    */
@@ -566,7 +566,7 @@ module.exports = class FmcFile {
    * @function getImagesData
    * @summary Get the path to a folder and the supported images within it
    * @param {Array} imageFiles - Supported file types contained within the folder
-   * @returns {Promise<Array>} imagesData
+   * @returns {Promise<object[]>} imagesData
    * @memberof FmcFile
    * @static
    */
@@ -738,7 +738,7 @@ module.exports = class FmcFile {
    * @function sortDateOrderAscending
    * @summary Sort images in date order, ascending
    * @param {Array} imagesData - Images data
-   * @returns {Array} imagesDataSorted
+   * @returns {Number[]} imagesDataSorted
    * @memberof FmcFile
    * @static
    */

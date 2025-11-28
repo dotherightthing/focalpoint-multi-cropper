@@ -536,8 +536,8 @@ export class FmcCroppersUi {
 
   /**
    * @function getCropperOptions
-   * @param {Number|null} exportWidth - Export width
-   * @param {Number|null} exportHeight - Export height
+   * @param {number|null} exportWidth - Export width
+   * @param {number|null} exportHeight - Export height
    * @param {string} role - master | slave
    * @param {string} action - resizeAndCrop (with preview) | resize
    * @returns {object} options
