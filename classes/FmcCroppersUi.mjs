@@ -876,14 +876,14 @@ export class FmcCroppersUi {
     this.croppers = [];
     this.resizers = [];
 
-    cropperImages.forEach((cropperImage, cropperIndex) => {
+    this.cropperImageElements.forEach(cropperImage => {
       const {
         cropperAction: action,
         cropperRole: role
       } = cropperImage.dataset;
 
       if ((role === 'master') || ((role === 'slave') && (action === 'resizeAndCrop'))) {
-        const cropper = this.initCropper(cropperImage, cropperIndex);
+        const cropper = this.initCropper(cropperImage);
 
         this.croppers.push(cropper);
       } else if ((role === 'slave') && (action === 'resize')) {
