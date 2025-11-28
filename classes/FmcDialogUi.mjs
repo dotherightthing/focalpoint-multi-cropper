@@ -105,6 +105,20 @@ export class FmcDialogUi {
   }
 
   /**
+   * openHandler
+   * @summary Function to run when the dialog is opened
+   * @type {Array}
+   * @memberof FmcDialogUi
+   */
+  get openHandler() {
+    return this._openHandler;
+  }
+
+  set openHandler(openHandler) {
+    this._openHandler = dtrtValidate.validate(openHandler, 'array', 'FmcDialogUi.openHandler');
+  }
+
+  /**
    * selector
    * @summary DOM selector
    * @type {string}
