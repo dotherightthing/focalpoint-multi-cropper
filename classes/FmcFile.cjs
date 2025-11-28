@@ -113,11 +113,7 @@ module.exports = class FmcFile {
     const matchingFiles = files.filter(filePath => filePath.match(baseTargetFilename));
 
     matchingFiles.forEach(file => {
-      fs.unlinkSync(file, err => {
-        if (err) {
-          throw err;
-        }
-      });
+      fs.unlinkSync(file);
     });
 
     counts.deletions = matchingFiles.length;
