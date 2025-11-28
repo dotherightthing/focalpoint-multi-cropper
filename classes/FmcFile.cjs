@@ -59,7 +59,7 @@ module.exports = class FmcFile {
   /**
    * getFocalpointRegex
    * @returns {string} regex
-   * @memberof FmcCroppersUi
+   * @memberof FmcFile
    * @static
    */
   static getFocalpointRegex() {

@@ -1,4 +1,5 @@
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcUi } from './FmcUi.mjs';
 
 export class FmcCropperImgUi {
   /**
@@ -30,20 +31,8 @@ export class FmcCropperImgUi {
   /* Getters and Setters */
 
   /**
-   * readyHandler
-   * @type {Array}
-   * @memberof FmcCropperImgUi
-   */
-  get readyHandler() {
-    return this._readyHandler;
-  }
-
-  set readyHandler(readyHandler) {
-    this._readyHandler = dtrtValidate.validate(readyHandler, 'array', 'FmcCropperImgUi.readyHandler');
-  }
-
-  /**
    * element
+   * @summary Image element within the (last) cropper
    * @type {HTMLElement}
    * @memberof FmcCropperImgUi
    */
@@ -56,7 +45,22 @@ export class FmcCropperImgUi {
   }
 
   /**
+   * readyHandler
+   * @summary Function to run after cropperjs fires a "ready" event for the (last) cropper image - each time an image is loaded into the cropper
+   * @type {Array}
+   * @memberof FmcCropperImgUi
+   */
+  get readyHandler() {
+    return this._readyHandler;
+  }
+
+  set readyHandler(readyHandler) {
+    this._readyHandler = dtrtValidate.validate(readyHandler, 'array', 'FmcCropperImgUi.readyHandler');
+  }
+
+  /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcCropperImgUi
    */
@@ -70,6 +74,7 @@ export class FmcCropperImgUi {
 
   /**
    * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
    * @type {string}
    * @memberof FmcCropperImgUi
    */
@@ -85,10 +90,12 @@ export class FmcCropperImgUi {
 
   /**
    * @function handleUpdate
-   * @param {object} event - Custom event
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
    * @memberof FmcCropperImgUi
    */
   handleUpdate(event) {
+    FmcUi.log(`FmcCropperImgUi.handleUpdate following "${this.updateListener}"`);
     const [ instance, method ] = this.readyHandler;
 
     const {

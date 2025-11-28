@@ -38,6 +38,7 @@ export class FmcSelectUi {
 
   /**
    * changeHandler
+   * @summary Function to run when an option is selected
    * @type {Array}
    * @memberof FmcSelectUi
    */
@@ -51,6 +52,7 @@ export class FmcSelectUi {
 
   /**
    * element
+   * @summary The select element
    * @type {HTMLElement}
    * @memberof FmcSelectUi
    */
@@ -64,6 +66,7 @@ export class FmcSelectUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcSelectUi
    */
@@ -77,6 +80,7 @@ export class FmcSelectUi {
 
   /**
    * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
    * @type {string}
    * @memberof FmcSelectUi
    */
@@ -92,11 +96,12 @@ export class FmcSelectUi {
 
   /**
    * @function handleUpdate
-   * @param {object} event - Custom event
-   * @memberof FmcButtonUi
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
+   * @memberof FmcSelectUi
    */
   handleUpdate(event) {
-    FmcUi.log('# 1.F - EXEC handleUpdate / updatePresets');
+    FmcUi.log(`FmcSelectUi.handleUpdate following "${this.updateListener}"`);
     const {
       detail = {}
     } = event;

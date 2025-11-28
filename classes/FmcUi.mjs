@@ -1,5 +1,6 @@
 /**
  * @file FmcUi.js
+ * @summary Methods relating to the UI
  */
 
 import dtrtValidate from 'dtrt-type-validate';
@@ -37,6 +38,7 @@ export class FmcUi {
 
   /**
    * debounceDelay
+   * @summary Number of milliseconds to wait before actioning a repeated function call
    * @type {number}
    * @memberof FmcUi
    */
@@ -50,7 +52,7 @@ export class FmcUi {
 
   /**
    * debug
-   * @summary Flag used by FmcUi.log
+   * @summary Toggles debugging on and off via FmcUi.log
    * @type {boolean}
    * @memberof FmcUi
    */
@@ -117,6 +119,7 @@ export class FmcUi {
 
   /**
    * selectors
+   * @summary DOM selectors
    * @type {object}
    * @memberof FmcUi
    */
@@ -867,7 +870,7 @@ export class FmcUi {
 
   /**
    * @function handlePresetsOpen
-   * @summary Actions to run after the presets modal is opened.
+   * @summary Actions to run after the presets modal is opened
    * @memberof FmcUi
    */
   async handlePresetsOpen() {

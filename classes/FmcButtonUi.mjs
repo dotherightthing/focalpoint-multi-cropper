@@ -38,6 +38,7 @@ export class FmcButtonUi {
 
   /**
    * clickHandler
+   * @summary Function to run when the button is clicked
    * @type {Array}
    * @memberof FmcButtonUi
    */
@@ -51,6 +52,7 @@ export class FmcButtonUi {
 
   /**
    * element
+   * @summary Button element
    * @type {HTMLElement}
    * @memberof FmcButtonUi
    */
@@ -64,6 +66,7 @@ export class FmcButtonUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcButtonUi
    */
@@ -77,6 +80,7 @@ export class FmcButtonUi {
 
   /**
    * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
    * @type {string}
    * @memberof FmcButtonUi
    */
@@ -91,28 +95,19 @@ export class FmcButtonUi {
   /* Instance methods */
 
   /**
-   * @function handleUpdate
-   * @param {object} event - Custom event
+   * @function disable
+   * @summary Disable the button
    * @memberof FmcButtonUi
    */
-  handleUpdate(event) {
-    const {
-      detail = {}
-    } = event;
-
-    const {
-      value
-    } = detail;
-
-    if (value.length) {
-      this.enable(value);
-    } else {
-      this.disable();
-    }
+  disable() {
+    this.element.dataset.href = '#';
+    this.element.removeAttribute('title');
+    this.element.setAttribute('disabled', '');
   }
 
   /**
    * @function enable
+   * @summary Re-enable the button
    * @param {string} value - Value
    * @memberof FmcButtonUi
    */
@@ -120,16 +115,6 @@ export class FmcButtonUi {
     this.element.dataset.href = value;
     this.element.setAttribute('title', value);
     this.element.removeAttribute('disabled');
-  }
-
-  /**
-   * @function disable
-   * @memberof FmcButtonUi
-   */
-  disable() {
-    this.element.dataset.href = '#';
-    this.element.removeAttribute('title');
-    this.element.setAttribute('disabled', '');
   }
 
   /**
@@ -195,6 +180,29 @@ export class FmcButtonUi {
       if (href && (href !== '#')) {
         window.FmcFile.openInFinder({ href });
       }
+    }
+  }
+
+  /**
+   * @function handleUpdate
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
+   * @memberof FmcButtonUi
+   */
+  handleUpdate(event) {
+    FmcUi.log(`FmcButtonUi.handleUpdate following "${this.updateListener}"`);
+    const {
+      detail = {}
+    } = event;
+
+    const {
+      value
+    } = detail;
+
+    if (value.length) {
+      this.enable(value);
+    } else {
+      this.disable();
     }
   }
 }

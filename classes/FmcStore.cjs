@@ -392,7 +392,7 @@ class FmcStore {
           throw error;
         }
       });
-          }
+    }
   }
 
   /**
@@ -428,8 +428,8 @@ class FmcStore {
       resolve({
         statusMessage: 'Saved options',
         statusType: 'success'
-        });
       });
+    });
   }
 
   /**

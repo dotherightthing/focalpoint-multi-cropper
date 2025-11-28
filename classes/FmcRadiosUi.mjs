@@ -38,6 +38,7 @@ export class FmcRadiosUi {
 
   /**
    * changeHandler
+   * @summary Function to run when a radio button is checked
    * @type {Array}
    * @memberof FmcRadiosUi
    */
@@ -51,8 +52,9 @@ export class FmcRadiosUi {
 
   /**
    * elements
-   * @type {*}
-   * @memberof FmcButtonUi
+   * @summary Radio button elements
+   * @type {HTMLElement[]}
+   * @memberof FmcRadiosUi
    * @todo Validation
    */
   get elements() {
@@ -65,6 +67,7 @@ export class FmcRadiosUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcRadiosUi
    */
@@ -76,10 +79,25 @@ export class FmcRadiosUi {
     this._selector = dtrtValidate.validate(selector, 'string', 'FmcRadiosUi.selector');
   }
 
+  /**
+   * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
+   * @type {string}
+   * @memberof FmcRadiosUi
+   */
+  get updateListener() {
+    return this._updateListener;
+  }
+
+  set updateListener(updateListener) {
+    this._updateListener = dtrtValidate.validate(updateListener, 'string', 'FmcButtonUi.updateListener');
+  }
+
   /* Instance methods */
 
   /**
    * @function getState
+   * @summary Get the state of the radio button set by determining which one is checked
    * @returns {boolean} state
    * @memberof FmcRadiosUi
    */
@@ -90,33 +108,13 @@ export class FmcRadiosUi {
   }
 
   /**
-   * @function setState
-   * @summary Turn on or off
-   * @param {string} state - on|off
-   * @returns {HTMLElement} checkedRadio
+   * @function handleUpdate
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
    * @memberof FmcRadiosUi
    */
-  setState(state) {
-    let checkedRadio = null;
-
-    this.elements.forEach(radio => {
-      radio.checked = (radio.value === state);
-
-      if (radio.value === state) {
-        checkedRadio = radio;
-      }
-    });
-
-    return checkedRadio;
-  }
-
-  /**
-   * @function handleUpdate
-   * @param {object} event - Custom event
-   * @memberof FmcButtonUi
-   */
   handleUpdate(event) {
-    FmcUi.log('# X.X - EXEC handleUpdate');
+    FmcUi.log(`FmcRadiosUi.handleUpdate following "${this.updateListener}"`);
     const {
       detail = {}
     } = event;
@@ -139,5 +137,26 @@ export class FmcRadiosUi {
     }
 
     FmcUi.emitElementEvent(checkedElement[0], 'change');
+  }
+
+  /**
+   * @function setState
+   * @summary Change the state of the radio button set by checking one of the radios
+   * @param {string} state - on|off
+   * @returns {HTMLElement} checkedRadio
+   * @memberof FmcRadiosUi
+   */
+  setState(state) {
+    let checkedRadio = null;
+
+    this.elements.forEach(radio => {
+      radio.checked = (radio.value === state);
+
+      if (radio.value === state) {
+        checkedRadio = radio;
+      }
+    });
+
+    return checkedRadio;
   }
 }

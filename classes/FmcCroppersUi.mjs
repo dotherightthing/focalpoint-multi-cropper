@@ -1,6 +1,3 @@
-/**
- * @file FmcCroppersUi.js
- */
 import dtrtValidate from 'dtrt-type-validate';
 import { FmcUi } from './FmcUi.mjs';
 
@@ -46,7 +43,8 @@ export class FmcCroppersUi {
 
   /**
    * Cropper
-   * @type {Function}
+   * @summary The Cropper constructor creates a new Cropper instance
+   * @type {Cropper}
    * @memberof FmcCroppersUi
    */
   get Cropper() {
@@ -59,6 +57,7 @@ export class FmcCroppersUi {
 
   /**
    * croppers
+   * @summary Multiple visible instances of Cropper, including one master and several with unique proportions
    * @type {Array}
    * @memberof FmcCroppersUi
    */
@@ -72,6 +71,7 @@ export class FmcCroppersUi {
 
   /**
    * croppersOptions
+   * @summary Options supplied to the Cropper constructor when creating a new Cropper instance
    * @type {object}
    * @memberof FmcCroppersUi
    */
@@ -85,6 +85,7 @@ export class FmcCroppersUi {
 
   /**
    * elements
+   * @summary UI elements associated with the croppers
    * @type {object}
    * @memberof FmcCroppersUi
    */
@@ -98,6 +99,7 @@ export class FmcCroppersUi {
 
   /**
    * imageSrc
+   * @summary Stores the value of the current cropper image source, via this.changeSourceImage
    * @type {string}
    * @memberof FmcCroppersUi
    */
@@ -139,6 +141,7 @@ export class FmcCroppersUi {
 
   /**
    * resizers
+   * @summary Multiple hidden instances of resizer, which resizes images without cropping
    * @type {Array}
    * @memberof FmcCroppersUi
    */
@@ -152,6 +155,7 @@ export class FmcCroppersUi {
 
   /**
    * selectors
+   * @summary DOM selectors
    * @type {object}
    * @memberof FmcCroppersUi
    */
@@ -165,7 +169,7 @@ export class FmcCroppersUi {
 
   /**
    * slaveCroppers
-   * @summary An array of objects, each containing a slave cropper instance
+   * @summary An array of objects, each containing a slave (non-master) instance of Cropper
    * @type {Array}
    * @memberof FmcCroppersUi
    */
@@ -179,6 +183,7 @@ export class FmcCroppersUi {
 
   /**
    * updateDelay
+   * @summary Number of milliseconds to wait after dragging the focalpoint, before applying rounding
    * @type {number}
    * @memberof FmcCroppersUi
    */
@@ -952,6 +957,7 @@ export class FmcCroppersUi {
    * @param {HTMLElement} resizerImage - Resizer image
    * @returns { object } resizer
    * @memberof FmcCroppersUi
+   * @todo Convert resizer to a class
    */
   initResizer(resizerImage) {
     FmcUi.log('FmcCroppersUi.initResizer', resizerImage);

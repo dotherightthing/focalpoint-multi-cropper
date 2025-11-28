@@ -58,6 +58,7 @@ export class FmcThumbsUi {
 
   /**
    * selectors
+   * @summary DOM selectors
    * @type {object}
    * @memberof FmcThumbsUi
    */

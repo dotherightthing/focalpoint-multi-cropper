@@ -42,6 +42,7 @@ export class FmcTextfieldUi {
 
   /**
    * changeHandler
+   * @summary Function to run when text is added or removed from the textfield
    * @type {Array}
    * @memberof FmcTextfieldUi
    */
@@ -55,6 +56,7 @@ export class FmcTextfieldUi {
 
   /**
    * element
+   * @summary Textfield element
    * @type {HTMLElement}
    * @memberof FmcTextfieldUi
    */
@@ -68,6 +70,7 @@ export class FmcTextfieldUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcTextfieldUi
    */
@@ -81,6 +84,7 @@ export class FmcTextfieldUi {
 
   /**
    * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
    * @type {string}
    * @memberof FmcTextfieldUi
    */
@@ -96,10 +100,12 @@ export class FmcTextfieldUi {
 
   /**
    * @function handleUpdate
-   * @param {object} event - Custom event
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
    * @memberof FmcTextfieldUi
    */
   handleUpdate(event) {
+    FmcUi.log(`FmcTextfieldUi.handleUpdate following "${this.updateListener}"`);
     const {
       detail = {}
     } = event;

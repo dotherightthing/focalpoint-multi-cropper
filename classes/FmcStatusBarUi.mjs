@@ -1,4 +1,5 @@
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcUi } from './FmcUi.mjs';
 
 export class FmcStatusBarUi {
   /**
@@ -31,6 +32,7 @@ export class FmcStatusBarUi {
 
   /**
    * element
+   * @summary The status bar container element
    * @type {HTMLElement}
    * @memberof FmcStatusBarUi
    */
@@ -44,7 +46,8 @@ export class FmcStatusBarUi {
 
   /**
    * statusMessageElement
-   * @type {string}
+   * @summary The status bar element which displays messages
+   * @type {HTMLElement}
    * @memberof FmcStatusBarUi
    */
   get statusMessageElement() {
@@ -53,7 +56,8 @@ export class FmcStatusBarUi {
 
   /**
    * statusTypeElement
-   * @type {string}
+   * @summary The status bar element which displays the message type
+   * @type {HTMLElement}
    * @memberof FmcStatusBarUi
    */
   get statusTypeElement() {
@@ -62,6 +66,7 @@ export class FmcStatusBarUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcStatusBarUi
    */
@@ -75,6 +80,7 @@ export class FmcStatusBarUi {
 
   /**
    * statusTypes
+   * @summary Types of status messages
    * @type {Array}
    * @memberof FmcStatusBarUi
    */
@@ -88,8 +94,9 @@ export class FmcStatusBarUi {
 
   /**
    * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
    * @type {string}
-   * @memberof FmcButtonUi
+   * @memberof FmcStatusBarUi
    */
   get updateListener() {
     return this._updateListener;
@@ -103,12 +110,14 @@ export class FmcStatusBarUi {
 
   /**
    * @function handleUpdate
-   * @param {object} event - Message event
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
    * @memberof FmcStatusBarUi
    * @see {link https://www.macarthur.me/posts/when-dom-updates-appear-to-be-asynchronous}
    * @see {link https://stackoverflow.com/a/65144294}
    */
   async handleUpdate(event) {
+    FmcUi.log(`FmcStatusBarUi.handleUpdate following "${this.updateListener}"`);
     const {
       statusMessageElement,
       statusTypeElement,

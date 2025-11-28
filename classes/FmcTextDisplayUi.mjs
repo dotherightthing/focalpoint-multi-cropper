@@ -1,4 +1,5 @@
 import dtrtValidate from 'dtrt-type-validate';
+import { FmcUi } from './FmcUi.mjs';
 
 export class FmcTextDisplayUi {
   /**
@@ -29,6 +30,7 @@ export class FmcTextDisplayUi {
 
   /**
    * element
+   * @summary Text display element
    * @type {HTMLElement}
    * @memberof FmcTextDisplayUi
    */
@@ -42,6 +44,7 @@ export class FmcTextDisplayUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcTextDisplayUi
    */
@@ -55,6 +58,7 @@ export class FmcTextDisplayUi {
 
   /**
    * updateListener
+   * @summary Custom event to listen for, before responding with handleUpdate
    * @type {string}
    * @memberof FmcTextDisplayUi
    */
@@ -70,10 +74,12 @@ export class FmcTextDisplayUi {
 
   /**
    * @function handleUpdate
-   * @param {object} event - Custom event
+   * @summary Respond to an emitted custom event which matches this.updateListener
+   * @param {object} event - Custom event which matches this.updateListener
    * @memberof FmcTextDisplayUi
    */
   handleUpdate(event) {
+    FmcUi.log(`FmcTextDisplayUi.handleUpdate following "${this.updateListener}"`);
     const {
       detail = {}
     } = event;

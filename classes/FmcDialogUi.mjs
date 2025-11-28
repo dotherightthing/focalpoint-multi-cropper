@@ -106,6 +106,7 @@ export class FmcDialogUi {
 
   /**
    * selector
+   * @summary DOM selector
    * @type {string}
    * @memberof FmcDialogUi
    */
