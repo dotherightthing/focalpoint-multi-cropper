@@ -80,7 +80,7 @@ export class FmcDialogUi {
 
   /**
    * element
-   * @type {HTMLElement}
+   * @type {HTMLDialogElement}
    * @memberof FmcDialogUi
    */
   get element() {

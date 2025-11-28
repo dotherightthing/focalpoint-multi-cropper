@@ -733,8 +733,8 @@ module.exports = class FmcFile {
   /**
    * @function sortDateOrderAscending
    * @summary Sort images in date order, ascending
-   * @param {Array} imagesData - Images data
-   * @returns {Number[]} imagesDataSorted
+   * @param {object[]} imagesData - Images data
+   * @returns {number[]} imagesDataSorted
    * @memberof FmcFile
    * @static
    */
