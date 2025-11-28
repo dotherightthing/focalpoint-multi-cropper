@@ -536,8 +536,8 @@ export class FmcCroppersUi {
 
   /**
    * @function getCropperOptions
-   * @param {string} exportWidth - Export width
-   * @param {string} exportHeight - Export height
+   * @param {Number|null} exportWidth - Export width
+   * @param {Number|null} exportHeight - Export height
    * @param {string} role - master | slave
    * @param {string} action - resizeAndCrop (with preview) | resize
    * @returns {object} options
@@ -632,7 +632,7 @@ export class FmcCroppersUi {
    * @param {string} args.imagePercentXUi - Image Percent X as shown in the UI controls
    * @param {string} args.imagePercentYUi - Image Percent Y as shown in the UI controls
    * @param {string} args.imageProportionsUi - Image Proportions setting as shown in the UI controls
-   * @returns {string} state
+   * @returns {Promise<string>} state
    * @memberof FmcCroppersUi
    * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
    */
@@ -805,7 +805,7 @@ export class FmcCroppersUi {
    * @param {string} fileName - Image file name and path
    * @param {number} resizeW - Resize width
    * @param {number} resizeH - Resize height
-   * @returns {object} { centerX, centerY }
+   * @returns {Promise<object>} { centerX, centerY }
    * @memberof FmcCroppersUi
    */
   async getResizedImageCenterXY(fileName, resizeW, resizeH) {
@@ -1168,7 +1168,7 @@ export class FmcCroppersUi {
   /**
    * @function resizeAndCropImage
    * @param {string} targetFolder - Target folder
-   * @returns {string} baseExportPath
+   * @returns {Promise<string>} baseExportPath
    * @memberof FmcCroppersUi
    */
   async resizeAndCropImage(targetFolder) {
@@ -1454,10 +1454,11 @@ export class FmcCroppersUi {
       croppersId
     } = selectors;
 
+    // container for the 4 croppers
     const croppersEl = document.getElementById(croppersId);
 
     if (loading) {
-      croppersEl.dataset.cropperFocalpointLoading = true;
+      croppersEl.dataset.cropperFocalpointLoading = 'true';
     } else {
       delete croppersEl.dataset.cropperFocalpointLoading;
     }
@@ -1581,7 +1582,7 @@ export class FmcCroppersUi {
    * @param {string} args.imageFlags - Image flags (comma separated)
    * @param {string} args.imagePercentX - Image percentage X
    * @param {string} args.imagePercentY - Image percentage Y
-   * @returns {Promise<string>} { msg, type }
+   * @returns {Promise<object>} { msg, type }
    * @memberof FmcCroppersUi
    * @todo update to match setFocalpointSaveState
    */
@@ -1727,7 +1728,7 @@ export class FmcCroppersUi {
   /**
    * @function getImageTitle
    * @param {string} imagePath - Image path
-   * @returns {object} { Title }
+   * @returns {Promise<object>} { Title }
    * @memberof FmcCroppersUi
    * @static
    */

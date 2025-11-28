@@ -32,7 +32,7 @@ module.exports = class FmcFile {
 
   /**
    * @function copyFromClipboard
-   * @returns {string} text
+   * @returns {Promise<string>} text
    * @memberof FmcFile
    * @static
    */
@@ -74,7 +74,7 @@ module.exports = class FmcFile {
    * @param {number} data.quality - Quality
    * @param {string} data.targetFolder - Target folder
    * @param {Array} data.cropsAndSizes - Crops and sizes
-   * @returns {object} { baseExportPath, counts }
+   * @returns {Promise<object>} { baseExportPath, counts }
    * @memberof FmcFile
    * @static
    */
@@ -209,7 +209,7 @@ module.exports = class FmcFile {
    * @param {number} data.quality - Image quality
    * @param {string} data.sourceFileName - Source file name
    * @param {string} data.targetFilename - Export filename
-   * @returns {string} successMessage
+   * @returns {Promise<string>} successMessage
    * @memberof FmcFile
    * @static
    */
@@ -367,7 +367,7 @@ module.exports = class FmcFile {
    * @param {event} event - FmcFile:deleteImagePercentXYFromImage event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.fileName - Filename
-   * @returns {object} { msg, type }
+   * @returns {Promise<object>} { msg, type }
    * @memberof FmcFile
    * @static
    */
@@ -405,7 +405,7 @@ module.exports = class FmcFile {
    * @param {event} event - FmcFile:pathExists event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.path - Path
-   * @returns {boolean} exists
+   * @returns {Promise<boolean>} exists
    * @memberof FmcFile
    * @static
    * @see {@link https://futurestud.io/tutorials/node-js-check-if-a-file-exists}
@@ -428,7 +428,7 @@ module.exports = class FmcFile {
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.fileName - File name
-   * @returns {object} parts
+   * @returns {Promise<object>} parts
    * @memberof FmcFile
    * @static
    */
@@ -473,7 +473,7 @@ module.exports = class FmcFile {
   /**
    * @function getImageFiles
    * @param {string} dir - Directory path
-   * @returns {Array} files
+   * @returns {Promise<Array>} files
    * @memberof FmcFile
    * @static
    */
@@ -491,7 +491,7 @@ module.exports = class FmcFile {
    * @param {string} data.imageName - Image name
    * @param {string} data.title - EXIF/IPTC title
    * @param {string} data.date - Date created
-   * @returns {object} msgObj
+   * @returns {Promise<object>} msgObj
    * @memberof FmcFile
    * @static
    */
@@ -570,7 +570,7 @@ module.exports = class FmcFile {
    * @function getImagesData
    * @summary Get the path to a folder and the supported images within it
    * @param {Array} imageFiles - Supported file types contained within the folder
-   * @returns {Array} imagesData
+   * @returns {Promise<Array>} imagesData
    * @memberof FmcFile
    * @static
    */
@@ -624,7 +624,7 @@ module.exports = class FmcFile {
    * @param {string} data.fileDescription - File description
    * @param {string} data.filePath - Path to website file
    * @param {string} data.folderPath - Path to website (workspace) folder
-   * @returns {string} statusMessage
+   * @returns {Promise<string>} statusMessage
    * @memberof FmcFile
    * @static
    */
@@ -684,7 +684,7 @@ module.exports = class FmcFile {
    * @param {string} data.dialogTitle - Title for the dialog
    * @param {boolean} data.restore - Restore setting if it was previously stored
    * @param {string} data.storeKey - Key under which to persist the file path in the JSON file
-   * @returns { object } { fileName, filePath }
+   * @returns {Promise<object>} { fileName, filePath }
    * @memberof FmcFile
    * @static
    */
@@ -767,7 +767,7 @@ module.exports = class FmcFile {
    *  (The UI contains multiple folder 'Browse' buttons, but only the 'folderIn' needs access to imagesData.)
    * @param {boolean} data.restore - Restore setting if it was previously stored
    * @param {string} data.storeKey - Key under which to persist the folder path in the JSON file
-   * @returns {object} { folderName, folderPath, imagesData }
+   * @returns {Promise<object>} { folderName, folderPath, imagesData }
    * @todo Can slice() operation be merged into getFileNameParts() ?
    * @memberof FmcFile
    * @static
@@ -883,7 +883,7 @@ module.exports = class FmcFile {
    * @param {string} data.fileNameWithPath - File name with path
    * @param {object} data.exifData - EXIF data
    * @param {object} data.dateTimeOriginalAsDate - whether to get DateTimeOriginal.asDate()
-   * @returns {object} { tags, extras }
+   * @returns {Promise<object>} { tags, extras }
    * @see {@link https://stackoverflow.com/a/49729848}
    * @memberof FmcFile
    * @static
@@ -925,7 +925,7 @@ module.exports = class FmcFile {
    * @param {object} data - Data
    * @param {string} data.oldFileNameWithPath - Old file name with path
    * @param {string} data.newFileNameWithPath - New file name with path
-   * @returns {object} { statusMessage, statusType }
+   * @returns {Promise<object>} { statusMessage, statusType }
    * @memberof FmcFile
    * @static
    */

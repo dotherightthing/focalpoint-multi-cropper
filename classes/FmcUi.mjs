@@ -189,7 +189,7 @@ export class FmcUi {
    * @function getPathWebEmbed
    * @summary Set the web embed path in the footer
    * @param {string} pathOut - Path out
-   * @returns {string} pathWebEmbed
+   * @returns {Promise<string>} pathWebEmbed
    * @memberof FmcUi
    */
   async getPathWebEmbed(pathOut) {
@@ -350,7 +350,7 @@ export class FmcUi {
 
   /**
    * @function handleExportSelected
-   * @returns {string} baseExportPath
+   * @returns {Promise<string>} baseExportPath
    * @memberof FmcUi
    */
   async handleExportSelected() {
@@ -1423,7 +1423,7 @@ export class FmcUi {
   /**
    * @function emitElementEvent
    * @summary Emit a custom event
-   * @param {HTMLElement} element - element that will dispatch the event
+   * @param {Window|HTMLElement} element - element that will dispatch the event
    * @param {string} eventName - Event names are case-sensitive
    * @param {object} eventDetail - name-value pair
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent}
