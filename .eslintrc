@@ -32,6 +32,11 @@
     "cypress/no-unnecessary-waiting": "off",
     "func-names": "off",
     "indent": ["warn", 2],
+    "jsdoc/require-tags": [
+      "error", {
+        "tags": [ "summary" ]
+      }
+    ],
     "max-len": "off",
     "no-alert": "off",
     "no-await-in-loop": "off",
