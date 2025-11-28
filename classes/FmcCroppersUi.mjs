@@ -1053,11 +1053,9 @@ export class FmcCroppersUi {
 
     const {
       top: masterCropperCanvasOffsetTop
-      // left: masterCropperCanvasOffsetLeft
     } = this.calcCanvasOffsets();
 
     const {
-      top: masterCropperCanvasTop,
       left: masterCropperCanvasLeft
     } = masterCropper.cropperInstance.getCanvasData();
 
@@ -1077,11 +1075,10 @@ export class FmcCroppersUi {
 
         this.moveSlaveCropperCropBoxToPageXY({
           cropper: cropperInstance,
-          pageX,
-          pageY,
+          masterCropperCanvasLeft,
           masterCropperCanvasOffsetTop,
-          masterCropperCanvasTop,
-          masterCropperCanvasLeft
+          pageX,
+          pageY
         });
       });
     }
