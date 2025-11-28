@@ -927,15 +927,11 @@ module.exports = class FmcFile {
       newFileNameWithPath
     } = data;
 
-    const result = fs.renameSync(oldFileNameWithPath, newFileNameWithPath, (error) => {
-      if (error) {
-        console.log(error);
-      }
-    });
+    fs.renameSync(oldFileNameWithPath, newFileNameWithPath);
 
     return {
-      statusMessage: result
-      // statusType
+      statusMessage: 'File renamed',
+      statusType: 'success'
     };
   }
 };
