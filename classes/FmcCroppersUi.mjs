@@ -28,11 +28,22 @@ export class FmcCroppersUi {
     });
 
     const {
+      cropperImageClass,
       croppersId
     } = selectors;
 
+    // container for the 4 croppers
+    const croppersEl = document.getElementById(croppersId);
+
+    this.cropperImageElements = document.querySelectorAll(`#${croppersId} .${cropperImageClass}`);
+
     // assign Expando property to expose methods during E2E testing
-    document.getElementById(croppersId).fmcCroppersUi = this;
+    // An expando property is a dynamic property that can be added to an object at runtime
+    if (typeof Cypress !== 'undefined') {
+      // @ts-ignore
+      // Property 'fmcCroppersUi' does not exist on type 'HTMLElement'.
+      croppersEl.fmcCroppersUi = this;
+    }
 
     this.croppers = [];
     this.resizers = [];
