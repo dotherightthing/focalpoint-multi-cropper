@@ -33,8 +33,8 @@ const args = process.argv.slice(3);
 const showDevTools = args.indexOf('devtools') !== -1;
 const maximiseWindow = args.indexOf('maximise') !== -1;
 
-const FmcFile = require('./server/FmcFile.cjs');
-const FmcStore = require('./server/FmcStore.cjs');
+const FmcFile = require('./FmcFile.cjs');
+const FmcStore = require('./FmcStore.cjs');
 
 const path = require('path');
 const contextMenu = require('electron-context-menu');
@@ -50,7 +50,7 @@ const createWindow = () => {
     height,
     webPreferences: {
       nodeIntegration: true, // disable sandboxing
-      preload: path.join(__dirname, 'server/preload.cjs')
+      preload: path.join(__dirname, 'preload.cjs')
     },
     title: appName
   });

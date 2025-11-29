@@ -1,16 +1,16 @@
 // Electron's render process (web page)
 
-import { FmcButtonUi } from './client/FmcButtonUi.mjs';
-import { FmcCropperImgUi } from './client/FmcCropperImgUi.mjs';
-import { FmcCroppersUi } from './client/FmcCroppersUi.mjs';
-import { FmcDialogUi } from './client/FmcDialogUi.mjs';
-import { FmcRadiosUi } from './client/FmcRadiosUi.mjs';
-import { FmcSelectUi } from './client/FmcSelectUi.mjs';
-import { FmcStatusBarUi } from './client/FmcStatusBarUi.mjs';
-import { FmcTextDisplayUi } from './client/FmcTextDisplayUi.mjs';
-import { FmcTextfieldUi } from './client/FmcTextfieldUi.mjs';
-import { FmcThumbsUi } from './client/FmcThumbsUi.mjs';
-import { FmcUi } from './client/FmcUi.mjs';
+import { FmcButtonUi } from './FmcButtonUi.mjs';
+import { FmcCropperImgUi } from './FmcCropperImgUi.mjs';
+import { FmcCroppersUi } from './FmcCroppersUi.mjs';
+import { FmcDialogUi } from './FmcDialogUi.mjs';
+import { FmcRadiosUi } from './FmcRadiosUi.mjs';
+import { FmcSelectUi } from './FmcSelectUi.mjs';
+import { FmcStatusBarUi } from './FmcStatusBarUi.mjs';
+import { FmcTextDisplayUi } from './FmcTextDisplayUi.mjs';
+import { FmcTextfieldUi } from './FmcTextfieldUi.mjs';
+import { FmcThumbsUi } from './FmcThumbsUi.mjs';
+import { FmcUi } from './FmcUi.mjs';
 
 // listeners
 

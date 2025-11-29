@@ -512,4 +512,4 @@ const fmcStore = new FmcStore({
 });
 
 // used externally to access static methods
-export default FmcStore;
+module.exports = FmcStore;
