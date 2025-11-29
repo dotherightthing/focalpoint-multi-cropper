@@ -14,6 +14,7 @@
     "start:maximise": "electron . -- maximise",
     "test": "start-server-and-test serve http://127.0.0.1:8000 test:cypress",
     "test:cypress": "cypress run --browser firefox:dev"
+    "updateTypes": "npx tsc"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "eslint-plugin-jsdoc": "^61.4.1",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
-    "start-server-and-test": "^2.0.0"
+    "start-server-and-test": "^2.0.0",
+    "typescript": "^5.9.3"
   }
 }

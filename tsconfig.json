@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    // Tells TypeScript to read JS files, as
+    // normally they are ignored as source files
+    "allowJs": true,
+    // Generate d.ts files
+    "declaration": true,
+    // This compiler run should only output d.ts files
+    "emitDeclarationOnly": true,
+    // Types should go into this directory.
+    // Removing this would place the .d.ts files
+    // next to the .js files
+    "outDir": "types",
+    // go to js file when using IDE functions like
+    // "Go to Definition" in VSCode
+    "declarationMap": true,
+    // Private identifiers (like those in exiftool-vendored)
+    // are only available when targeting ECMAScript 2015 and higher
+    "target": "es2015",
+    // When target is 'es2015', moduleResolution is 'Classic'
+    // so tsc cannot resolve imports like: import * as undici from "undici-types"
+    // Setting moduleResolution to 'nodenext' resolves this
+    "moduleResolution": "nodenext",
+    // Option 'module' must be set to 'NodeNext' when option 'moduleResolution' is set to 'NodeNext'
+    "module": "nodenext"
+  }
+}
