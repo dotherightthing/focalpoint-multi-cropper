@@ -29,29 +29,29 @@
     "cypress/no-unnecessary-waiting": "off",
     "func-names": "off",
     "indent": ["warn", 2],
+    "jsdoc/reject-any-type": "off",
+    "jsdoc/reject-function-type": "off",
     "jsdoc/require-tags": [
       "error", {
         "tags": [ "summary" ]
       }
     ],
-    "jsdoc/reject-any-type": "off",
-    "jsdoc/reject-function-type": "off",
     "max-len": "off",
     "no-alert": "off",
     "no-await-in-loop": "off",
     "no-console": "off",
-    "no-underscore-dangle": "off",
-    "no-use-before-define": "off",
     "no-param-reassign": [ "warn", {
       "props": false
     }],
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "no-unused-expressions": 0,
     "no-unused-vars": [
       "warn", 
       {
         "varsIgnorePattern": "^(ui)|^config"
       }
     ],
-    "no-unused-expressions": 0,
     "prefer-regex-literals": 0,
     "valid-typeof": [
       "off"
