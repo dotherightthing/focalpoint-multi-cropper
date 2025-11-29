@@ -319,13 +319,13 @@ class FmcStore {
 
   /**
    * @function setOptionsKeys
-   * @param {event|null} event - FmcStore:setOptionsKeys event captured by ipcMain.handle
+   * @summary Set or update the supplied key/value in the options section of the store's data file
    * @param {object} data - Data
    * @param {Array} data.keyValuePairs - Objects (key - val pairs)
    * @memberof FmcStore
    * @static
    */
-  static async setOptionsKeys(event, data) {
+  static async setOptionsKeys(data) {
     /*
     "options": [
       {
@@ -359,14 +359,14 @@ class FmcStore {
 
   /**
    * @function setPresetKeys
-   * @param {event|null} event - FmcStore:setPresetKeys event captured by ipcMain.handle
+   * @summary Set or update the supplied key/value in the presets section of the store's data file
    * @param {object} data - Data
    * @param {Array} data.keyValuePairs - Objects (key - val pairs)
    * @param {string} data.presetName - Preset name (to save keys with preset)
    * @memberof FmcStore
    * @static
    */
-  static async setPresetKeys(event, data) {
+  static async setPresetKeys(data) {
     /*
     "presets": [
       {
@@ -446,7 +446,7 @@ class FmcStore {
       lastModified: new Date().toLocaleString() // "13/08/2023, 8:52:55 pm"
     });
 
-    await FmcStore.setOptionsKeys(null, { keyValuePairs });
+    await FmcStore.setOptionsKeys({ keyValuePairs });
 
     return new Promise(resolve => {
       resolve({
@@ -487,7 +487,7 @@ class FmcStore {
       lastModified: new Date().toLocaleString() // "13/08/2023, 8:52:55 pm"
     });
 
-    await FmcStore.setPresetKeys(null, {
+    await FmcStore.setPresetKeys({
       keyValuePairs,
       presetName: name
     });

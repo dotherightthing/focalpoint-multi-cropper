@@ -45,6 +45,5 @@ contextBridge.exposeInMainWorld('FmcStore', {
   getStoreFilePath: (data) => ipcRenderer.invoke('FmcStore:getStoreFilePath', data),
   setOptions: (data) => ipcRenderer.invoke('FmcStore:setOptions', data),
   setPreset: (data) => ipcRenderer.invoke('FmcStore:setPreset', data),
-  setPresetKeys: (data) => ipcRenderer.invoke('FmcStore:setPresetKeys', data),
   setActivePresetName: (data) => ipcRenderer.invoke('FmcStore:setActivePresetName', data)
 });

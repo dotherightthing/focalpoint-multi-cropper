@@ -131,7 +131,6 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcStore:setActivePresetName', FmcStore.setActivePresetName);
   ipcMain.handle('FmcStore:setOptions', FmcStore.setOptions);
   ipcMain.handle('FmcStore:setPreset', FmcStore.setPreset);
-  ipcMain.handle('FmcStore:setPresetKeys', FmcStore.setPresetKeys);
 
   createWindow();
 
