@@ -45,20 +45,6 @@ class FmcStore {
     }
   }
 
-  /**
-   * data
-   * @summary The data object
-   * @type {object}
-   * @memberof FmcStore
-   */
-  get data() {
-    return this._data;
-  }
-
-  set data(data) {
-    this._data = dtrtValidate.validate(data, 'object', 'FmcStore.data');
-  }
-
   /* Static methods */
 
   /**
