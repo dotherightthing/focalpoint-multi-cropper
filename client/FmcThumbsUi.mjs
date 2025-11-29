@@ -192,11 +192,11 @@ export class FmcThumbsUi {
 
     let str = '';
 
-    el.dataset.thumbIndex = thumbIndex;
+    el.dataset.thumbIndex = String(thumbIndex);
 
     // store for later access
     if (typeof thumbTotal !== 'undefined') {
-      el.dataset.thumbTotal = thumbTotal;
+      el.dataset.thumbTotal = String(thumbTotal);
     }
 
     if (typeof el.dataset.thumbTotal !== 'undefined') {
