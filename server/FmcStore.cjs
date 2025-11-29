@@ -5,6 +5,7 @@
  * @see {@link https://gist.githubusercontent.com/ccnokes/95cb454860dbf8577e88d734c3f31e08/raw/7b98c7eaa9c74b40f1a62ceb70116c799b9dd555/store.js}
  */
 
+import dtrtValidate from 'dtrt-type-validate';
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -44,18 +45,33 @@ class FmcStore {
     }
   }
 
+  /**
+   * data
+   * @summary The data object
+   * @type {object}
+   * @memberof FmcStatusBarUi
+   */
+  get data() {
+    return this._data;
+  }
+
+  set data(data) {
+    this._data = dtrtValidate.validate(data, 'object', 'FmcStore.data');
+  }
+
   /* Static methods */
 
   /**
    * @function getActivePreset
+   * @summary Load the preset which matches the name of the active preset
    * @param {event|null} event - FmcStore:getActivePreset event captured by ipcMain.handle
-   * @returns {object} preset
+   * @returns {Promise<object>} preset
    * @memberof FmcStore
    * @static
    */
   static async getActivePreset(event) { // eslint-disable-line no-unused-vars
     // this returns { key: value, key2: value2 }
-    let activePresetKeyValuePairs = await FmcStore.getKeys(null, {
+    let activePresetKeyValuePairs = await FmcStore.getKeys({
       keys: [ 'activePreset' ]
     });
 
@@ -75,15 +91,16 @@ class FmcStore {
 
   /**
    * @function getKeys
-   * @param {event|null} event - FmcStore:getKeys event captured by ipcMain.handle
+   * @summary Retrieve key-value pairs for the supplied keys, optionally from a named preset
    * @param {object} data - Data
    * @param {Array} data.keys - Keys
    * @param {string} data.presetName - Preset name (if key was saved with preset)
-   * @returns {object} keyValuePairs
+   * @returns {Promise<object>} keyValuePairs
    * @memberof FmcStore
    * @static
+   * @todo Only called internally - async may be redundant, consider making #private
    */
-  static async getKeys(event, data) {
+  static async getKeys(data) {
     const {
       keys,
       presetName
@@ -105,7 +122,7 @@ class FmcStore {
       for (let k = 0; k < keys.length; k += 1) {
         const key = keys[k];
 
-        const value = await store.get(key, (error) => {
+        const value = await fmcStore.get(key, (error) => {
           if (error) {
             throw new Error(`Error ${key} does not exist: ${error}`);
           }
@@ -121,14 +138,14 @@ class FmcStore {
   /**
    * @function getOptions
    * @param {event|null} event - FmcStore:getOptions event captured by ipcMain.handle
-   * @returns {object} options
+   * @returns {Promise<object>} options
    * @memberof FmcStore
    * @static
    */
   static async getOptions(event) { // eslint-disable-line no-unused-vars
     let msgObj;
 
-    const options = await store.get('options') || {};
+    const options = await fmcStore.get('options') || {};
 
     if ((typeof options !== 'undefined') && Object.keys(options).length > 0) {
       msgObj = {
@@ -153,7 +170,7 @@ class FmcStore {
    * @param {event|null} event - FmcStore:getPreset event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.presetName - Preset name (if key was saved with preset)
-   * @returns {object} { preset, presetIndex, presets }
+   * @returns {Promise<object>} { preset, presetIndex, presets }
    * @memberof FmcStore
    * @static
    */
@@ -166,7 +183,7 @@ class FmcStore {
     let preset = {};
     let presetIndex = -1;
 
-    const presets = await store.get('presets');
+    const presets = await fmcStore.get('presets');
 
     if ((typeof presets !== 'undefined') && presets.length) {
       preset = presets.filter(item => item.name === presetName);
@@ -193,13 +210,14 @@ class FmcStore {
 
   /**
    * @function getPresetNames
-   * @returns {Array} presets in alphabetical order
+   * @summary Get the names of all the presets in the store
+   * @returns {Promise<string[]>} presets in alphabetical order
    * @memberof FmcStore
    * @static
    * @see {@link https://stackoverflow.com/a/8900922}
    */
   static async getPresetNames() {
-    const presets = await store.get('presets');
+    const presets = await fmcStore.get('presets');
     let presetNames = [];
 
     if (typeof presets !== 'undefined') {
@@ -212,17 +230,21 @@ class FmcStore {
 
   /**
    * @function getStoreFilePath
+   * @summary Get the path to the user-preferences.json file used by the store
    * @param {event|null} event - FmcStore:getStoreFilePath event captured by ipcMain.handle
-   * @returns {string} storeFilePath
+   * @returns {Promise<string>} storeFilePath
    * @memberof FmcStore
    * @static
    */
   static async getStoreFilePath(event) { // eslint-disable-line no-unused-vars
-    return store.path;
+    return fmcStore.path;
   }
 
   /**
    * @function parseDataFile
+   * @summary Get the contents of the store's data file in JSON format
+   * @description
+   * Note: this doesn't use async as it is called from the constructor and the results are not passed to the frontend
    * @param {string} filePath - File path
    * @param {object} defaults - Defaults
    * @returns {object} data|defaults
@@ -242,6 +264,7 @@ class FmcStore {
 
   /**
    * @function setActivePresetName
+   * @summary Store the value of the active preset name
    * @param {event|null} event - FmcStore:setActivePresetName event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.presetName - Preset name
@@ -264,6 +287,7 @@ class FmcStore {
 
   /**
    * @function setOrphanKeys
+   * @summary Set or update the supplied key/value in the store's data file
    * @param {event|null} event - FmcStore:setOrphanKeys event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {Array} data.keyValuePairs - Objects (key - val pairs)
@@ -285,7 +309,7 @@ class FmcStore {
         value
       ] = Object.entries(obj)[0];
 
-      store.set(key, value, (error) => {
+      fmcStore.set(key, value, (error) => {
         if (error) {
           throw error;
         }
@@ -326,7 +350,7 @@ class FmcStore {
       options[key] = value;
     });
 
-    store.set('options', options, (error) => {
+    fmcStore.set('options', options, (error) => {
       if (error) {
         throw error;
       }
@@ -387,7 +411,7 @@ class FmcStore {
 
       presets[presetIndex] = preset;
 
-      store.set('presets', presets, (error) => {
+      fmcStore.set('presets', presets, (error) => {
         if (error) {
           throw error;
         }
@@ -400,7 +424,7 @@ class FmcStore {
    * @param {event} event - FmcStore:setOptions event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.name - Preset name
-   * @returns {object} msgObj
+   * @returns {Promise<object>} msgObj
    * @memberof FmcStore
    * @static
    */
@@ -478,10 +502,10 @@ class FmcStore {
 }
 
 // used internally to set and get data
-const store = new FmcStore({
+const fmcStore = new FmcStore({
   configName: 'user-preferences',
   defaults: {}
 });
 
 // used externally to access static methods
-module.exports = FmcStore;
+export default FmcStore;
