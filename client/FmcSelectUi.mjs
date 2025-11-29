@@ -101,7 +101,7 @@ export class FmcSelectUi {
    * @memberof FmcSelectUi
    */
   handleUpdate(event) {
-    FmcUi.log(`FmcSelectUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcSelectUi.handleUpdate`);
     const {
       detail = {}
     } = event;

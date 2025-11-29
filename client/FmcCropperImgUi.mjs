@@ -95,7 +95,7 @@ export class FmcCropperImgUi {
    * @memberof FmcCropperImgUi
    */
   handleUpdate(event) {
-    FmcUi.log(`FmcCropperImgUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcCropperImgUi.handleUpdate`);
     const [ instance, method ] = this.readyHandler;
 
     const {

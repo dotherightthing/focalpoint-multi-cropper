@@ -296,13 +296,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.clear();
   }
 
-  FmcUi.log('# 1 - CALL fmcUi.loadOptions');
+  FmcUi.log('renderer.js -> fmcUi.loadOptions');
   await fmcUi.loadOptions();
 
-  FmcUi.log('# 1.A - CALL fmcUi.selectActivePreset');
+  FmcUi.log('renderer.js -> fmcUi.selectActivePreset');
   await fmcUi.selectActivePreset();
 
-  FmcUi.log('# 2.A - CALL fmcUi.handlePresetLoad');
+  FmcUi.log('renderer.js -> fmcUi.handlePresetLoad');
   await fmcUi.handlePresetLoad();
 
   if ((typeof window.FmcFile === 'undefined') || (typeof window.FmcStore === 'undefined')) {

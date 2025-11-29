@@ -117,7 +117,7 @@ export class FmcStatusBarUi {
    * @see {link https://stackoverflow.com/a/65144294}
    */
   async handleUpdate(event) {
-    FmcUi.log(`FmcStatusBarUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcStatusBarUi.handleUpdate`);
     const {
       statusMessageElement,
       statusTypeElement,

@@ -79,7 +79,7 @@ export class FmcTextDisplayUi {
    * @memberof FmcTextDisplayUi
    */
   handleUpdate(event) {
-    FmcUi.log(`FmcTextDisplayUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcTextDisplayUi.handleUpdate`);
     const {
       detail = {}
     } = event;

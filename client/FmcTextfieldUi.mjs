@@ -105,7 +105,7 @@ export class FmcTextfieldUi {
    * @memberof FmcTextfieldUi
    */
   handleUpdate(event) {
-    FmcUi.log(`FmcTextfieldUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcTextfieldUi.handleUpdate`);
     const {
       detail = {}
     } = event;
@@ -131,6 +131,6 @@ export class FmcTextfieldUi {
     element.value = value;
 
     // fire 'change' event so that change is picked up by listener
-    FmcUi.emitElementEvent(element, 'change');
+    FmcUi.emitElementEvent('FmcTextfieldUi.handleUpdate', element, 'change');
   }
 }

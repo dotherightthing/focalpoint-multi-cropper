@@ -128,7 +128,7 @@ export class FmcButtonUi {
     event.preventDefault();
 
     if (typeof window.FmcFile === 'undefined') {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcButtonUi.handleCopyPath', window, 'updateStatus', {
         statusMessage: 'Error: Clipboard operations require Electron',
         statusType: 'warning'
       });
@@ -145,7 +145,7 @@ export class FmcButtonUi {
       if (title) {
         window.FmcFile.copyToClipboard({ text: title });
 
-        FmcUi.emitElementEvent(window, 'updateStatus', {
+        FmcUi.emitElementEvent('FmcButtonUi.handleCopyPath', window, 'updateStatus', {
           statusMessage: 'Value copied to clipboard',
           statusType: 'success'
         });
@@ -164,7 +164,7 @@ export class FmcButtonUi {
     event.preventDefault();
 
     if (typeof window.FmcFile === 'undefined') {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcButtonUi.handleLinkToPath', window, 'updateStatus', {
         statusMessage: 'Error: Finder links require Electron',
         statusType: 'warning'
       });
@@ -190,7 +190,7 @@ export class FmcButtonUi {
    * @memberof FmcButtonUi
    */
   handleUpdate(event) {
-    FmcUi.log(`FmcButtonUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcButtonUi.handleUpdate`);
     const {
       detail = {}
     } = event;

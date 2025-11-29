@@ -425,7 +425,7 @@ export class FmcThumbsUi {
     selectedThumb.setAttribute('tabindex', '-1');
     selectedThumb.focus();
 
-    FmcUi.emitElementEvent(selectedThumb, 'click', {});
+    FmcUi.emitElementEvent('FmcThumbsUi.clickSelectedThumb', selectedThumb, 'click', {});
   }
 
   /**

@@ -525,7 +525,7 @@ export class FmcCroppersUi {
       }
     });
 
-    FmcUi.emitElementEvent(window, 'updateLastCropperListener', { removeListener: true });
+    FmcUi.emitElementEvent('FmcCroppersUi.destroy', window, 'updateLastCropperListener', { removeListener: true });
     this.croppers = [];
   }
 
@@ -604,7 +604,7 @@ export class FmcCroppersUi {
             pageY: pageYRaw
           });
 
-          FmcUi.emitElementEvent(window, 'updateStatus', {
+          FmcUi.emitElementEvent('FmcCroppersUi.getCropperOptions', window, 'updateStatus', {
             statusMessage: 'Rounding percentages for storage...'
           });
 
@@ -624,12 +624,9 @@ export class FmcCroppersUi {
             });
 
             FmcUi.log('getCropperOptions');
-            FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: imagePercentX });
-            FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: imagePercentY });
-
-            FmcUi.emitElementEvent(window, 'updateStatus', {
-              statusMessage: ''
-            });
+            FmcUi.emitElementEvent('FmcCroppersUi.getCropperOptions', window, 'updateFocalpointX', { value: imagePercentX });
+            FmcUi.emitElementEvent('FmcCroppersUi.getCropperOptions', window, 'updateFocalpointY', { value: imagePercentY });
+            FmcUi.emitElementEvent('FmcCroppersUi.getCropperOptions', window, 'updateStatus', { statusMessage: '' });
           }, updateDelay);
         }
       });
@@ -756,7 +753,7 @@ export class FmcCroppersUi {
 
     this.setSaveState(state);
 
-    FmcUi.emitElementEvent(window, 'updateStatus', {
+    FmcUi.emitElementEvent('FmcCroppersUi.setFocalpointSaveState', window, 'updateStatus', {
       statusMessage,
       statusType
     });
@@ -905,7 +902,7 @@ export class FmcCroppersUi {
     });
 
     if (!this.croppers.length) {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcCroppersUi.init', window, 'updateStatus', {
         statusMessage: 'Croppers could not be initialised',
         statusType: 'warning'
       });
@@ -916,7 +913,7 @@ export class FmcCroppersUi {
     this.masterCropper = this.croppers.filter(cropper => cropper.role === 'master')[0];
     this.slaveCroppers = this.croppers.filter(cropper => cropper.role === 'slave');
 
-    FmcUi.emitElementEvent(window, 'updateLastCropperListener', { addListener: true });
+    FmcUi.emitElementEvent('FmcCroppersUi.init', window, 'updateLastCropperListener', { addListener: true });
     // if (typeof document.createElement('cropper').style.transition === 'undefined') {
     //   rotateEl.prop('disabled', true);
     // }
@@ -1303,7 +1300,7 @@ export class FmcCroppersUi {
       cropsAndSizes
     });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', {
+    FmcUi.emitElementEvent('FmcCroppersUi.resizeAndCropImage', window, 'updateStatus', {
       statusMessage: `Deleted ${counts.deletions} matching files. Generated ${counts.crops} crops and ${counts.resizes} sizes`,
       statusType: 'success'
     });
@@ -1410,8 +1407,8 @@ export class FmcCroppersUi {
       panorama = false
     } = this.getFlagsFromSrc({ src, title: Title });
 
-    FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: imagePercentX });
-    FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: imagePercentY });
+    FmcUi.emitElementEvent('FmcCroppersUi.isDefaultFocalpoint', window, 'updateFocalpointX', { value: imagePercentX });
+    FmcUi.emitElementEvent('FmcCroppersUi.isDefaultFocalpoint', window, 'updateFocalpointY', { value: imagePercentY });
 
     // TODO reinstate as needed:
     // const focalpointYInputId = focalpointYInput.element.getAttribute('id');

@@ -157,7 +157,7 @@ export class FmcDialogUi {
       statusType: ''
     };
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.open', window, 'updateStatus', msgObj);
   }
 
   /**
@@ -179,6 +179,6 @@ export class FmcDialogUi {
       statusType: ''
     };
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.close', window, 'updateStatus', msgObj);
   }
 }

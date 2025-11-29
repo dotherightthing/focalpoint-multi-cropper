@@ -241,7 +241,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointAutoSave: state });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.handleAutosaveRadiosChange', window, 'updateStatus', msgObj);
 
     const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
@@ -268,7 +268,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsAutoSelectFiltered: state });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.handleAutoSelectFilteredRadiosChange', window, 'updateStatus', msgObj);
 
     await this.handleFilterSubmit();
   }
@@ -299,7 +299,7 @@ export class FmcUi {
       filePath
     });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', {
+    FmcUi.emitElementEvent('FmcUi.handleEditPresets', window, 'updateStatus', {
       statusMessage
     });
   }
@@ -340,7 +340,7 @@ export class FmcUi {
       }
     }
 
-    FmcUi.emitElementEvent(window, 'updateStatus', {
+    FmcUi.emitElementEvent('FmcUi.handleExportAll', window, 'updateStatus', {
       statusMessage: `Generated crops and sizes for ${exportedCount} thumbnails`,
       statusType: 'success'
     });
@@ -390,7 +390,7 @@ export class FmcUi {
       fmcThumbsUiInstance
     } = this;
 
-    FmcUi.emitElementEvent(window, 'updateFilter', { value: '' });
+    FmcUi.emitElementEvent('FmcUi.handleFilterClear', window, 'updateFilter', { value: '' });
 
     fmcThumbsUiInstance.filterByFilenameAndCropped('');
   }
@@ -439,11 +439,11 @@ export class FmcUi {
 
     const statusMessage = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
 
-    FmcUi.emitElementEvent(window, 'updateStatus', { statusMessage });
+    FmcUi.emitElementEvent('FmcUi.handleFocalpointDelete', window, 'updateStatus', { statusMessage });
 
     // input change listener calls setFocalpointSaveState
-    FmcUi.emitElementEvent(window, 'updateFocalpointX', { value: 50 });
-    FmcUi.emitElementEvent(window, 'updateFocalpointY', { value: 50 });
+    FmcUi.emitElementEvent('FmcUi.handleFocalpointDelete', window, 'updateFocalpointX', { value: 50 });
+    FmcUi.emitElementEvent('FmcUi.handleFocalpointDelete', window, 'updateFocalpointY', { value: 50 });
   }
 
   /**
@@ -583,7 +583,7 @@ export class FmcUi {
     // if 'Browse' was clicked
     // capture data with the field (inside the 'Open Settings' dialog) until it is saved to a preset
     if (!restore) {
-      FmcUi.emitElementEvent(window, 'updateFolderIn', {
+      FmcUi.emitElementEvent('FmcUi.handleFolderInBrowse', window, 'updateFolderIn', {
         targetFolder: folderPath,
         value: folderName
       });
@@ -622,7 +622,7 @@ export class FmcUi {
       return;
     }
 
-    FmcUi.emitElementEvent(window, 'updateFolderOut', {
+    FmcUi.emitElementEvent('FmcUi.handleFolderOutBrowse', window, 'updateFolderOut', {
       targetFolder: folderPath,
       value: folderName
     });
@@ -653,7 +653,7 @@ export class FmcUi {
       return;
     }
 
-    FmcUi.emitElementEvent(window, 'updateFolderWebsite', {
+    FmcUi.emitElementEvent('FmcUi.handleFolderWebsiteBrowse', window, 'updateFolderWebsite', {
       targetFolder: folderPath,
       value: folderName
     });
@@ -752,9 +752,7 @@ export class FmcUi {
       filePath: targetFile
     });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', {
-      statusMessage
-    });
+    FmcUi.emitElementEvent('FmcUi.handlePresetEditWebpage', window, 'updateStatus', { statusMessage });
   }
 
   /**
@@ -777,7 +775,7 @@ export class FmcUi {
       return;
     }
 
-    FmcUi.emitElementEvent(window, 'updatePresetFileWebpage', {
+    FmcUi.emitElementEvent('FmcUi.handlePresetFileWebpageBrowse', window, 'updatePresetFileWebpage', {
       targetFile: filePath,
       targetFolder: folderPath,
       value: fileName
@@ -792,7 +790,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async handlePresetLoad(event = {}) {
-    FmcUi.log('# 2.B - EXEC fmcUi.handlePresetLoad');
+    FmcUi.log('FmcUi.handlePresetLoad');
     const {
       elements,
       fmcThumbsUiInstance
@@ -827,30 +825,30 @@ export class FmcUi {
         name
       } = preset;
 
-      FmcUi.emitElementEvent(window, 'updatePresetFileWebpage', {
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updatePresetFileWebpage', {
         targetFile: fileWebpage.targetFile,
         targetFolder: fileWebpage.targetFolder,
         value: fileWebpage.value
       });
 
-      FmcUi.emitElementEvent(window, 'updateFilter', { value: '' });
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateFilter', { value: '' });
 
-      FmcUi.emitElementEvent(window, 'updateFolderIn', {
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateFolderIn', {
         targetFolder: folderIn.targetFolder,
         value: folderIn.value
       });
 
-      FmcUi.emitElementEvent(window, 'updateFolderOut', {
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateFolderOut', {
         targetFolder: folderOut.targetFolder,
         value: folderOut.value
       });
 
-      FmcUi.emitElementEvent(window, 'updateFolderWebsite', {
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateFolderWebsite', {
         targetFolder: folderWebsite.targetFolder,
         value: folderWebsite.value
       });
 
-      FmcUi.emitElementEvent(window, 'updatePresetNameActive', { value: name }); // TODO presetName
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updatePresetNameActive', { value: name }); // TODO presetName
 
       const restore = true;
 
@@ -861,12 +859,12 @@ export class FmcUi {
 
       fmcThumbsUiInstance.clickSelectedThumb(1);
 
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateStatus', {
         statusMessage: `Loaded preset ${name}`,
         statusType: 'success'
       });
     } catch (error) {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateStatus', {
         statusMessage: 'No active preset to load',
         statusType: 'warning'
       });
@@ -880,7 +878,7 @@ export class FmcUi {
    */
   async handlePresetsOpen() {
     FmcUi.log('FmcUi.handlePresetsOpen');
-    FmcUi.emitElementEvent(window, 'updatePresets', {
+    FmcUi.emitElementEvent('FmcUi.handlePresetsOpen', window, 'updatePresets', {
       label: 'Select a preset',
       options: await window.FmcStore.getPresetNames()
     });
@@ -888,7 +886,7 @@ export class FmcUi {
     await this.selectActivePreset();
 
     // TODO is this necessary
-    FmcUi.emitElementEvent(window, 'updatePresetsFile', { value: await window.FmcStore.getStoreFilePath() });
+    FmcUi.emitElementEvent('FmcUi.handlePresetsOpen', window, 'updatePresetsFile', { value: await window.FmcStore.getStoreFilePath() });
   }
 
   /**
@@ -942,15 +940,15 @@ export class FmcUi {
       name
     });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.handlePresetSave', window, 'updateStatus', msgObj);
 
     await window.FmcStore.setActivePresetName({ presetName: name });
 
-    FmcUi.emitElementEvent(window, 'updatePresetNameActive', { value: name });
+    FmcUi.emitElementEvent('FmcUi.handlePresetSave', window, 'updatePresetNameActive', { value: name });
 
     fmcThumbsUiInstance.clickSelectedThumb(1);
 
-    FmcUi.emitElementEvent(window, 'updatePresets', {
+    FmcUi.emitElementEvent('FmcUi.handlePresetSave', window, 'updatePresets', {
       label: 'Select a preset',
       options: await window.FmcStore.getPresetNames(),
       value: name
@@ -1032,7 +1030,7 @@ export class FmcUi {
 
     const { latLong } = clickedButton.dataset;
 
-    FmcUi.emitElementEvent(window, 'updateImageLatLong', { value: latLong });
+    FmcUi.emitElementEvent('FmcUi.handleThumbClick', window, 'updateImageLatLong', { value: latLong });
 
     await this.setPaths(newImageSrc, pathOut);
 
@@ -1052,7 +1050,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ thumbsFilterUncropped: state });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.handleThumbsFilterUncroppedRadiosChange', window, 'updateStatus', msgObj);
 
     await this.handleFilterSubmit();
   }
@@ -1087,9 +1085,9 @@ export class FmcUi {
 
     if (document.activeElement === filter) {
       if (key === 'Enter') {
-        FmcUi.emitElementEvent(filterSubmitButton, 'click', {});
+        FmcUi.emitElementEvent('FmcUi.handleWindowKeydown', filterSubmitButton, 'click', {});
       } else if (metaKey && (key === 'v')) {
-        FmcUi.emitElementEvent(window, 'updateFilter', { value: await window.FmcFile.copyFromClipboard() });
+        FmcUi.emitElementEvent('FmcUi.handleWindowKeydown', window, 'updateFilter', { value: await window.FmcFile.copyFromClipboard() });
       }
     } else if (document.activeElement.classList.contains(thumbButtonClass)) {
       if (key === 'ArrowLeft') {
@@ -1128,7 +1126,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteFilename: state });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.handleWriteFilenameRadiosChange', window, 'updateStatus', msgObj);
 
     // TODO : Update Photos app etc
   }
@@ -1145,7 +1143,7 @@ export class FmcUi {
     const state = event.target.value;
     const msgObj = await window.FmcStore.setOptions({ focalpointWriteTitle: state });
 
-    FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+    FmcUi.emitElementEvent('FmcUi.handleWriteTitleRadiosChange', window, 'updateStatus', msgObj);
 
     // TODO : Update Photos app etc
   }
@@ -1156,7 +1154,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   async loadOptions() {
-    FmcUi.log('# X.X - EXEC fmcUi.loadOptions');
+    FmcUi.log('FmcUi.loadOptions');
 
     try {
       const { options } = await window.FmcStore.getOptions(null);
@@ -1172,18 +1170,18 @@ export class FmcUi {
       } = options;
 
       // TODO: rename to update:foo to make more readable
-      FmcUi.emitElementEvent(window, 'updateFocalpointAutoSave', { value: focalpointAutoSave });
-      FmcUi.emitElementEvent(window, 'updateFocalpointWriteFilename', { value: focalpointWriteFilename });
-      FmcUi.emitElementEvent(window, 'updateFocalpointWriteTitle', { value: focalpointWriteTitle });
-      FmcUi.emitElementEvent(window, 'updateThumbsAutoSelectFiltered', { value: thumbsAutoSelectFiltered });
-      FmcUi.emitElementEvent(window, 'updateThumbsFilterUncropped', { value: thumbsFilterUncropped });
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateFocalpointAutoSave', { value: focalpointAutoSave });
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateFocalpointWriteFilename', { value: focalpointWriteFilename });
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateFocalpointWriteTitle', { value: focalpointWriteTitle });
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateThumbsAutoSelectFiltered', { value: thumbsAutoSelectFiltered });
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateThumbsFilterUncropped', { value: thumbsFilterUncropped });
 
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateStatus', {
         statusMessage: 'Loaded options',
         statusType: 'success'
       });
     } catch (error) {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateStatus', {
         statusMessage: 'No options to load',
         statusType: 'warning'
       });
@@ -1231,7 +1229,7 @@ export class FmcUi {
         imagePercentY: focalpointY
       });
 
-      FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
+      FmcUi.emitElementEvent('FmcUi.saveFocalpoint', window, 'updateStatus', msgObj);
     }
   }
 
@@ -1242,11 +1240,11 @@ export class FmcUi {
    */
   async selectActivePreset() {
     // TODO Consider renaming to selectStoredActivePreset
-    FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
+    FmcUi.log('FmcUi.selectActivePreset -> FmcStore.getActivePreset');
     const activePreset = await window.FmcStore.getActivePreset();
 
     if (typeof activePreset === 'undefined') {
-      FmcUi.emitElementEvent(window, 'updateStatus', {
+      FmcUi.emitElementEvent('FmcUi.selectActivePreset', window, 'updateStatus', {
         statusMessage: 'No active preset to select',
         statusType: 'warning'
       });
@@ -1255,8 +1253,7 @@ export class FmcUi {
     }
 
     // select the preset
-    FmcUi.log('# 1.E - EMIT window.updatePresets');
-    FmcUi.emitElementEvent(window, 'updatePresets', { value: activePreset.name });
+    FmcUi.emitElementEvent('FmcUi.selectActivePreset', window, 'updatePresets', { value: activePreset.name });
   }
 
   /**
@@ -1280,7 +1277,10 @@ export class FmcUi {
     const fileName = FmcUi.getFileNameFromPath(src);
     const pathIn = this.srcSafe(src);
 
-    FmcUi.emitElementEvent(window, 'updateImagePathIn', { value: pathIn });
+    FmcUi.emitElementEvent('FmcUi.setPaths', window, 'updateImagePathIn', {
+      emitter: 'FmcUi.selectActivePreset',
+      value: pathIn
+    });
 
     thumbFileName.element.textContent = fileName;
 
@@ -1297,8 +1297,8 @@ export class FmcUi {
           pathOutSafe = this.srcSafe(pathOut);
         }
 
-        FmcUi.emitElementEvent(window, 'updateWebEmbedPath', { value: pathWebEmbedSafe });
-        FmcUi.emitElementEvent(window, 'updateImagePathOut', { value: pathOutSafe });
+        FmcUi.emitElementEvent('FmcUi.setPaths', window, 'updateWebEmbedPath', { value: pathWebEmbedSafe });
+        FmcUi.emitElementEvent('FmcUi.setPaths', window, 'updateImagePathOut', { value: pathOutSafe });
 
         resolve();
       }, 500);
@@ -1427,12 +1427,13 @@ export class FmcUi {
 
     const element = document.getElementById(elementId);
 
-    FmcUi.emitElementEvent(element, eventName, eventDetail);
+    FmcUi.emitElementEvent('FmcUi.emitEvent', element, eventName, eventDetail);
   }
 
   /**
    * @function emitElementEvent
    * @summary Emit a custom event
+   * @param {string} callerId - ID of caller eg FmcButtonUi.handleCopyPath
    * @param {Window|HTMLElement} element - element that will dispatch the event
    * @param {string} eventName - Event names are case-sensitive
    * @param {object} eventDetail - name-value pair
@@ -1441,8 +1442,8 @@ export class FmcUi {
    * @memberof FmcUi
    * @static
    */
-  static emitElementEvent(element, eventName, eventDetail = {}) {
-    FmcUi.log('FmcUi.emitElementEvent', element, eventName, eventDetail);
+  static emitElementEvent(callerId, element, eventName, eventDetail = {}) {
+    FmcUi.log(`📢 Custom event "${eventName}" emitted by ${callerId} on element ${element}`, eventDetail);
     const event = new CustomEvent(eventName, {
       bubbles: true, // stop with event.stopPropagation()
       cancelable: true, // cancel with event.preventDefault()
@@ -1541,8 +1542,19 @@ export class FmcUi {
         argsArray.shift();
       }
 
-      console.groupCollapsed(label);
-      argsArray.forEach(arg => console.log(arg));
+      // const strinfigiedArgs = argsArray.map(arg => typeof arg === 'object' ? JSON.stringify(arg, 2) : arg);
+
+      const timestamp = new Date().toLocaleTimeString();
+
+      let style = 'font-weight: normal';
+
+      if (label.match(/Custom event/)) {
+        style += '; color: grey';
+      }
+
+      console.groupCollapsed(`%c${timestamp} - ${label}`, style);
+      console.log(argsArray); // .toString()
+      // argsArray.forEach(arg => console.log(arg));
       console.groupEnd();
     }
   }

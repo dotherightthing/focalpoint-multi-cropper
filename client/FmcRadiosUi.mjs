@@ -114,7 +114,7 @@ export class FmcRadiosUi {
    * @memberof FmcRadiosUi
    */
   handleUpdate(event) {
-    FmcUi.log(`FmcRadiosUi.handleUpdate following "${this.updateListener}"`);
+    FmcUi.log(`👂🏽 Custom event "${this.updateListener}" handled by FmcRadiosUi.handleUpdate`);
     const {
       detail = {}
     } = event;
@@ -136,7 +136,7 @@ export class FmcRadiosUi {
       checkedElement = elementsArray[0];
     }
 
-    FmcUi.emitElementEvent(checkedElement[0], 'change');
+    FmcUi.emitElementEvent('FmcRadiosUi.handleUpdate', checkedElement[0], 'change');
   }
 
   /**
