@@ -5,7 +5,6 @@
  * @see {@link https://gist.githubusercontent.com/ccnokes/95cb454860dbf8577e88d734c3f31e08/raw/7b98c7eaa9c74b40f1a62ceb70116c799b9dd555/store.js}
  */
 
-import dtrtValidate from 'dtrt-type-validate';
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
