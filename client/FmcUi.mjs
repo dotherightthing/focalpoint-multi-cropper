@@ -230,8 +230,7 @@ export class FmcUi {
     const {
       elements,
       fmcCroppersUiInstance,
-      fmcThumbsUiInstance,
-      masterCropper
+      fmcThumbsUiInstance
     } = this;
 
     const {
@@ -245,19 +244,17 @@ export class FmcUi {
 
     FmcUi.emitElementEvent(window, 'updateStatus', msgObj);
 
-    if (masterCropper) {
-      const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
+    const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
 
-      await this.autosaveFocalpoint(state === 'on');
+    await this.autosaveFocalpoint(state === 'on');
 
-      await fmcCroppersUiInstance.setFocalpointSaveState({
-        thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
-        thumbIndex,
-        imagePercentXUi: focalpointXInput.element.value,
-        imagePercentYUi: focalpointYInput.element.value,
-        imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
-      });
-    }
+    await fmcCroppersUiInstance.setFocalpointSaveState({
+      thumbIndexPrevious: focalpointXInput.element.dataset.thumbIndexPrevious,
+      thumbIndex,
+      imagePercentXUi: focalpointXInput.element.value,
+      imagePercentYUi: focalpointYInput.element.value,
+      imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
+    });
   }
 
   /**
@@ -686,8 +683,8 @@ export class FmcUi {
     const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
     const thumbButton = document.querySelector(`.${selectedClass}`);
     const thumbImg = document.querySelector(`.${selectedClass} .${thumbImgClass}`);
-    const thumbIndex = 0;
     const thumbs = document.querySelectorAll(`.${thumbClass}`);
+    let thumbIndex = 0;
 
     thumbs.forEach((_thumb, index) => {
       if (_thumb.classList.contains(selectedClass)) {
@@ -1313,6 +1310,7 @@ export class FmcUi {
 
   /**
    * @function srcSafe
+   * @summary Replace encoded spaces with regular ones
    * @param {string} src - Path
    * @returns {string} srcSafe
    * @memberof FmcUi
@@ -1367,14 +1365,14 @@ export class FmcUi {
    * @function debounce
    * @param {Function} func - Function to call after delay
    * @param {number} wait - Wait time in ms
-   * @param {boolean} immediate - Call the function immediately
+   * @param {boolean} [immediate] - Call the function immediately
    * @returns {Function} function
    * @memberof FmcUi
    * @static
    * @see {@link https://stackoverflow.com/a/65081210}
    * @see {@link https://www.freecodecamp.org/news/debounce-explained-how-to-make-your-javascript-wait-for-your-user-to-finish-typing-2/}
    */
-  static debounce(func, wait, immediate) {
+  static debounce(func, wait, immediate = false) {
     FmcUi.log('FmcUi.debounce', func, wait, immediate);
     let timeout;
 
@@ -1516,6 +1514,7 @@ export class FmcUi {
 
   /**
    * @function log
+   * @summary Log debugging messages
    * @param {...*} args - Function arguments
    * @memberof FmcUi
    * @static
