@@ -13,7 +13,6 @@ export class FmcCroppersUi {
      * @summary Manages croppers component, containing instances of cropperjs
      * @param {object} config - Instance config
      * @public
-     * @todo Add a subscribe method
      */
     constructor(config?: object);
     set cropperImageElements(cropperImageElements: HTMLElement[]);
@@ -71,7 +70,7 @@ export class FmcCroppersUi {
     set elements(elements: object);
     /**
      * elements
-     * @summary UI elements associated with the croppers
+     * @summary DOM elements shared between fmcCroppersUiInstance, fmcThumbsUiInstance, fmcUi
      * @type {object}
      * @memberof FmcCroppersUi
      */
@@ -147,6 +146,7 @@ export class FmcCroppersUi {
     }): object;
     /**
      * @function calcImageXYFromImagePercentXY
+     * @summary Calculate the XY position of the image click from the percentage position of the image click
      * @param {object} args - Arguments
      * @param {number} args.imagePercentX - Image percentage X
      * @param {number} args.imagePercentY - Image percentage Y
@@ -160,6 +160,7 @@ export class FmcCroppersUi {
     }): object;
     /**
      * @function calcImageXYFromPageXY
+     * @summary Calculate the XY position of the image click from the position of the page click
      * @param {object} args - Arguments
      * @param {number} args.pageX - Page X
      * @param {number} args.pageY - Page Y
@@ -185,6 +186,7 @@ export class FmcCroppersUi {
     }): object;
     /**
      * @function calcPageXYFromImageXY
+     * @summary Calculate the XY location of the page click from the location of the click relative to the cropper image
      * @param {object} args - Arguments
      * @param {number} args.imageX - Image X
      * @param {number} args.imageY - Image Y
@@ -214,6 +216,7 @@ export class FmcCroppersUi {
     }): number;
     /**
      * @function calcImagePercentXYFromPageXY
+     * @summary Calculate the XY location of the page click as it relates to the scaled image
      * @param {object} args - Arguments
      * @param {number} args.pageX - Page X
      * @param {number} args.pageY - Page Y
@@ -275,7 +278,6 @@ export class FmcCroppersUi {
      * @param {string} args.imageProportionsUi - Image Proportions setting as shown in the UI controls
      * @returns {Promise<string>} state
      * @memberof FmcCroppersUi
-     * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
      */
     setFocalpointSaveState({ focalpointReset, thumbIndexPrevious, thumbIndex, imagePercentXUi, imagePercentYUi, imageProportionsUi }: {
         focalpointReset: boolean;
@@ -341,7 +343,6 @@ export class FmcCroppersUi {
      * @param {HTMLElement} resizerImage - Resizer image
      * @returns { object } resizer
      * @memberof FmcCroppersUi
-     * @todo Convert resizer to a class
      */
     initResizer(resizerImage: HTMLElement): object;
     /**
@@ -357,12 +358,11 @@ export class FmcCroppersUi {
     injectHeading(cropperImage: HTMLElement, label: string, exportWidth: number | null, exportHeight: number | null): HTMLElement;
     /**
      * @function moveCropperCropBoxToPageXY
+     * @summary Move the cropbox to the location where the page was clicked
      * @param {object} args - Method arguments
      * @param {number} args.pageX - Page X
      * @param {number} args.pageY - Page Y
      * @memberof FmcCroppersUi
-     * @todo This sometimes needs to be clicked twice, needs to support a shaky hand (#5)
-     * @todo Also support end of dragging
      */
     moveCropperCropBoxToPageXY({ pageX, pageY }: {
         pageX: number;
@@ -408,12 +408,14 @@ export class FmcCroppersUi {
     resizeAndCropImage(targetFolder: string): Promise<string>;
     /**
      * @function deleteImagePercentXYFromImage
+     * @summary Remove the focalpoint from the image filename or title
      * @returns {Promise<string>} msg
      * @memberof FmcCroppersUi
      */
     deleteImagePercentXYFromImage(): Promise<string>;
     /**
      * @function isDefaultFocalpoint
+     * @summary Determine whether the supplied focalpoint settings are the defaults
      * @param {object} args - Arguments
      * @param {string|number} args.imagePercentX - Image percent X
      * @param {string|number} args.imagePercentY - Image percent Y
@@ -428,8 +430,8 @@ export class FmcCroppersUi {
     }): boolean;
     /**
      * @function reinstateImagePercentXYFromImage
+     * @summary Update the XY fields from the focalpoint saved in the image filename or title
      * @memberof FmcCroppersUi
-     * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
      */
     reinstateImagePercentXYFromImage(): Promise<void>;
     /**
@@ -443,12 +445,14 @@ export class FmcCroppersUi {
     scaleSlaveVal(slaveCropper: object, val: number): number;
     /**
      * @function setLoadingState
+     * @summary Set the focalpoint cropbox to loading, which hides it via the CSS stylesheet
      * @param {boolean} loading - Loading
      * @memberof FmcCroppersUi
      */
     setLoadingState(loading: boolean): void;
     /**
      * @function setSaveState
+     * @summary Set the focalpoint saved state to default|dirty|saved
      * @param {string} state - State (default|dirty|saved)
      * @memberof FmcCroppersUi
      */
@@ -462,6 +466,7 @@ export class FmcCroppersUi {
     validateCroppersImage(): boolean;
     /**
      * @function formatDateTimeOriginalForPhotosApp
+     * @summary Reformat the value of the EXIF DateTimeOriginal tag to a string suitable for searching in Photos.app
      * @param {object} DateTimeOriginal - DateTimeOriginal
      * @param {string} dateTimeOriginalAsDate - dateTimeOriginalAsDate
      * @returns {object} { date }
@@ -477,7 +482,6 @@ export class FmcCroppersUi {
      * @param {string} args.imagePercentY - Image percentage Y
      * @returns {Promise<object>} { msg, type }
      * @memberof FmcCroppersUi
-     * @todo update to match setFocalpointSaveState
      */
     writeImagePercentXYToImage({ imageFlags, imagePercentX, imagePercentY }: {
         imageFlags: string;

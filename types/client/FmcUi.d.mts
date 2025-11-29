@@ -1,10 +1,11 @@
 export class FmcUi {
     /**
      * @function debounce
-     * @param {Function} func - Function to call after delay
+     * @summary Creates a function that will not be called, as long as it continues to be invoked within `wait` milliseconds
+     * @param {Function} func - Function to call
      * @param {number} wait - Wait time in ms
      * @param {boolean} [immediate] - Call the function immediately
-     * @returns {Function} function
+     * @returns {Function} A function, that, as long as it continues to be invoked, will not be triggered
      * @memberof FmcUi
      * @static
      * @see {@link https://stackoverflow.com/a/65081210}
@@ -47,6 +48,7 @@ export class FmcUi {
     static getElementIndex(element: HTMLElement, nodeList: NodeList): number;
     /**
      * @function getFileNameFromPath
+     * @summary Isolate the file name from the file path
      * @param {string} path - File path
      * @returns {string} fileName
      * @memberof FmcUi
@@ -76,14 +78,14 @@ export class FmcUi {
     /**
      * @function log
      * @summary Log debugging messages
-     * @param {...*} args - Function arguments
+     * @param {...any} args - Function arguments
      * @memberof FmcUi
      * @static
      */
     static log(...args: any[]): void;
     /**
      * @class FmcUi
-     * @summary Manages UI
+     * @summary Manages rendering and manipulation of the UI
      * @param {object} config - Instance config
      * @public
      */
@@ -109,6 +111,7 @@ export class FmcUi {
     set elements(elements: object);
     /**
      * elements
+     * @summary DOM elements shared between fmcCroppersUiInstance, fmcThumbsUiInstance, fmcUi
      * @type {object}
      * @memberof FmcUi
      */
@@ -126,6 +129,7 @@ export class FmcUi {
     set fmcCroppersUiInstance(fmcCroppersUiInstance: object);
     /**
      * fmcCroppersUiInstance
+     * @summary An instance of FmcCroppersUi
      * @type {object}
      * @memberof FmcUi
      */
@@ -134,6 +138,7 @@ export class FmcUi {
     set fmcThumbsUiInstance(fmcThumbsUiInstance: object);
     /**
      * fmcThumbsUiInstance
+     * @summary An instance of FmcThumbsUi
      * @type {object}
      * @memberof FmcUi
      */
@@ -150,6 +155,7 @@ export class FmcUi {
     _selectors: any;
     /**
      * @function autosaveFocalpoint
+     * @summary Save the current focalpoint if "Auto-Save" is enabled
      * @param {boolean} on - Auto-Save is on (true) or off (false)
      * @memberof FmcUi
      */
@@ -172,31 +178,33 @@ export class FmcUi {
     getPathWebEmbed(pathOut: string): Promise<string>;
     /**
      * @function handleAutosaveRadiosChange
-     * @summary Actions to run after a "Auto-Save" radio button is checked
+     * @summary Actions to run after the "Auto-Save" option is enabled or disabled
      * @param {object} event - Change event
      * @memberof FmcUi
      */
     handleAutosaveRadiosChange(event: object): Promise<void>;
     /**
      * @function handleAutoSelectFilteredRadiosChange
-     * @summary Actions to run after a "Auto-Select First Filter Result" radio button is checked
+     * @summary Actions to run after the "Auto-Select First Filter Result" option is enabled or disabled
      * @param {object} event - Change event
      * @memberof FmcUi
      */
     handleAutoSelectFilteredRadiosChange(event: object): Promise<void>;
     /**
      * @function handleEditPresets
+     * @summary Open user-preferences.json in VSCode
      * @memberof FmcUi
      */
     handleEditPresets(): Promise<void>;
     /**
      * @function handleExportAll
+     * @summary Cycle through all thumbs and export those with focalpoints
      * @memberof FmcUi
-     * @todo Replace exportDelay with more robust check
      */
     handleExportAll(): Promise<void>;
     /**
      * @function handleExportSelected
+     * @summary Export the image associated with the thumb selected in the UI, then update button paths and focus the "Copy base embed path" button
      * @returns {Promise<string>} baseExportPath
      * @memberof FmcUi
      */
@@ -215,23 +223,27 @@ export class FmcUi {
     handleFilterSubmit(): Promise<void>;
     /**
      * @function handleFocalpointDelete
+     * @summary Delete focalpoint information from an image
      * @memberof FmcUi
      */
     handleFocalpointDelete(): Promise<void>;
     /**
      * @function handleFocalpointInputChange
+     * @summary When the focalpoint XY fields are changed, move the cropbox and save the new focalpoint to the image filename or title
      * @param {object} event - Change event
      * @memberof FmcUi
      */
     handleFocalpointInputChange(event: object): Promise<void>;
     /**
      * @function handleFocalpointReset
+     * @summary Reset the values in the X and Y fields, to the values stored in the image filename or title
      * @param {object} event - Click event
      * @memberof FmcUi
      */
     handleFocalpointReset(event: object): Promise<void>;
     /**
      * @function handleFocalpointSave
+     * @summary Save the focalpoint to the image filename or title
      * @memberof FmcUi
      */
     handleFocalpointSave(): Promise<void>;
@@ -264,7 +276,6 @@ export class FmcUi {
      * @summary Actions to run after the cropper source is changed - due to a focalpoint being written to or deleted from the filename
      * @param {object} event - imageRenamed event
      * @memberof FmcUi
-     * @todo Rename to something more intuitive
      */
     handleImageRenamed(event: object): Promise<void>;
     /**
@@ -275,6 +286,7 @@ export class FmcUi {
     handleLastCropperImgReady(): Promise<void>;
     /**
      * @function handlePresetEditWebpage
+     * @summary Open the preset webpage file in VSCode
      * @memberof FmcUi
      */
     handlePresetEditWebpage(): Promise<void>;
@@ -315,7 +327,7 @@ export class FmcUi {
     handleThumbClick(event: object): Promise<void>;
     /**
      * @function handleThumbsFilterUncroppedRadiosChange
-     * @summary Actions to run after a "Hide Uncropped Thumbnails" radio button is checked
+     * @summary Actions to run after the "Hide Uncropped Thumbnails" option is enabled or disabled
      * @param {object} event - Change event
      * @memberof FmcUi
      */
@@ -335,14 +347,14 @@ export class FmcUi {
     handleWindowResize(): void;
     /**
      * @function handleWriteFilenameRadiosChange
-     * @summary Actions to run after a "Write Focalpoint To Filename" radio button is checked
+     * @summary Actions to run after the "Write Focalpoint To Filename" option is enabled or disabled
      * @param {object} event - Change event
      * @memberof FmcUi
      */
     handleWriteFilenameRadiosChange(event: object): Promise<void>;
     /**
      * @function handleWriteTitleRadiosChange
-     * @summary Actions to run after a "Write Focalpoint To EXIF/IPTC Title" radio button is checked
+     * @summary Actions to run after the "Write Focalpoint To EXIF/IPTC Title" option is enabled or disabled
      * @param {object} event - Change event
      * @memberof FmcUi
      */
@@ -355,13 +367,13 @@ export class FmcUi {
     loadOptions(): Promise<void>;
     /**
      * @function saveFocalpoint
+     * @summary Save the focalpoint to the image filename or title
      * @memberof FmcUi
      */
     saveFocalpoint(): Promise<void>;
     /**
      * @function selectActivePreset
      * @summary Get the active preset from FmcStore. Select this preset in the dropdown in the Settings modal.
-     * @todo Consider renaming to selectStoredActivePreset ?
      * @memberof FmcUi
      */
     selectActivePreset(): Promise<void>;
@@ -393,6 +405,7 @@ export class FmcUi {
     srcSafe(src: string): string;
     /**
      * @function useTestData
+     * @summary Use fixed data for Cypress testing
      * @memberof FmcUi
      */
     testData(): Promise<void>;

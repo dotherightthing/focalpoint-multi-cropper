@@ -1,15 +1,16 @@
-/**
- * @file FmcStore.js
- * @summary Store user preferences in user-preferences.json
- * @see {@link https://cameronnokes.com/blog/how-to-store-user-data-in-electron/}
- * @see {@link https://gist.githubusercontent.com/ccnokes/95cb454860dbf8577e88d734c3f31e08/raw/7b98c7eaa9c74b40f1a62ceb70116c799b9dd555/store.js}
- */
-
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
 
 class FmcStore {
+  /**
+   * @class FmcStore
+   * @summary Manages storage of user preferences in user-preferences.json
+   * @see {@link https://cameronnokes.com/blog/how-to-store-user-data-in-electron/}
+   * @see {@link https://gist.githubusercontent.com/ccnokes/95cb454860dbf8577e88d734c3f31e08/raw/7b98c7eaa9c74b40f1a62ceb70116c799b9dd555/store.js}
+   * @param {object} opts - Options
+   * @public
+   */
   constructor(opts) {
     // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
     // app.getPath('userData') will return a string of the user's app data directory path.
@@ -409,6 +410,7 @@ class FmcStore {
 
   /**
    * @function setOptions
+   * @summary Update the options object in the store
    * @param {event} event - FmcStore:setOptions event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.name - Preset name
@@ -446,6 +448,7 @@ class FmcStore {
 
   /**
    * @function setPreset
+   * @summary Update a preset object in the store
    * @param {event} event - FmcStore:setPreset event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.name - Preset name

@@ -8,6 +8,7 @@ declare class FmcFile {
      */
     /**
      * @function copyFromClipboard
+     * @summary Copy the value that is on the system clipboard
      * @returns {Promise<string>} text
      * @memberof FmcFile
      * @static
@@ -15,6 +16,7 @@ declare class FmcFile {
     static copyFromClipboard(): Promise<string>;
     /**
      * @function copyToClipboard
+     * @summary Copy a value to the system clipboard
      * @param {event} event - FmcFile:copyToClipboard event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.text - Text
@@ -26,6 +28,7 @@ declare class FmcFile {
     }): void;
     /**
      * getFocalpointRegex
+     * @summary Isolate the part of the filename or image title which contains focalpoint information
      * @returns {RegExp} regex
      * @memberof FmcFile
      * @static
@@ -33,6 +36,7 @@ declare class FmcFile {
     static getFocalpointRegex(): RegExp;
     /**
      * @function resizeAndCropImage
+     * @summary Deleting existing resizes and crops and generate new ones
      * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.fileName - Filename
@@ -123,6 +127,7 @@ declare class FmcFile {
     }): Promise<object>;
     /**
      * @function pathExists
+     * @summary Check that a file path exists
      * @param {event} event - FmcFile:pathExists event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.path - Path
@@ -136,6 +141,7 @@ declare class FmcFile {
     }): Promise<boolean>;
     /**
      * @function getFileNameParts
+     * @summary Separate a filepath out into various parts
      * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.fileName - File name
@@ -148,17 +154,18 @@ declare class FmcFile {
     }): Promise<object>;
     /**
      * @function getFiles
-     * @summary Get all files within a directory, ignoring subfolders
+     * @summary Get all filenames within a directory, ignoring subfolders
      * @param {string} dir - Directory path
-     * @returns {Array} files
+     * @returns {string[]} filenames
      * @memberof FmcFile
      * @static
      */
-    static getFiles(dir: string): any[];
+    static getFiles(dir: string): string[];
     /**
      * @function getImageFiles
+     * @summary Get all image filenames within a directory
      * @param {string} dir - Directory path
-     * @returns {Promise<string[]>} files
+     * @returns {Promise<string[]>} filenames
      * @memberof FmcFile
      * @static
      */
@@ -191,6 +198,7 @@ declare class FmcFile {
     static getImagesData(imageFiles: any[]): Promise<object[]>;
     /**
      * @function openInEditor
+     * @summary Open a file in an editor application
      * @param {event} event - FmcFile:openInEditor event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.editorCommand - Editor command (e.g. 'code')
@@ -209,18 +217,19 @@ declare class FmcFile {
     }): Promise<string>;
     /**
      * @function openInFinder
+     * @summary Open the Finder and select a file
      * @param {event} event - FmcFile:openInFinder event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.href - HREF
      * @memberof FmcFile
      * @static
-     * @todo Doesn't work if href contains a space (issue #123)
      */
     static openInFinder(event: Event, data: {
         href: string;
     }): void;
     /**
      * @function selectFile
+     * @summary Open a Finder file-picker at the previous folder location
      * @param {event} event - FmcFile:selectFile event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.dialogTitle - Title for the dialog
@@ -246,6 +255,7 @@ declare class FmcFile {
     static sortDateOrderAscending(imagesData: object[]): number[];
     /**
      * @function selectFolder
+     * @summary Open a Finder folder-picker at the previous folder location
      * @param {event} event - FmcFile:selectFolder event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.dialogTitle - Title for the dialog
@@ -254,7 +264,6 @@ declare class FmcFile {
      * @param {boolean} data.restore - Restore setting if it was previously stored
      * @param {string} data.storeKey - Key under which to persist the folder path in the JSON file
      * @returns {Promise<object>} { folderName, folderPath, imagesData }
-     * @todo Can slice() operation be merged into getFileNameParts() ?
      * @memberof FmcFile
      * @static
      */
@@ -287,7 +296,6 @@ declare class FmcFile {
      * @see {@link https://stackoverflow.com/a/49729848}
      * @memberof FmcFile
      * @static
-     * @todo Add regular exiftool to preload.cjs
      */
     static exiftool(event: Event, data: {
         method: string;

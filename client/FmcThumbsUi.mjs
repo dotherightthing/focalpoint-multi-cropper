@@ -1,7 +1,3 @@
-/**
- * @file FmcThumbsUi.js
- */
-
 import dtrtValidate from 'dtrt-type-validate';
 import { FmcUi } from './FmcUi.mjs';
 import { FmcCroppersUi } from './FmcCroppersUi.mjs';
@@ -9,7 +5,7 @@ import { FmcCroppersUi } from './FmcCroppersUi.mjs';
 export class FmcThumbsUi {
   /**
    * @class FmcThumbsUi
-   * @summary Manages thumbs component
+   * @summary Manages rendering and manipulation of the sequence of thumbnails below the croppers
    * @param {object} config - Instance config
    * @public
    */
@@ -116,6 +112,7 @@ export class FmcThumbsUi {
 
   /**
    * @function setCssImagePercentXY
+   * @summary Set alt and style attributes on a thumb button in order to display the focalpoint circle
    * @param {object} args - Arguments
    * @param {HTMLElement} args.thumbButton - DOM Element
    * @param {HTMLElement} args.thumbImg - DOM Element
@@ -176,6 +173,7 @@ export class FmcThumbsUi {
 
   /**
    * @function displayCount
+   * @summary Update the value of the #N / NN counter which appears next to the current image title
    * @param {object} args - Arguments
    * @param {number} args.thumbTotal - Thumb total
    * @param {number} args.thumbIndex - Thumb index (first is 1)
@@ -215,6 +213,7 @@ export class FmcThumbsUi {
 
   /**
    * @function filterByFilenameAndCropped
+   * @summary Hide thumbs which don't match the search string, or which are uncropped (if "Hide Uncropped Thumbnails" is enabled)
    * @param {string} searchStr - Search string
    * @memberof FmcThumbsUi
    */
@@ -431,6 +430,7 @@ export class FmcThumbsUi {
 
   /**
    * @function getButtons
+   * @summary Get all thumbs buttons
    * @returns {NodeList} thumbsButtons - Thumb buttons
    * @memberof FmcThumbsUi
    */
@@ -451,6 +451,7 @@ export class FmcThumbsUi {
 
   /**
    * @function getClickedButton
+   * @summary Get the thumb button which was clicked and the its index within all thumb buttons
    * @param {object} event - Event
    * @returns {HTMLElement} button
    * @memberof FmcThumbsUi
@@ -473,6 +474,7 @@ export class FmcThumbsUi {
 
   /**
    * @function getSelectedThumbIndex
+   * @summary Get the index of the selected thumb from a data- property in the DOM
    * @returns {string} thumbIndex
    * @memberof FmcThumbsUi
    */

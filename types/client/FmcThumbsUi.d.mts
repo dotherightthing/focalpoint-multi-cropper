@@ -21,7 +21,7 @@ export class FmcThumbsUi {
     static getPreviousIndex(nodeList: NodeList, selectedIndex: number): number;
     /**
      * @class FmcThumbsUi
-     * @summary Manages thumbs component
+     * @summary Manages rendering and manipulation of the sequence of thumbnails below the croppers
      * @param {object} config - Instance config
      * @public
      */
@@ -29,6 +29,7 @@ export class FmcThumbsUi {
     set elements(elements: object);
     /**
      * elements
+     * @summary DOM elements shared between fmcCroppersUiInstance, fmcThumbsUiInstance, fmcUi
      * @type {object}
      * @memberof FmcThumbsUi
      */
@@ -37,6 +38,7 @@ export class FmcThumbsUi {
     set fmcCroppersUiInstance(fmcCroppersUiInstance: object);
     /**
      * fmcCroppersUiInstance
+     * @summary An instance of FmcCroppersUi
      * @type {object}
      * @memberof FmcThumbsUi
      */
@@ -60,12 +62,14 @@ export class FmcThumbsUi {
     applySelectedClass(target: HTMLElement): void;
     /**
      * @function changeSelectedImageSrc
+     * @summary Change the src attribute of the specified IMG element
      * @param {string} src - New src
      * @memberof FmcThumbsUi
      */
     changeSelectedImageSrc(src: string): void;
     /**
      * @function setCssImagePercentXY
+     * @summary Set alt and style attributes on a thumb button in order to display the focalpoint circle
      * @param {object} args - Arguments
      * @param {HTMLElement} args.thumbButton - DOM Element
      * @param {HTMLElement} args.thumbImg - DOM Element
@@ -90,6 +94,7 @@ export class FmcThumbsUi {
     containsThumbs(): number;
     /**
      * @function displayCount
+     * @summary Update the value of the #N / NN counter which appears next to the current image title
      * @param {object} args - Arguments
      * @param {number} args.thumbTotal - Thumb total
      * @param {number} args.thumbIndex - Thumb index (first is 1)
@@ -101,6 +106,7 @@ export class FmcThumbsUi {
     }): void;
     /**
      * @function filterByFilenameAndCropped
+     * @summary Hide thumbs which don't match the search string, or which are uncropped (if "Hide Uncropped Thumbnails" is enabled)
      * @param {string} searchStr - Search string
      * @memberof FmcThumbsUi
      */
@@ -129,12 +135,14 @@ export class FmcThumbsUi {
     clickSelectedThumb(selectedThumbIndex: number): void;
     /**
      * @function getButtons
+     * @summary Get all thumbs buttons
      * @returns {NodeList} thumbsButtons - Thumb buttons
      * @memberof FmcThumbsUi
      */
     getButtons(): NodeList;
     /**
      * @function getClickedButton
+     * @summary Get the thumb button which was clicked and the its index within all thumb buttons
      * @param {object} event - Event
      * @returns {HTMLElement} button
      * @memberof FmcThumbsUi
@@ -142,6 +150,7 @@ export class FmcThumbsUi {
     getClickedButton(event: object): HTMLElement;
     /**
      * @function getSelectedThumbIndex
+     * @summary Get the index of the selected thumb from a data- property in the DOM
      * @returns {string} thumbIndex
      * @memberof FmcThumbsUi
      */

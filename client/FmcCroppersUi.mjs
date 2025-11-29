@@ -302,6 +302,7 @@ export class FmcCroppersUi {
 
   /**
    * @function calcImageXYFromImagePercentXY
+   * @summary Calculate the XY position of the image click from the percentage position of the image click
    * @param {object} args - Arguments
    * @param {number} args.imagePercentX - Image percentage X
    * @param {number} args.imagePercentY - Image percentage Y
@@ -331,6 +332,7 @@ export class FmcCroppersUi {
 
   /**
    * @function calcImageXYFromPageXY
+   * @summary Calculate the XY position of the image click from the position of the page click
    * @param {object} args - Arguments
    * @param {number} args.pageX - Page X
    * @param {number} args.pageY - Page Y
@@ -391,6 +393,7 @@ export class FmcCroppersUi {
 
   /**
    * @function calcPageXYFromImageXY
+   * @summary Calculate the XY location of the page click from the location of the click relative to the cropper image
    * @param {object} args - Arguments
    * @param {number} args.imageX - Image X
    * @param {number} args.imageY - Image Y
@@ -445,6 +448,7 @@ export class FmcCroppersUi {
 
   /**
    * @function calcImagePercentXYFromPageXY
+   * @summary Calculate the XY location of the page click as it relates to the scaled image
    * @param {object} args - Arguments
    * @param {number} args.pageX - Page X
    * @param {number} args.pageY - Page Y
@@ -1050,6 +1054,7 @@ export class FmcCroppersUi {
 
   /**
    * @function moveCropperCropBoxToPageXY
+   * @summary Move the cropbox to the location where the page was clicked
    * @param {object} args - Method arguments
    * @param {number} args.pageX - Page X
    * @param {number} args.pageY - Page Y
@@ -1308,10 +1313,12 @@ export class FmcCroppersUi {
 
   /**
    * @function deleteImagePercentXYFromImage
+   * @summary Remove the focalpoint from the image filename or title
    * @returns {Promise<string>} msg
    * @memberof FmcCroppersUi
    */
   async deleteImagePercentXYFromImage() {
+    // TODO check whether this also affects the title or not
     FmcUi.log('FmcCroppersUi.deleteImagePercentXYFromImage');
     const {
       croppers,
@@ -1353,6 +1360,7 @@ export class FmcCroppersUi {
 
   /**
    * @function isDefaultFocalpoint
+   * @summary Determine whether the supplied focalpoint settings are the defaults
    * @param {object} args - Arguments
    * @param {string|number} args.imagePercentX - Image percent X
    * @param {string|number} args.imagePercentY - Image percent Y
@@ -1370,6 +1378,7 @@ export class FmcCroppersUi {
 
   /**
    * @function reinstateImagePercentXYFromImage
+   * @summary Update the XY fields from the focalpoint saved in the image filename or title
    * @memberof FmcCroppersUi
    */
   async reinstateImagePercentXYFromImage() {
@@ -1450,6 +1459,7 @@ export class FmcCroppersUi {
 
   /**
    * @function setLoadingState
+   * @summary Set the focalpoint cropbox to loading, which hides it via the CSS stylesheet
    * @param {boolean} loading - Loading
    * @memberof FmcCroppersUi
    */
@@ -1475,6 +1485,7 @@ export class FmcCroppersUi {
 
   /**
    * @function setSaveState
+   * @summary Set the focalpoint saved state to default|dirty|saved
    * @param {string} state - State (default|dirty|saved)
    * @memberof FmcCroppersUi
    */
@@ -1529,6 +1540,7 @@ export class FmcCroppersUi {
 
   /**
    * @function formatDateTimeOriginalForPhotosApp
+   * @summary Reformat the value of the EXIF DateTimeOriginal tag to a string suitable for searching in Photos.app
    * @param {object} DateTimeOriginal - DateTimeOriginal
    * @param {string} dateTimeOriginalAsDate - dateTimeOriginalAsDate
    * @returns {object} { date }

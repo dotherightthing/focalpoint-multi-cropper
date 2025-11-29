@@ -11,7 +11,7 @@ declare class FmcStore {
     static getActivePreset(event: Event | null): Promise<object>;
     /**
      * @function getKeys
-     * @param {event|null} event - FmcStore:getKeys event captured by ipcMain.handle
+     * @summary Retrieve key-value pairs for the supplied keys, optionally from a named preset
      * @param {object} data - Data
      * @param {Array} data.keys - Keys
      * @param {string} data.presetName - Preset name (if key was saved with preset)
@@ -19,12 +19,13 @@ declare class FmcStore {
      * @memberof FmcStore
      * @static
      */
-    static getKeys(event: Event | null, data: {
+    static getKeys(data: {
         keys: any[];
         presetName: string;
     }): Promise<object>;
     /**
      * @function getOptions
+     * @summary Retrieve the options object from the store
      * @param {event|null} event - FmcStore:getOptions event captured by ipcMain.handle
      * @returns {Promise<object>} options
      * @memberof FmcStore
@@ -33,6 +34,7 @@ declare class FmcStore {
     static getOptions(event: Event | null): Promise<object>;
     /**
      * @function getPreset
+     * @summary Retrieve a named preset from the store
      * @param {event|null} event - FmcStore:getPreset event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.presetName - Preset name (if key was saved with preset)
@@ -45,6 +47,7 @@ declare class FmcStore {
     }): Promise<object>;
     /**
      * @function getPresetNames
+     * @summary Get names of all presets in the store
      * @returns {Promise<string[]>} presets in alphabetical order
      * @memberof FmcStore
      * @static
@@ -53,6 +56,7 @@ declare class FmcStore {
     static getPresetNames(): Promise<string[]>;
     /**
      * @function getStoreFilePath
+     * @summary Get the path to the user-preferences.json file used by the store
      * @param {event|null} event - FmcStore:getStoreFilePath event captured by ipcMain.handle
      * @returns {Promise<string>} storeFilePath
      * @memberof FmcStore
@@ -97,30 +101,31 @@ declare class FmcStore {
     }): Promise<void>;
     /**
      * @function setOptionsKeys
-     * @param {event|null} event - FmcStore:setOptionsKeys event captured by ipcMain.handle
+     * @summary Set or update the supplied key/value in the options section of the store's data file
      * @param {object} data - Data
      * @param {Array} data.keyValuePairs - Objects (key - val pairs)
      * @memberof FmcStore
      * @static
      */
-    static setOptionsKeys(event: Event | null, data: {
+    static setOptionsKeys(data: {
         keyValuePairs: any[];
     }): Promise<void>;
     /**
      * @function setPresetKeys
-     * @param {event|null} event - FmcStore:setPresetKeys event captured by ipcMain.handle
+     * @summary Set or update the supplied key/value in the presets section of the store's data file
      * @param {object} data - Data
      * @param {Array} data.keyValuePairs - Objects (key - val pairs)
      * @param {string} data.presetName - Preset name (to save keys with preset)
      * @memberof FmcStore
      * @static
      */
-    static setPresetKeys(event: Event | null, data: {
+    static setPresetKeys(data: {
         keyValuePairs: any[];
         presetName: string;
     }): Promise<void>;
     /**
      * @function setOptions
+     * @summary Update the options object in the store
      * @param {event} event - FmcStore:setOptions event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.name - Preset name
@@ -133,6 +138,7 @@ declare class FmcStore {
     }): Promise<object>;
     /**
      * @function setPreset
+     * @summary Update a preset object in the store
      * @param {event} event - FmcStore:setPreset event captured by ipcMain.handle
      * @param {object} data - Data
      * @param {string} data.name - Preset name
@@ -143,18 +149,18 @@ declare class FmcStore {
     static setPreset(event: Event, data: {
         name: string;
     }): object;
-    constructor(opts: any);
-    path: string;
-    set data(data: object);
     /**
-     * data
-     * @summary The data object
-     * @type {object}
-     * @memberof FmcStatusBarUi
+     * @class FmcStore
+     * @summary Manages storage of user preferences in user-preferences.json
+     * @see {@link https://cameronnokes.com/blog/how-to-store-user-data-in-electron/}
+     * @see {@link https://gist.githubusercontent.com/ccnokes/95cb454860dbf8577e88d734c3f31e08/raw/7b98c7eaa9c74b40f1a62ceb70116c799b9dd555/store.js}
+     * @param {object} opts - Options
+     * @public
      */
-    get data(): object;
+    constructor(opts: object);
+    path: string;
+    data: any;
     get(key: any): any;
     set(key: any, val: any): void;
-    _data: any;
 }
 //# sourceMappingURL=FmcStore.d.cts.map

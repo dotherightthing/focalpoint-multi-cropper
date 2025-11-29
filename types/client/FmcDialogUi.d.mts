@@ -9,6 +9,7 @@ export class FmcDialogUi {
     set appendedElement(appendedElement: HTMLElement);
     /**
      * appendedElement
+     * @summary Element to append to the dialog when it is opened, and to document.body when it is closed
      * @type {HTMLElement}
      * @memberof FmcDialogUi
      */
@@ -17,7 +18,7 @@ export class FmcDialogUi {
     set appendedSelector(appendedSelector: string);
     /**
      * appendedSelector
-     * @summary Selector of element to append to dialog when open
+     * @summary Selector of the element to append to the dialog when it is opened, and to document.body when it is closed
      * @type {string}
      * @memberof FmcDialogUi
      */
@@ -26,6 +27,7 @@ export class FmcDialogUi {
     set closerElement(closerElement: HTMLElement);
     /**
      * closerElement
+     * @summary Element (button) which closes the dialog
      * @type {HTMLElement}
      * @memberof FmcDialogUi
      */
@@ -34,6 +36,7 @@ export class FmcDialogUi {
     set element(element: HTMLDialogElement);
     /**
      * element
+     * @summary The dialog element
      * @type {HTMLDialogElement}
      * @memberof FmcDialogUi
      */
@@ -42,6 +45,7 @@ export class FmcDialogUi {
     set openerElement(openerElement: HTMLElement);
     /**
      * openerElement
+     * @summary Element (button) which opens the dialog
      * @type {HTMLElement}
      * @memberof FmcDialogUi
      */
@@ -67,11 +71,13 @@ export class FmcDialogUi {
     _selector: any;
     /**
      * @function open
+     * @summary Open the dialog
      * @memberof FmcUi
      */
     open(): Promise<void>;
     /**
      * @function close
+     * @summary Close the dialog
      * @memberof FmcUi
      */
     close(): void;

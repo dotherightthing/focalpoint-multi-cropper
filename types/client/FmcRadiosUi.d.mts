@@ -21,7 +21,6 @@ export class FmcRadiosUi {
      * @summary Radio button elements
      * @type {HTMLElement[]}
      * @memberof FmcRadiosUi
-     * @todo Validation
      */
     get elements(): HTMLElement[];
     _elements: HTMLElement[];

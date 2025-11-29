@@ -37,6 +37,8 @@
         "tags": [ "summary" ]
       }
     ],
+    "jsdoc/reject-any-type": "off",
+    "jsdoc/reject-function-type": "off",
     "max-len": "off",
     "no-alert": "off",
     "no-await-in-loop": "off",

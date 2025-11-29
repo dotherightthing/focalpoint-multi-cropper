@@ -10,6 +10,7 @@ const { clipboard, dialog, shell } = require('electron');
 const { promises: Fs } = require('fs');
 const { spawn } = require('child_process');
 
+// TODO add osascript to preload.cjs
 const osascript = require('node-osascript');
 
 module.exports = class FmcFile {
@@ -69,6 +70,7 @@ module.exports = class FmcFile {
 
   /**
    * @function resizeAndCropImage
+   * @summary Deleting existing resizes and crops and generate new ones
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.fileName - Filename
@@ -397,6 +399,7 @@ module.exports = class FmcFile {
 
   /**
    * @function pathExists
+   * @summary Check that a file path exists
    * @param {event} event - FmcFile:pathExists event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.path - Path
@@ -420,6 +423,7 @@ module.exports = class FmcFile {
 
   /**
    * @function getFileNameParts
+   * @summary Separate a filepath out into various parts
    * @param {event} event - FmcFile:resizeAndCropImage event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.fileName - File name
@@ -453,9 +457,9 @@ module.exports = class FmcFile {
 
   /**
    * @function getFiles
-   * @summary Get all files within a directory, ignoring subfolders
+   * @summary Get all filenames within a directory, ignoring subfolders
    * @param {string} dir - Directory path
-   * @returns {Array} files
+   * @returns {string[]} filenames
    * @memberof FmcFile
    * @static
    */
@@ -467,8 +471,9 @@ module.exports = class FmcFile {
 
   /**
    * @function getImageFiles
+   * @summary Get all image filenames within a directory
    * @param {string} dir - Directory path
-   * @returns {Promise<string[]>} files
+   * @returns {Promise<string[]>} filenames
    * @memberof FmcFile
    * @static
    */
@@ -613,6 +618,7 @@ module.exports = class FmcFile {
 
   /**
    * @function openInEditor
+   * @summary Open a file in an editor application
    * @param {event} event - FmcFile:openInEditor event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.editorCommand - Editor command (e.g. 'code')
@@ -659,6 +665,7 @@ module.exports = class FmcFile {
 
   /**
    * @function openInFinder
+   * @summary Open the Finder and select a file
    * @param {event} event - FmcFile:openInFinder event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.href - HREF
@@ -675,6 +682,7 @@ module.exports = class FmcFile {
 
   /**
    * @function selectFile
+   * @summary Open a Finder file-picker at the previous folder location
    * @param {event} event - FmcFile:selectFile event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.dialogTitle - Title for the dialog
@@ -756,6 +764,7 @@ module.exports = class FmcFile {
 
   /**
    * @function selectFolder
+   * @summary Open a Finder folder-picker at the previous folder location
    * @param {event} event - FmcFile:selectFolder event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.dialogTitle - Title for the dialog

@@ -5,7 +5,6 @@ export class FmcButtonUi {
      * @param {object} event - Click event
      * @memberof FmcButtonUi
      * @static
-     * @todo Why is title used rather than data-title or better still data-path?
      */
     static handleCopyPath(event: object): void;
     /**
