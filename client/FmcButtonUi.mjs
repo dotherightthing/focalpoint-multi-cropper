@@ -123,7 +123,6 @@ export class FmcButtonUi {
    * @param {object} event - Click event
    * @memberof FmcButtonUi
    * @static
-   * @todo Why is title used rather than data-title or better still data-path?
    */
   static handleCopyPath(event) {
     event.preventDefault();
@@ -140,6 +139,7 @@ export class FmcButtonUi {
     const eventTarget = FmcUi.getTargetElementOfType(event, 'button');
 
     if (eventTarget) {
+      // TODO Why is title attribute used rather than data-title or better still data-path?
       const title = eventTarget.getAttribute('title');
 
       if (title) {

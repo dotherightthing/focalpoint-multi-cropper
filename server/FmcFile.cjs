@@ -33,6 +33,7 @@ module.exports = class FmcFile {
    * @static
    */
   static async copyFromClipboard() {
+    // TODO Add clipboard to preload.cjs
     const text = await clipboard.readText();
 
     return text;
@@ -47,6 +48,7 @@ module.exports = class FmcFile {
    * @static
    */
   static copyToClipboard(event, data) {
+    // TODO Add clipboard to preload.cjs
     const { text } = data;
 
     clipboard.writeText(text);
@@ -659,9 +661,10 @@ module.exports = class FmcFile {
    * @param {string} data.href - HREF
    * @memberof FmcFile
    * @static
-   * @todo Doesn't work if href contains a space (issue #123)
    */
   static openInFinder(event, data) {
+    // TODO Doesn't work if href contains a space (issue #123)
+    // TODO add shell to preload.js
     const { href } = data;
 
     shell.showItemInFolder(href);
@@ -758,7 +761,6 @@ module.exports = class FmcFile {
    * @param {boolean} data.restore - Restore setting if it was previously stored
    * @param {string} data.storeKey - Key under which to persist the folder path in the JSON file
    * @returns {Promise<object>} { folderName, folderPath, imagesData }
-   * @todo Can slice() operation be merged into getFileNameParts() ?
    * @memberof FmcFile
    * @static
    */
@@ -835,6 +837,7 @@ module.exports = class FmcFile {
 
         const pathSeparator = retrievedData.folderPath.lastIndexOf('/');
 
+        // TODO Can slice() operation be merged into getFileNameParts()
         retrievedData.folderName = retrievedData.folderPath.slice(pathSeparator + 1);
 
         return retrievedData;
@@ -877,9 +880,9 @@ module.exports = class FmcFile {
    * @see {@link https://stackoverflow.com/a/49729848}
    * @memberof FmcFile
    * @static
-   * @todo Add regular exiftool to preload.cjs
    */
   static async exiftool(event, data) {
+    // TODO Add regular exiftool to preload.cjs
     const {
       method,
       fileNameWithPath,

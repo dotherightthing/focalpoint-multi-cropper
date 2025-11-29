@@ -307,10 +307,10 @@ export class FmcUi {
   /**
    * @function handleExportAll
    * @memberof FmcUi
-   * @todo Replace exportDelay with more robust check
    */
   async handleExportAll() {
     FmcUi.log('FmcUi.handleExportAll');
+    // TODO Replace exportDelay with more robust check
     const {
       exportDelay,
       fmcThumbsUiInstance
@@ -657,9 +657,9 @@ export class FmcUi {
    * @summary Actions to run after the cropper source is changed - due to a focalpoint being written to or deleted from the filename
    * @param {object} event - imageRenamed event
    * @memberof FmcUi
-   * @todo Rename to something more intuitive
    */
   async handleImageRenamed(event) {
+    // TODO Rename to something more intuitive
     FmcUi.log('FmcUi.handleImageRenamed', event);
     const {
       fmcCroppersUiInstance,
@@ -879,6 +879,7 @@ export class FmcUi {
 
     await this.selectActivePreset();
 
+    // TODO is this necessary
     FmcUi.emitElementEvent(window, 'updatePresetsFile', { value: await window.FmcStore.getStoreFilePath() });
   }
 
@@ -1228,10 +1229,10 @@ export class FmcUi {
   /**
    * @function selectActivePreset
    * @summary Get the active preset from FmcStore. Select this preset in the dropdown in the Settings modal.
-   * @todo Consider renaming to selectStoredActivePreset ?
    * @memberof FmcUi
    */
   async selectActivePreset() {
+    // TODO Consider renaming to selectStoredActivePreset
     FmcUi.log('# 1.B - CALL FmcStore.getActivePreset');
     const activePreset = await window.FmcStore.getActivePreset();
 

@@ -55,13 +55,13 @@ export class FmcRadiosUi {
    * @summary Radio button elements
    * @type {HTMLElement[]}
    * @memberof FmcRadiosUi
-   * @todo Validation
    */
   get elements() {
     return this._elements;
   }
 
   set elements(elements) {
+    // TODO Validation
     this._elements = elements;
   }
 

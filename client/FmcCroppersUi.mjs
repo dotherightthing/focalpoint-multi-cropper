@@ -7,9 +7,10 @@ export class FmcCroppersUi {
    * @summary Manages croppers component, containing instances of cropperjs
    * @param {object} config - Instance config
    * @public
-   * @todo Add a subscribe method
    */
   constructor(config = {}) {
+    // TODO Add a subscribe method
+
     // select the relevant arguments from the config object passed in
     const {
       Cropper,
@@ -651,7 +652,6 @@ export class FmcCroppersUi {
    * @param {string} args.imageProportionsUi - Image Proportions setting as shown in the UI controls
    * @returns {Promise<string>} state
    * @memberof FmcCroppersUi
-   * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
    */
   async setFocalpointSaveState({
     focalpointReset,
@@ -686,6 +686,7 @@ export class FmcCroppersUi {
     const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
+    // TODO Fix - currently possible to enable both writeFilename and writeTitle - or neither
     // TODO when XY is sourced from image (for pre-writeTitle files), "Focalpoint changed but not saved to title" appears
     const msgTarget = (() => {
       switch (true) {
@@ -974,9 +975,9 @@ export class FmcCroppersUi {
    * @param {HTMLElement} resizerImage - Resizer image
    * @returns { object } resizer
    * @memberof FmcCroppersUi
-   * @todo Convert resizer to a class
    */
   initResizer(resizerImage) {
+    // TODO Convert resizer to a class
     FmcUi.log('FmcCroppersUi.initResizer', resizerImage);
     const {
       imageSrc
@@ -1053,10 +1054,10 @@ export class FmcCroppersUi {
    * @param {number} args.pageX - Page X
    * @param {number} args.pageY - Page Y
    * @memberof FmcCroppersUi
-   * @todo This sometimes needs to be clicked twice, needs to support a shaky hand (#5)
-   * @todo Also support end of dragging
    */
   moveCropperCropBoxToPageXY({ pageX, pageY }) {
+    // TODO This sometimes needs to be clicked twice, needs to support a shaky hand (#5)
+    // TODO Also support end of dragging
     FmcUi.log('FmcCroppersUi.moveCropperCropBoxToPageXY', { pageX, pageY });
     const {
       croppers,
@@ -1370,9 +1371,9 @@ export class FmcCroppersUi {
   /**
    * @function reinstateImagePercentXYFromImage
    * @memberof FmcCroppersUi
-   * @todo Fix - currently possible to enable both writeFilename and writeTitle - or neither
    */
   async reinstateImagePercentXYFromImage() {
+    // TODO Fix - currently possible to enable both writeFilename and writeTitle - or neither
     FmcUi.log('FmcCroppersUi.reinstateImagePercentXYFromImage');
     const {
       elements,
@@ -1592,13 +1593,13 @@ export class FmcCroppersUi {
    * @param {string} args.imagePercentY - Image percentage Y
    * @returns {Promise<object>} { msg, type }
    * @memberof FmcCroppersUi
-   * @todo update to match setFocalpointSaveState
    */
   async writeImagePercentXYToImage({
     imageFlags,
     imagePercentX,
     imagePercentY
   }) {
+    // TODO update to match setFocalpointSaveState
     FmcUi.log('FmcCroppersUi.writeImagePercentXYToImage', {
       imageFlags,
       imagePercentX,

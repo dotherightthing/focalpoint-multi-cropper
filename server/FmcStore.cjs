@@ -98,9 +98,9 @@ class FmcStore {
    * @returns {Promise<object>} keyValuePairs
    * @memberof FmcStore
    * @static
-   * @todo Only called internally - async may be redundant, consider making #private
    */
   static async getKeys(data) {
+    // TODO Only called internally - async may be redundant, consider making #private
     const {
       keys,
       presetName
