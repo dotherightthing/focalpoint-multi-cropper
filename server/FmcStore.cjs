@@ -24,12 +24,26 @@ class FmcStore {
 
   /* Getters and Setters */
 
-  // This will just return the property on the `data` object
+  /* Instance methods */
+
+  /**
+   * @function get
+   * @summary Gets the value for a key/property stored in this.data
+   * @param {string} key - Key/property
+   * @returns {*} Value of this.data[key]
+   * @memberof FmcStore
+   */
   get(key) {
     return this.data[key];
   }
 
-  // ...and this will set it
+  /**
+   * @function set
+   * @summary Sets the value for a key/property stored in this.data
+   * @param {string} key - Key/property
+   * @param {object} val - Value
+   * @memberof FmcStore
+   */
   set(key, val) {
     this.data[key] = val;
     // Wait, I thought using the node.js' synchronous APIs was bad form?
@@ -132,7 +146,6 @@ class FmcStore {
   static async getOptions(event) { // eslint-disable-line no-unused-vars
     let msgObj;
 
-    // TODO Check whether I am using getters and setters correctly in other files - and not just referencing by property name
     const options = await fmcStore.get('options') || {};
 
     if ((typeof options !== 'undefined') && Object.keys(options).length > 0) {
