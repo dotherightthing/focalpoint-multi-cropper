@@ -32,6 +32,7 @@ export class FmcThumbsUi {
 
   /**
    * elements
+   * @summary DOM elements shared between fmcCroppersUiInstance, fmcThumbsUiInstance, fmcUi
    * @type {object}
    * @memberof FmcThumbsUi
    */
@@ -45,6 +46,7 @@ export class FmcThumbsUi {
 
   /**
    * fmcCroppersUiInstance
+   * @summary An instance of FmcCroppersUi
    * @type {object}
    * @memberof FmcThumbsUi
    */
@@ -95,6 +97,7 @@ export class FmcThumbsUi {
 
   /**
    * @function changeSelectedImageSrc
+   * @summary Change the src attribute of the specified IMG element
    * @param {string} src - New src
    * @memberof FmcThumbsUi
    */

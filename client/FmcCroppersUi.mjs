@@ -111,7 +111,7 @@ export class FmcCroppersUi {
 
   /**
    * elements
-   * @summary UI elements associated with the croppers
+   * @summary DOM elements shared between fmcCroppersUiInstance, fmcThumbsUiInstance, fmcUi
    * @type {object}
    * @memberof FmcCroppersUi
    */

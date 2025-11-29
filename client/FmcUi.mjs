@@ -66,6 +66,7 @@ export class FmcUi {
 
   /**
    * elements
+   * @summary DOM elements shared between fmcCroppersUiInstance, fmcThumbsUiInstance, fmcUi
    * @type {object}
    * @memberof FmcUi
    */

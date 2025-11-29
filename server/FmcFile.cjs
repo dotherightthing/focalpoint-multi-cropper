@@ -28,6 +28,7 @@ module.exports = class FmcFile {
 
   /**
    * @function copyFromClipboard
+   * @summary Copy the value that is on the system clipboard
    * @returns {Promise<string>} text
    * @memberof FmcFile
    * @static
@@ -41,6 +42,7 @@ module.exports = class FmcFile {
 
   /**
    * @function copyToClipboard
+   * @summary Copy a value to the system clipboard
    * @param {event} event - FmcFile:copyToClipboard event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.text - Text
@@ -56,6 +58,7 @@ module.exports = class FmcFile {
 
   /**
    * getFocalpointRegex
+   * @summary Isolate the part of the filename or image title which contains focalpoint information
    * @returns {RegExp} regex
    * @memberof FmcFile
    * @static
