@@ -123,6 +123,7 @@ class FmcStore {
 
   /**
    * @function getOptions
+   * @summary Retrieve the options object from the store
    * @param {event|null} event - FmcStore:getOptions event captured by ipcMain.handle
    * @returns {Promise<object>} options
    * @memberof FmcStore
@@ -131,6 +132,7 @@ class FmcStore {
   static async getOptions(event) { // eslint-disable-line no-unused-vars
     let msgObj;
 
+    // TODO Check whether I am using getters and setters correctly in other files - and not just referencing by property name
     const options = await fmcStore.get('options') || {};
 
     if ((typeof options !== 'undefined') && Object.keys(options).length > 0) {
@@ -153,6 +155,7 @@ class FmcStore {
 
   /**
    * @function getPreset
+   * @summary Retrieve a named preset from the store
    * @param {event|null} event - FmcStore:getPreset event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.presetName - Preset name (if key was saved with preset)
@@ -196,7 +199,7 @@ class FmcStore {
 
   /**
    * @function getPresetNames
-   * @summary Get the names of all the presets in the store
+   * @summary Get names of all presets in the store
    * @returns {Promise<string[]>} presets in alphabetical order
    * @memberof FmcStore
    * @static
