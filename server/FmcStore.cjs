@@ -49,7 +49,7 @@ class FmcStore {
    * data
    * @summary The data object
    * @type {object}
-   * @memberof FmcStatusBarUi
+   * @memberof FmcStore
    */
   get data() {
     return this._data;
