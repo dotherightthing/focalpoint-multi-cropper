@@ -12,9 +12,6 @@
     "plugin:cypress/recommended",
     "plugin:jsdoc/recommended"
   ],
-  "globals": {
-    "uiSelectFolder": "readonly"
-  },
   "plugins": [
     "jsdoc"
   ],
