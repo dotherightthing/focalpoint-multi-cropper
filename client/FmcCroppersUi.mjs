@@ -437,7 +437,7 @@ export class FmcCroppersUi {
     }
 
     // In testing, rounding changes the results by 1-4 units.
-    // This causes little visual difference but makes the numbers much easier to fmcStore.
+    // This causes little visual difference but makes the numbers much easier to store.
 
     return round ? Math.round(percentage * 100) : percentage * 100;
   }
