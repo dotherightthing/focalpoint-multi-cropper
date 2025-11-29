@@ -2,7 +2,7 @@
   "name": "focalpoint-multi-cropper",
   "version": "1.0.0",
   "description": "Helper tool to rename images for batch cropping by ImageMagick.",
-  "main": "main.cjs",
+  "main": "server/main.cjs",
   "scripts": {
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "stylelint ./css/*.css",
