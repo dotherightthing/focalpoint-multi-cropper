@@ -33,8 +33,8 @@ const args = process.argv.slice(3);
 const showDevTools = args.indexOf('devtools') !== -1;
 const maximiseWindow = args.indexOf('maximise') !== -1;
 
-const FmcFile = require('./classes/FmcFile.cjs');
-const FmcStore = require('./classes/FmcStore.cjs');
+const FmcFile = require('./server/FmcFile.cjs');
+const FmcStore = require('./server/FmcStore.cjs');
 
 const path = require('path');
 const contextMenu = require('electron-context-menu');
@@ -50,7 +50,7 @@ const createWindow = () => {
     height,
     webPreferences: {
       nodeIntegration: true, // disable sandboxing
-      preload: path.join(__dirname, 'preload.cjs')
+      preload: path.join(__dirname, 'server/preload.cjs')
     },
     title: appName
   });
@@ -106,7 +106,6 @@ const createWindow = () => {
   }, 100);
 };
 
-// Open a window if none are open (macOS)
 app.whenReady().then(() => {
   // ipcMain module for inter-process communication (IPC) with render process
 
@@ -125,7 +124,6 @@ app.whenReady().then(() => {
   ipcMain.handle('FmcFile:selectFolder', FmcFile.selectFolder);
   ipcMain.handle('FmcFile:setTitleInPhotosApp', FmcFile.setTitleInPhotosApp);
   ipcMain.handle('FmcStore:getActivePreset', FmcStore.getActivePreset);
-  ipcMain.handle('FmcStore:getKeys', FmcStore.getKeys);
   ipcMain.handle('FmcStore:getOptions', FmcStore.getOptions);
   ipcMain.handle('FmcStore:getPreset', FmcStore.getPreset);
   ipcMain.handle('FmcStore:getPresetNames', FmcStore.getPresetNames);
@@ -138,6 +136,7 @@ app.whenReady().then(() => {
   createWindow();
 
   app.on('activate', () => {
+    // Open a window if none are open (macOS)
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
