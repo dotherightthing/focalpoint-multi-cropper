@@ -67,6 +67,20 @@ export class FmcCroppersUi {
   }
 
   /**
+   * cropperImageElements
+   * @summary 4x src-less image placeholders which are replaced by 4x croppers
+   * @type {HTMLElement[]}
+   * @memberof FmcCroppersUi
+   */
+  get cropperImageElements() {
+    return this._cropperImageElements;
+  }
+
+  set cropperImageElements(cropperImageElements) {
+    this._cropperImageElements = dtrtValidate.validate(cropperImageElements, 'Array', 'FmcCroppersUi.cropperImageElements');
+  }
+
+  /**
    * croppers
    * @summary Multiple visible instances of Cropper, including one master and several with unique proportions
    * @type {Array}
@@ -245,6 +259,7 @@ export class FmcCroppersUi {
 
   /**
    * @function calcCropBoxXYFromPageXY
+   * @summary Calculate the XY position of the cropbox from the XY click or cropend position
    * @param {object} args - Arguments
    * @param {number} args.pageX - Page X
    * @param {number} args.pageY - Page Y
@@ -422,7 +437,7 @@ export class FmcCroppersUi {
     }
 
     // In testing, rounding changes the results by 1-4 units.
-    // This causes little visual difference but makes the numbers much easier to store.
+    // This causes little visual difference but makes the numbers much easier to fmcStore.
 
     return round ? Math.round(percentage * 100) : percentage * 100;
   }
@@ -473,6 +488,7 @@ export class FmcCroppersUi {
 
   /**
    * @function changeSourceImage
+   * @summary Change the cropper image (when a thumbnail is clicked on)
    * @param {string} newImageSrc - New image src
    * @memberof FmcCroppersUi
    */
@@ -536,6 +552,7 @@ export class FmcCroppersUi {
 
   /**
    * @function getCropperOptions
+   * @summary Build an options object to pass to the cropperjs Cropper constructor
    * @param {number|null} exportWidth - Export width
    * @param {number|null} exportHeight - Export height
    * @param {string} role - master | slave
@@ -852,25 +869,14 @@ export class FmcCroppersUi {
   init() {
     FmcUi.log('FmcCroppersUi.init');
     const {
-      imageSrc,
-      selectors
+      imageSrc
     } = this;
-
-    const {
-      cropperImageClass,
-      croppersId
-    } = selectors;
 
     if (typeof imageSrc === 'undefined') {
       return;
     }
 
     this.setLoadingState(true);
-
-    // these are the images used by the 4 croppers
-    // they start off with no src
-    // when an image appears, what you see is the cropper - not the img
-    const cropperImages = document.querySelectorAll(`#${croppersId} .${cropperImageClass}`);
 
     // prevent compounding arrays
     this.croppers = [];
@@ -1011,6 +1017,7 @@ export class FmcCroppersUi {
 
   /**
    * @function injectHeading
+   * @summary Inject a heading element above a cropper image
    * @param {HTMLElement} cropperImage - Cropper image
    * @param {string} label - Cropper label
    * @param {number|null} exportWidth - Export width
@@ -1167,6 +1174,7 @@ export class FmcCroppersUi {
 
   /**
    * @function resizeAndCropImage
+   * @summary Resize and crop an image
    * @param {string} targetFolder - Target folder
    * @returns {Promise<string>} baseExportPath
    * @memberof FmcCroppersUi
@@ -1727,6 +1735,7 @@ export class FmcCroppersUi {
 
   /**
    * @function getImageTitle
+   * @summary Get the image Title from its EXIF data
    * @param {string} imagePath - Image path
    * @returns {Promise<object>} { Title }
    * @memberof FmcCroppersUi
