@@ -6,14 +6,14 @@
   "scripts": {
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "stylelint ./css/*.css",
-    "lint:js": "npx eslint ./*.*js && npx eslint ./classes/*.*js",
+    "lint:js": "npx eslint ./server/*.cjs && npx eslint ./client/*.mjs",
     "prepare": "husky install",
     "serve": "http-server ./ --port 8000 --silent",
     "start": "electron .",
     "start:debug": "electron . -- devtools",
     "start:maximise": "electron . -- maximise",
     "test": "start-server-and-test serve http://127.0.0.1:8000 test:cypress",
-    "test:cypress": "cypress run --browser firefox:dev"
+    "test:cypress": "cypress run --browser firefox:dev",
     "updateTypes": "npx tsc"
   },
   "repository": {
