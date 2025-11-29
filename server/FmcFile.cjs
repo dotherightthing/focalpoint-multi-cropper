@@ -1,7 +1,3 @@
-/**
- * @file FmcFile.js
- */
-
 const commandExists = require('command-exists');
 const { exiftool } = require('exiftool-vendored');
 const fs = require('fs');
@@ -184,6 +180,7 @@ module.exports = class FmcFile {
 
   /**
    * @function gmResizeAndCrop
+   * @summary Resize and/or crop an image using gm (GraphicsMagick)
    * @param {object} data - Data
    * @param {number|undefined} data.centerX - Center of image (X axis)
    * @param {number|undefined} data.centerY - Center of image (Y axis)
@@ -196,9 +193,9 @@ module.exports = class FmcFile {
    * @param {string} data.markerHex - Hex color of the focalpoint marker
    * @param {number} data.markerStrokeW - Stroke width of the focalpoint marker
    * @param {number} data.markerWH - Width/Height of the focalpoint marker
+   * @param {number} data.quality - Image quality
    * @param {number} data.resizeW - Width to resize the image to
    * @param {number|undefined} data.resizeH - Height to resize the image to
-   * @param {number} data.quality - Image quality
    * @param {string} data.sourceFileName - Source file name
    * @param {string} data.targetFilename - Export filename
    * @returns {Promise<string>} successMessage
@@ -217,9 +214,9 @@ module.exports = class FmcFile {
       markerHex,
       markerStrokeW,
       markerWH,
+      quality,
       resizeW,
       resizeH,
-      quality,
       sourceFileName,
       targetFilename
     } = data;
@@ -356,6 +353,7 @@ module.exports = class FmcFile {
 
   /**
    * @function deleteImagePercentXYFromImage
+   * @summary Remove focalpoint data from an image's filename
    * @param {event} event - FmcFile:deleteImagePercentXYFromImage event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.fileName - Filename
@@ -879,6 +877,7 @@ module.exports = class FmcFile {
    * @see {@link https://stackoverflow.com/a/49729848}
    * @memberof FmcFile
    * @static
+   * @todo Add regular exiftool to preload.cjs
    */
   static async exiftool(event, data) {
     const {
@@ -913,6 +912,7 @@ module.exports = class FmcFile {
 
   /**
    * @function renameSync
+   * @summary Rename a file to add or remove a focalpoint from the filename
    * @param {event} event - FmcFile:renameSync event captured by ipcMain.handle
    * @param {object} data - Data
    * @param {string} data.oldFileNameWithPath - Old file name with path
