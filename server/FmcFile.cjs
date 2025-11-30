@@ -909,9 +909,11 @@ module.exports = class FmcFile {
       tags = await exiftool[method](fileNameWithPath);
 
       if (dateTimeOriginalAsDate) {
-        const { DateTimeOriginal = {} } = tags;
+        const { DateTimeOriginal } = tags;
 
-        extras.dateTimeOriginalAsDate = DateTimeOriginal.toDate();
+        if (typeof DateTimeOriginal !== 'undefined') {
+          extras.dateTimeOriginalAsDate = DateTimeOriginal.toDate();
+        }
       }
     }
 

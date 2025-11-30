@@ -1661,9 +1661,14 @@ export class FmcCroppersUi {
           extras
         } = data;
 
-        const { DateTimeOriginal = {} } = tags;
+        const { DateTimeOriginal } = tags;
         const { dateTimeOriginalAsDate } = extras;
-        const date = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
+
+        let date = '';
+
+        if ((typeof DateTimeOriginal !== 'undefined') && (typeof dateTimeOriginalAsDate !== 'undefined')) {
+          date = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
+        }
 
         if (date.length) {
           await window.FmcFile.exiftool({
