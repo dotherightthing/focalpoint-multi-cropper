@@ -762,7 +762,7 @@ export class FmcCroppersUi {
     FmcUi.log('FmcCroppersUi.getImagePercentXYFromSrc', { src, title });
 
     const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    let matchesOut;
+    let matchesOut = [];
     let imagePercentXY = {};
 
     [ src, title ].forEach(str => {
@@ -797,7 +797,7 @@ export class FmcCroppersUi {
     FmcUi.log('FmcCroppersUi.getFlagsFromSrc', { src, title });
 
     const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    let matchesOut;
+    let matchesOut = [];
     let imageFlags = {};
 
     [ src, title ].forEach(str => {
