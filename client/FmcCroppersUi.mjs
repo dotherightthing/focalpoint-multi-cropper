@@ -1672,7 +1672,7 @@ export class FmcCroppersUi {
 
         const { DateTimeOriginal } = tags;
 
-        let photosAppDate;
+        let photosAppDate = '';
         let dateTimeOriginalAsDate;
 
         if (typeof DateTimeOriginal !== 'undefined') {
@@ -1687,10 +1687,6 @@ export class FmcCroppersUi {
 
           dateTimeOriginalAsDate = new Date(`${year}-${month}-${day} ${hour}:${minute}:${second}`);
 
-          photosAppDate = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
-        }
-
-        if ((typeof DateTimeOriginal !== 'undefined') && (typeof dateTimeOriginalAsDate !== 'undefined')) {
           photosAppDate = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
         }
 
