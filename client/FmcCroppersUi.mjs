@@ -761,12 +761,12 @@ export class FmcCroppersUi {
   getImagePercentXYFromSrc({ src, title }) {
     FmcUi.log('FmcCroppersUi.getImagePercentXYFromSrc', { src, title });
 
-    const regexp = /\[([0-9]+)%,([0-9]+)%(,P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
+    const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
     let matchesOut;
     let imagePercentXY = {};
 
     [ src, title ].forEach(str => {
-      const matches = str.match(regexp);
+      const matches = str.matchAll(regexp);
       const matchesArr = matches ? [ ...matches ] : [];
 
       if (matchesArr.length) {
@@ -796,16 +796,22 @@ export class FmcCroppersUi {
   getFlagsFromSrc({ src, title }) {
     FmcUi.log('FmcCroppersUi.getFlagsFromSrc', { src, title });
 
-    const str = src || title;
+    const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
+    let matchesOut;
     let imageFlags = {};
 
-    const regexp = /\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
+    [ src, title ].forEach(str => {
     const matches = str.matchAll(regexp);
-    const matchesArr = [ ...matches ];
+      const matchesArr = matches ? [ ...matches ] : [];
 
     if (matchesArr.length) {
+        matchesOut = matchesArr;
+      }
+    });
+
+    if (matchesOut.length) {
       imageFlags = {
-        panorama: matchesArr[0][3] ? true : false // eslint-disable-line no-unneeded-ternary
+        panorama: matchesOut[0][3] ? true : false // eslint-disable-line no-unneeded-ternary
       };
     }
 
