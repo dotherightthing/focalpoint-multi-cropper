@@ -12,6 +12,9 @@
     "plugin:cypress/recommended",
     "plugin:jsdoc/recommended"
   ],
+  "globals": {
+    "Cropper": "readonly"
+  },
   "plugins": [
     "jsdoc"
   ],

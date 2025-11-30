@@ -13,7 +13,6 @@ export class FmcCroppersUi {
 
     // select the relevant arguments from the config object passed in
     const {
-      Cropper,
       croppersOptions,
       elements,
       selectors,
@@ -21,7 +20,6 @@ export class FmcCroppersUi {
     } = config;
 
     Object.assign(this, {
-      Cropper,
       croppersOptions,
       elements,
       selectors,
@@ -52,20 +50,6 @@ export class FmcCroppersUi {
   }
 
   /* Getters and Setters */
-
-  /**
-   * Cropper
-   * @summary The Cropper constructor creates a new Cropper instance
-   * @type {Cropper}
-   * @memberof FmcCroppersUi
-   */
-  get Cropper() {
-    return this._Cropper;
-  }
-
-  set Cropper(Cropper) {
-    this._Cropper = dtrtValidate.validate(Cropper, 'function', 'FmcCroppersUi.Cropper');
-  }
 
   /**
    * cropperImageElements
@@ -929,7 +913,6 @@ export class FmcCroppersUi {
   initCropper(cropperImage) {
     FmcUi.log('FmcCroppersUi.initCropper', cropperImage);
     const {
-      Cropper,
       imageSrc
     } = this;
 

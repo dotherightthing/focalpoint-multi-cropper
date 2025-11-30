@@ -24,7 +24,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   const thumbsContainerId = 'thumbs';
 
   const fmcCroppersUiInstance = new FmcCroppersUi({
-    Cropper: window.Cropper,
     croppersOptions: {
       autoCrop: true, // Enable to crop the image automatically when initialized
       autoCropArea: 1, // Define the automatic cropping area size - as 100% of the image
