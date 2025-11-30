@@ -671,72 +671,72 @@ export class FmcCroppersUi {
     let statusType = 'warning';
 
     if (typeof masterCropper !== 'undefined') {
-    const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
-    const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
+      const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
+      const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
-    // TODO Fix - currently possible to enable both writeFilename and writeTitle - or neither
-    // TODO when XY is sourced from image (for pre-writeTitle files), "Focalpoint changed but not saved to title" appears
-    const msgTarget = (() => {
-      switch (true) {
-      case writeFilename && writeTitle:
-        return 'filename and title';
-      case writeFilename:
-        return 'filename';
-      case writeTitle:
-        return 'title';
-      default:
-        return '';
-      }
-    })();
+      // TODO Fix - currently possible to enable both writeFilename and writeTitle - or neither
+      // TODO when XY is sourced from image (for pre-writeTitle files), "Focalpoint changed but not saved to title" appears
+      const msgTarget = (() => {
+        switch (true) {
+        case writeFilename && writeTitle:
+          return 'filename and title';
+        case writeFilename:
+          return 'filename';
+        case writeTitle:
+          return 'title';
+        default:
+          return '';
+        }
+      })();
 
-    const msgLoadedFrom = (msgTarget.length) ? (` from ${msgTarget}`) : '';
-    const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
+      const msgLoadedFrom = (msgTarget.length) ? (` from ${msgTarget}`) : '';
+      const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
 
-    const { src } = masterCropper.cropperInstance.element;
-    const { Title } = await FmcCroppersUi.getImageTitle(src);
+      const { src } = masterCropper.cropperInstance.element;
+      const { Title } = await FmcCroppersUi.getImageTitle(src);
 
-    const {
-      imagePercentX: savedImagePercentX, // string
-      imagePercentY: savedImagePercentY // string
-    } = this.getImagePercentXYFromSrc({ src, title: Title });
+      const {
+        imagePercentX: savedImagePercentX, // string
+        imagePercentY: savedImagePercentY // string
+      } = this.getImagePercentXYFromSrc({ src, title: Title });
 
-    const {
-      panorama: savedPanorama = false
-    } = this.getFlagsFromSrc({ src, title: Title });
+      const {
+        panorama: savedPanorama = false
+      } = this.getFlagsFromSrc({ src, title: Title });
 
-    const isDefaultFocalpoint = this.isDefaultFocalpoint({
-      imagePercentX: imagePercentXUi,
-      imagePercentY: imagePercentYUi,
-      imageProportions: imageProportionsUi
-    });
+      const isDefaultFocalpoint = this.isDefaultFocalpoint({
+        imagePercentX: imagePercentXUi,
+        imagePercentY: imagePercentYUi,
+        imageProportions: imageProportionsUi
+      });
 
-    const isSavedFocalpoint = (
-      (imagePercentXUi === savedImagePercentX)
-      && (imagePercentYUi === savedImagePercentY)
-      && (((imageProportionsUi === 'panorama') && savedPanorama) || ((imageProportionsUi === 'default') && !savedPanorama))
-    );
+      const isSavedFocalpoint = (
+        (imagePercentXUi === savedImagePercentX)
+        && (imagePercentYUi === savedImagePercentY)
+        && (((imageProportionsUi === 'panorama') && savedPanorama) || ((imageProportionsUi === 'default') && !savedPanorama))
+      );
 
-    if (isDefaultFocalpoint) {
-      statusMessage = 'Default focalpoint';
-      state = 'default';
-    } else if (isSavedFocalpoint) {
-      state = 'saved';
+      if (isDefaultFocalpoint) {
+        statusMessage = 'Default focalpoint';
+        state = 'default';
+      } else if (isSavedFocalpoint) {
+        state = 'saved';
 
-      if (thumbIndex !== thumbIndexPrevious) {
-        statusMessage = 'Focalpoint loaded' + msgLoadedFrom;
-        statusType = 'success';
-      } else if (focalpointReset) {
-        statusMessage = 'Focalpoint reloaded' + msgLoadedFrom;
-        statusType = 'success';
+        if (thumbIndex !== thumbIndexPrevious) {
+          statusMessage = 'Focalpoint loaded' + msgLoadedFrom;
+          statusType = 'success';
+        } else if (focalpointReset) {
+          statusMessage = 'Focalpoint reloaded' + msgLoadedFrom;
+          statusType = 'success';
+        } else {
+          statusMessage = 'Focalpoint saved' + msgSavedTo;
+          statusType = 'success';
+        }
       } else {
-        statusMessage = 'Focalpoint saved' + msgSavedTo;
-        statusType = 'success';
+        statusMessage = 'Focalpoint changed but not saved' + msgSavedTo;
+        state = 'dirty';
+        statusType = 'warning';
       }
-    } else {
-      statusMessage = 'Focalpoint changed but not saved' + msgSavedTo;
-      state = 'dirty';
-      statusType = 'warning';
-    }
     }
 
     this.setSaveState(state);
@@ -1394,8 +1394,8 @@ export class FmcCroppersUi {
       panorama = false
     } = this.getFlagsFromSrc({ src, title: Title });
 
-    FmcUi.emitElementEvent('FmcCroppersUi.isDefaultFocalpoint', window, 'updateFocalpointX', { value: imagePercentX });
-    FmcUi.emitElementEvent('FmcCroppersUi.isDefaultFocalpoint', window, 'updateFocalpointY', { value: imagePercentY });
+    FmcUi.emitElementEvent('FmcCroppersUi.reinstateImagePercentXYFromImage', window, 'updateFocalpointX', { value: imagePercentX });
+    FmcUi.emitElementEvent('FmcCroppersUi.reinstateImagePercentXYFromImage', window, 'updateFocalpointY', { value: imagePercentY });
 
     // TODO reinstate as needed:
     // const focalpointYInputId = focalpointYInput.element.getAttribute('id');
