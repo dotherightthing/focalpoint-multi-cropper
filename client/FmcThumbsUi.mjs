@@ -393,7 +393,10 @@ export class FmcThumbsUi {
         const thumbImg = thumbImgs[index];
         const { src } = thumbImg;
         const { Title } = await FmcCroppersUi.getImageTitle(src);
-        const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
+        const {
+          imagePercentX,
+          imagePercentY
+        } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
 
         this.setCssImagePercentXY({
           thumbButton,

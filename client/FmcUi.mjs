@@ -687,7 +687,10 @@ export class FmcUi {
     const { selectors: fmcThumbsUiSelectors } = fmcThumbsUiInstance;
     const { selectedClass } = fmcThumbsUiSelectors;
     const { Title } = await FmcCroppersUi.getImageTitle(src);
-    const { imagePercentX, imagePercentY } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
+    const {
+      imagePercentX,
+      imagePercentY
+    } = fmcCroppersUiInstance.getImagePercentXYFromSrc({ src, title: Title });
     const thumbButton = document.querySelector(`.${selectedClass}`);
     const thumbImg = document.querySelector(`.${selectedClass} .${thumbImgClass}`);
     const thumbs = document.querySelectorAll(`.${thumbClass}`);

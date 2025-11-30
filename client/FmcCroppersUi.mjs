@@ -657,48 +657,25 @@ export class FmcCroppersUi {
       imageProportionsUi
     });
     const {
-      elements,
       masterCropper
     } = this;
-
-    const {
-      focalpointWriteFilenameRadios,
-      focalpointWriteTitleRadios
-    } = elements;
 
     let state = 'default';
     let statusMessage = 'Cropper not ready';
     let statusType = 'warning';
 
     if (typeof masterCropper !== 'undefined') {
-      const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
-      const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
-
-      // TODO Fix - currently possible to enable both writeFilename and writeTitle - or neither
-      // TODO when XY is sourced from image (for pre-writeTitle files), "Focalpoint changed but not saved to title" appears
-      const msgTarget = (() => {
-        switch (true) {
-        case writeFilename && writeTitle:
-          return 'filename and title';
-        case writeFilename:
-          return 'filename';
-        case writeTitle:
-          return 'title';
-        default:
-          return '';
-        }
-      })();
-
-      const msgLoadedFrom = (msgTarget.length) ? (` from ${msgTarget}`) : '';
-      const msgSavedTo = (msgTarget.length) ? (` to ${msgTarget}`) : '';
-
       const { src } = masterCropper.cropperInstance.element;
       const { Title } = await FmcCroppersUi.getImageTitle(src);
 
       const {
         imagePercentX: savedImagePercentX, // string
-        imagePercentY: savedImagePercentY // string
+        imagePercentY: savedImagePercentY, // string
+        source
       } = this.getImagePercentXYFromSrc({ src, title: Title });
+
+      const msgLoadedFrom = (source.length) ? (` from ${source}`) : '';
+      const msgSavedTo = (source.length) ? (` to ${source}`) : '';
 
       const {
         panorama: savedPanorama = false
@@ -762,7 +739,6 @@ export class FmcCroppersUi {
     FmcUi.log('FmcCroppersUi.getImagePercentXYFromSrc', { src, title });
 
     const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    let matchesOut = [];
     let imagePercentXY = {};
 
     [ src, title ].forEach(str => {
@@ -770,16 +746,13 @@ export class FmcCroppersUi {
       const matchesArr = matches ? [ ...matches ] : [];
 
       if (matchesArr.length) {
-        matchesOut = matchesArr;
+        imagePercentXY = {
+          imagePercentX: matchesArr[0][1],
+          imagePercentY: matchesArr[0][2],
+          source: str.match('file:') ? 'filename' : 'title'
+        };
       }
     });
-
-    if (matchesOut.length) {
-      imagePercentXY = {
-        imagePercentX: matchesOut[0][1],
-        imagePercentY: matchesOut[0][2]
-      };
-    }
 
     return imagePercentXY;
   }
@@ -797,7 +770,6 @@ export class FmcCroppersUi {
     FmcUi.log('FmcCroppersUi.getFlagsFromSrc', { src, title });
 
     const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    let matchesOut = [];
     let imageFlags = {};
 
     [ src, title ].forEach(str => {
@@ -805,15 +777,12 @@ export class FmcCroppersUi {
       const matchesArr = matches ? [ ...matches ] : [];
 
       if (matchesArr.length) {
-        matchesOut = matchesArr;
+        imageFlags = {
+          panorama: matchesArr[0][3] ? true : false, // eslint-disable-line no-unneeded-ternary
+          source: str.match('file:') ? 'filename' : 'title'
+        };
       }
     });
-
-    if (matchesOut.length) {
-      imageFlags = {
-        panorama: matchesOut[0][3] ? true : false // eslint-disable-line no-unneeded-ternary
-      };
-    }
 
     return imageFlags;
   }
@@ -1392,7 +1361,6 @@ export class FmcCroppersUi {
     const { Title } = await FmcCroppersUi.getImageTitle(src);
 
     if (src === '') {
-      console.error(masterCropper.cropperInstance.element);
       throw new Error('masterCropper.cropperInstance.element has no src');
     }
 
