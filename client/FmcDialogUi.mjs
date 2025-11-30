@@ -119,7 +119,9 @@ export class FmcDialogUi {
   }
 
   set openHandler(openHandler) {
-    this._openHandler = dtrtValidate.validate(openHandler, 'array', 'FmcDialogUi.openHandler');
+    // FIXME Error: FmcDialogUi.openHandler must be an array, not an undefined
+    // this._openHandler = dtrtValidate.validate(openHandler, 'array', 'FmcDialogUi.openHandler');
+    this._openHandler = openHandler;
   }
 
   /**
