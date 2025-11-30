@@ -761,17 +761,23 @@ export class FmcCroppersUi {
   getImagePercentXYFromSrc({ src, title }) {
     FmcUi.log('FmcCroppersUi.getImagePercentXYFromSrc', { src, title });
 
-    const str = src || title;
+    const regexp = /\[([0-9]+)%,([0-9]+)%(,P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
+    let matchesOut;
     let imagePercentXY = {};
 
-    const regexp = /\[([0-9]+)%,([0-9]+)%(,P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    const matches = str.matchAll(regexp);
-    const matchesArr = [ ...matches ];
+    [ src, title ].forEach(str => {
+      const matches = str.match(regexp);
+      const matchesArr = matches ? [ ...matches ] : [];
 
-    if (matchesArr.length) {
+      if (matchesArr.length) {
+        matchesOut = matchesArr;
+      }
+    });
+
+    if (matchesOut.length) {
       imagePercentXY = {
-        imagePercentX: matchesArr[0][1],
-        imagePercentY: matchesArr[0][2]
+        imagePercentX: matchesOut[0][1],
+        imagePercentY: matchesOut[0][2]
       };
     }
 
