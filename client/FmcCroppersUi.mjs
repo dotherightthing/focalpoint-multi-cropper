@@ -801,10 +801,10 @@ export class FmcCroppersUi {
     let imageFlags = {};
 
     [ src, title ].forEach(str => {
-    const matches = str.matchAll(regexp);
+      const matches = str.matchAll(regexp);
       const matchesArr = matches ? [ ...matches ] : [];
 
-    if (matchesArr.length) {
+      if (matchesArr.length) {
         matchesOut = matchesArr;
       }
     });
@@ -1378,7 +1378,6 @@ export class FmcCroppersUi {
    * @memberof FmcCroppersUi
    */
   async reinstateImagePercentXYFromImage() {
-    // TODO Fix - currently possible to enable both writeFilename and writeTitle - or neither
     FmcUi.log('FmcCroppersUi.reinstateImagePercentXYFromImage');
     const {
       elements,
