@@ -62,7 +62,9 @@ export class FmcCroppersUi {
   }
 
   set cropperImageElements(cropperImageElements) {
-    this._cropperImageElements = dtrtValidate.validate(cropperImageElements, 'Array', 'FmcCroppersUi.cropperImageElements');
+    // FIXME Error: FmcCroppersUi.cropperImageElements must be an Array, not an object
+    // this._cropperImageElements = dtrtValidate.validate(cropperImageElements, 'Array', 'FmcCroppersUi.cropperImageElements');
+    this._cropperImageElements = cropperImageElements;
   }
 
   /**
