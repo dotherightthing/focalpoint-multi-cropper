@@ -128,7 +128,9 @@ export class FmcTextfieldUi {
       element.dataset.targetFolder = targetFolder;
     }
 
-    element.value = value;
+    if (typeof value !== 'undefined') {
+      element.value = value;
+    }
 
     // fire 'change' event so that change is picked up by listener
     FmcUi.emitElementEvent('FmcTextfieldUi.handleUpdate', element, 'change');
