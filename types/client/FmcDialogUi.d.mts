@@ -59,7 +59,7 @@ export class FmcDialogUi {
      * @memberof FmcDialogUi
      */
     get openHandler(): any[];
-    _openHandler: any;
+    _openHandler: any[];
     set selector(selector: string);
     /**
      * selector

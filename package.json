@@ -14,7 +14,7 @@
     "start:maximise": "electron . -- maximise",
     "test": "start-server-and-test serve http://127.0.0.1:8000 test:cypress",
     "test:cypress": "cypress run --browser firefox:dev",
-    "updateTypes": "npx tsc"
+    "updateTypes": "rm -rf types/* && npx tsc"
   },
   "repository": {
     "type": "git",

@@ -291,7 +291,6 @@ declare class FmcFile {
      * @param {string} data.method - exiftool method to call
      * @param {string} data.fileNameWithPath - File name with path
      * @param {object} data.exifData - EXIF data
-     * @param {object} data.dateTimeOriginalAsDate - whether to get DateTimeOriginal.asDate()
      * @returns {Promise<object>} { tags, extras }
      * @see {@link https://stackoverflow.com/a/49729848}
      * @memberof FmcFile
@@ -301,7 +300,6 @@ declare class FmcFile {
         method: string;
         fileNameWithPath: string;
         exifData: object;
-        dateTimeOriginalAsDate: object;
     }): Promise<object>;
     /**
      * @function renameSync

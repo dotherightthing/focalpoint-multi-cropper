@@ -1,4 +1,4 @@
-export default FmcStore;
+export = FmcStore;
 declare class FmcStore {
     /**
      * @function getActivePreset
@@ -160,7 +160,21 @@ declare class FmcStore {
     constructor(opts: object);
     path: string;
     data: any;
-    get(key: any): any;
-    set(key: any, val: any): void;
+    /**
+     * @function get
+     * @summary Gets the value for a key/property stored in this.data
+     * @param {string} key - Key/property
+     * @returns {*} Value of this.data[key]
+     * @memberof FmcStore
+     */
+    get(key: string): any;
+    /**
+     * @function set
+     * @summary Sets the value for a key/property stored in this.data
+     * @param {string} key - Key/property
+     * @param {object} val - Value
+     * @memberof FmcStore
+     */
+    set(key: string, val: object): void;
 }
 //# sourceMappingURL=FmcStore.d.cts.map

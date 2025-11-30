@@ -47,16 +47,7 @@ export class FmcCroppersUi {
      * @memberof FmcCroppersUi
      */
     get masterCropperCropBoxWasDragged(): boolean;
-    set Cropper(Cropper: Cropper);
-    /**
-     * Cropper
-     * @summary The Cropper constructor creates a new Cropper instance
-     * @type {Cropper}
-     * @memberof FmcCroppersUi
-     */
-    get Cropper(): Cropper;
-    _Cropper: any;
-    _cropperImageElements: any;
+    _cropperImageElements: HTMLElement[];
     _croppers: any;
     set croppersOptions(croppersOptions: object);
     /**

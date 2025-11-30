@@ -27,6 +27,7 @@ export class FmcUi {
     /**
      * @function emitElementEvent
      * @summary Emit a custom event
+     * @param {string} callerId - ID of caller eg FmcButtonUi.handleCopyPath
      * @param {Window|HTMLElement} element - element that will dispatch the event
      * @param {string} eventName - Event names are case-sensitive
      * @param {object} eventDetail - name-value pair
@@ -35,7 +36,7 @@ export class FmcUi {
      * @memberof FmcUi
      * @static
      */
-    static emitElementEvent(element: Window | HTMLElement, eventName: string, eventDetail?: object): void;
+    static emitElementEvent(callerId: string, element: Window | HTMLElement, eventName: string, eventDetail?: object): void;
     /**
      * @function getElementIndex
      * @summary Get the index of the selected node in a nodelist
