@@ -664,10 +664,11 @@ export class FmcCroppersUi {
       focalpointWriteTitleRadios
     } = elements;
 
-    let state;
-    let statusMessage;
-    let statusType;
+    let state = 'default';
+    let statusMessage = 'Cropper not ready';
+    let statusType = 'warning';
 
+    if (typeof masterCropper !== 'undefined') {
     const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
 
@@ -733,6 +734,7 @@ export class FmcCroppersUi {
       statusMessage = 'Focalpoint changed but not saved' + msgSavedTo;
       state = 'dirty';
       statusType = 'warning';
+    }
     }
 
     this.setSaveState(state);
@@ -1615,8 +1617,6 @@ export class FmcCroppersUi {
 
     const writeFilename = (focalpointWriteFilenameRadios.getState() === 'on');
     const writeTitle = (focalpointWriteTitleRadios.getState() === 'on');
-    const fileName = masterCropper.cropperInstance.element.src;
-
     let imageFlagsPrefix = imageFlags.length ? ',' : '';
     let newFileNameAndExtClean;
     let newFileNameWithPath;
@@ -1628,7 +1628,11 @@ export class FmcCroppersUi {
     // although the change event may not actually fire in this case
     if ((imagePercentX === '') || (imagePercentY === '')) {
       errorMsg = 'Input out of range - focalpoint not saved to filename';
+    } else if (typeof masterCropper === 'undefined') {
+      errorMsg = 'Cannot write Image Percent XY To Image - masterCropper does not exist yet';
     } else {
+      const fileName = masterCropper.cropperInstance.element.src;
+
       // cannot place await inside promise
       const fileNameParts = await window.FmcFile.getFileNameParts({ fileName });
 
