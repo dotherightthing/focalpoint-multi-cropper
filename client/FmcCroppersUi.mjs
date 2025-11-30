@@ -1652,25 +1652,36 @@ export class FmcCroppersUi {
       if (writeTitle) {
         const data = await window.FmcFile.exiftool({
           method: 'read',
-          fileNameWithPath: oldFileNameWithPath,
-          dateTimeOriginalAsDate: true
+          fileNameWithPath: oldFileNameWithPath
         });
 
-        const {
-          tags,
-          extras
-        } = data;
+        const { tags } = data;
 
         const { DateTimeOriginal } = tags;
-        const { dateTimeOriginalAsDate } = extras;
 
-        let date = '';
+        let photosAppDate;
+        let dateTimeOriginalAsDate;
 
-        if ((typeof DateTimeOriginal !== 'undefined') && (typeof dateTimeOriginalAsDate !== 'undefined')) {
-          date = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
+        if (typeof DateTimeOriginal !== 'undefined') {
+          const {
+            year,
+            month,
+            day,
+            hour,
+            minute,
+            second
+          } = DateTimeOriginal;
+
+          dateTimeOriginalAsDate = new Date(`${year}-${month}-${day} ${hour}:${minute}:${second}`);
+
+          photosAppDate = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
         }
 
-        if (date.length) {
+        if ((typeof DateTimeOriginal !== 'undefined') && (typeof dateTimeOriginalAsDate !== 'undefined')) {
+          photosAppDate = this.formatDateTimeOriginalForPhotosApp(DateTimeOriginal, dateTimeOriginalAsDate);
+        }
+
+        if (photosAppDate.length) {
           await window.FmcFile.exiftool({
             method: 'write',
             fileNameWithPath: oldFileNameWithPath,
@@ -1680,7 +1691,7 @@ export class FmcCroppersUi {
           await window.FmcFile.setTitleInPhotosApp({
             imageName: fileNameOnlyCleanNoRegex,
             title: newFileNameAndExtClean,
-            date
+            date: photosAppDate
           });
         }
       }

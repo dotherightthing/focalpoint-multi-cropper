@@ -887,44 +887,29 @@ module.exports = class FmcFile {
    * @param {string} data.method - exiftool method to call
    * @param {string} data.fileNameWithPath - File name with path
    * @param {object} data.exifData - EXIF data
-   * @param {object} data.dateTimeOriginalAsDate - whether to get DateTimeOriginal.asDate()
    * @returns {Promise<object>} { tags, extras }
    * @see {@link https://stackoverflow.com/a/49729848}
    * @memberof FmcFile
    * @static
    */
   static async exiftool(event, data) {
-    // TODO Add regular exiftool to preload.cjs
     const {
       method,
       fileNameWithPath,
-      exifData,
-      dateTimeOriginalAsDate = false
+      exifData
     } = data;
 
     let tags;
-    let extras = {};
 
     if (method === 'read') {
       tags = await exiftool[method](fileNameWithPath);
-
-      if (dateTimeOriginalAsDate) {
-        const { DateTimeOriginal } = tags;
-
-        if (typeof DateTimeOriginal !== 'undefined') {
-          extras.dateTimeOriginalAsDate = DateTimeOriginal.toDate();
-        }
-      }
     }
 
     if (method === 'write') {
       tags = await exiftool[method](fileNameWithPath, exifData);
     }
 
-    return {
-      tags,
-      extras
-    };
+    return { tags };
   }
 
   /**
