@@ -1177,6 +1177,7 @@ export class FmcUi {
         thumbsFilterUncropped = 'off'
       } = options;
 
+      // set radio button states
       // TODO: rename to update:foo to make more readable
       FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateFocalpointAutoSave', { value: focalpointAutoSave });
       FmcUi.emitElementEvent('FmcUi.loadOptions', window, 'updateFocalpointWriteFilename', { value: focalpointWriteFilename });
