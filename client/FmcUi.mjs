@@ -317,11 +317,14 @@ export class FmcUi {
       fmcThumbsUiInstance
     } = this;
 
-    const thumbsButtons = fmcThumbsUiInstance.getButtons();
+    const {
+      thumbButtonElements
+    } = fmcThumbsUiInstance;
+
     let exportedCount = 0;
 
-    for (let b = 0; b < thumbsButtons.length; b += 1) {
-      const buttonEl = thumbsButtons[b];
+    for (let b = 0; b < thumbButtonElements.length; b += 1) {
+      const buttonEl = thumbButtonElements[b];
       const imagePercentX = buttonEl.style.getPropertyValue('--image-percent-x');
       const imagePercentY = buttonEl.style.getPropertyValue('--image-percent-y');
 
@@ -978,6 +981,10 @@ export class FmcUi {
     } = elements;
 
     const {
+      thumbButtonElements
+    } = fmcThumbsUiInstance;
+
+    const {
       dataset: {
         cropperFocalpointSaveStatus
       }
@@ -1005,9 +1012,7 @@ export class FmcUi {
 
     fmcThumbsUiInstance.applySelectedClass(clickedButton);
 
-    const thumbsButtons = fmcThumbsUiInstance.getButtons();
-
-    thumbsButtons.forEach(button => {
+    thumbButtonElements.forEach(button => {
       button.setAttribute('tabindex', '-1');
     });
 

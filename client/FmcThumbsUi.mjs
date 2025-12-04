@@ -68,6 +68,23 @@ export class FmcThumbsUi {
     this._selectors = dtrtValidate.validate(selectors, 'object', 'FmcThumbsUi.selectors');
   }
 
+  /**
+   * thumbButtonElements
+   * @summary DOM thumbButtonElements
+   * @type {object}
+   * @memberof FmcThumbsUi
+   */
+  get thumbButtonElements() {
+    return this._thumbButtonElements;
+  }
+
+  set thumbButtonElements(thumbButtonElements) {
+    console.log('set thumbButtonElements', typeof thumbButtonElements);
+    this._thumbButtonElements = thumbButtonElements;
+    // TODO validation for NodeList
+    // this._thumbButtonElements = dtrtValidate.validate(thumbButtonElements, 'object', 'FmcThumbsUi.thumbButtonElements');
+  }
+
   /* Instance methods */
 
   /**
@@ -293,20 +310,19 @@ export class FmcThumbsUi {
    */
   focusThumb(position) {
     FmcUi.log('FmcThumbsUi.focusThumb', position);
-    const thumbsButtons = this.getButtons();
 
-    if (!thumbsButtons.length) {
+    if (!this.thumbButtonElements.length) {
       return;
     }
 
     const focussedElement = document.activeElement;
-    const thumbsButtonCurrentIndex = FmcUi.getElementIndex(focussedElement, thumbsButtons);
+    const thumbsButtonCurrentIndex = FmcUi.getElementIndex(focussedElement, this.thumbButtonElements);
     let thumbsButtonNewIndex = -1;
 
     if (position === 'previous') {
-      thumbsButtonNewIndex = FmcThumbsUi.getPreviousIndex(thumbsButtons, thumbsButtonCurrentIndex);
+      thumbsButtonNewIndex = FmcThumbsUi.getPreviousIndex(this.thumbButtonElements, thumbsButtonCurrentIndex);
     } else if (position === 'next') {
-      thumbsButtonNewIndex = FmcThumbsUi.getNextIndex(thumbsButtons, thumbsButtonCurrentIndex);
+      thumbsButtonNewIndex = FmcThumbsUi.getNextIndex(this.thumbButtonElements, thumbsButtonCurrentIndex);
     } else if (position === 'selected') {
       thumbsButtonNewIndex = thumbsButtonCurrentIndex;
     }
@@ -314,7 +330,7 @@ export class FmcThumbsUi {
     if (thumbsButtonNewIndex > -1) {
       if (position !== 'selected') {
         // dispatchEvent doesn't apply :focus
-        thumbsButtons[thumbsButtonNewIndex].focus();
+        this.thumbButtonElements[thumbsButtonNewIndex].focus();
       }
     }
   }
@@ -380,16 +396,17 @@ export class FmcThumbsUi {
       if (i === imagesData.length - 1) {
         document.getElementById(thumbsContainerId).innerHTML = html;
 
+        this.thumbButtonElements = document.querySelectorAll(`.${thumbButtonClass}`);
+
         this.clickSelectedThumb(selectedThumbIndex);
       }
     });
 
-    const thumbButtons = this.getButtons();
     const thumbImgs = document.querySelectorAll(`.${thumbImgClass}`);
 
     // add focalpoint overlays to thumbs
     setTimeout(() => {
-      thumbButtons.forEach(async (thumbButton, index) => {
+      this.thumbButtonElements.forEach(async (thumbButton, index) => {
         const thumbImg = thumbImgs[index];
         const { src } = thumbImg;
         const { Title } = await FmcCroppersUi.getImageTitle(src);
@@ -422,34 +439,12 @@ export class FmcThumbsUi {
    */
   clickSelectedThumb(selectedThumbIndex) {
     FmcUi.log('FmcThumbsUi.clickSelectedThumb', selectedThumbIndex);
-    const thumbsButtons = this.getButtons();
-    const selectedThumb = thumbsButtons[selectedThumbIndex - 1];
+    const selectedThumb = this.thumbButtonElements[selectedThumbIndex - 1];
 
     selectedThumb.setAttribute('tabindex', '-1');
     selectedThumb.focus();
 
     FmcUi.emitElementEvent('FmcThumbsUi.clickSelectedThumb', selectedThumb, 'click', {});
-  }
-
-  /**
-   * @function getButtons
-   * @summary Get all thumbs buttons
-   * @returns {NodeList} thumbsButtons - Thumb buttons
-   * @memberof FmcThumbsUi
-   */
-  getButtons() {
-    FmcUi.log('FmcThumbsUi.getButtons');
-    const {
-      selectors
-    } = this;
-
-    const {
-      thumbButtonClass
-    } = selectors;
-
-    const thumbButtons = document.querySelectorAll(`.${thumbButtonClass}`);
-
-    return thumbButtons;
   }
 
   /**
@@ -461,9 +456,8 @@ export class FmcThumbsUi {
    */
   getClickedButton(event) {
     FmcUi.log('FmcThumbsUi.getClickedButton', event);
-    const thumbsButtons = this.getButtons();
 
-    if (!thumbsButtons.length) {
+    if (!this.thumbButtonElements.length) {
       return null;
     }
 
@@ -471,7 +465,7 @@ export class FmcThumbsUi {
 
     return {
       clickedButton, // can be null
-      clickedButtonIndex: clickedButton ? (Array.from(thumbsButtons).indexOf(clickedButton) + 1) : -1
+      clickedButtonIndex: clickedButton ? (Array.from(this.thumbButtonElements).indexOf(clickedButton) + 1) : -1
     };
   }
 
@@ -548,9 +542,7 @@ export class FmcThumbsUi {
       selectedClass
     } = selectors;
 
-    const thumbButtons = this.getButtons();
-
-    thumbButtons.forEach(button => {
+    this.thumbButtonElements.forEach(button => {
       button.classList.remove(selectedClass);
     });
   }
