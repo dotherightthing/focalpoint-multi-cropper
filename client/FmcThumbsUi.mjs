@@ -235,7 +235,8 @@ export class FmcThumbsUi {
     FmcUi.log('FmcThumbsUi.filterByFilenameAndCropped', searchStr);
     const {
       elements,
-      selectors
+      selectors,
+      thumbButtonElements
     } = this;
 
     const {
@@ -253,7 +254,6 @@ export class FmcThumbsUi {
 
     const autoSelectFiltered = thumbsAutoSelectFilteredRadios.getState() === 'on';
     const hideUncropped = thumbsFilterUncroppedRadios.getState() === 'on';
-    const thumbButtons = document.querySelectorAll(`#${thumbsContainerId} .${thumbButtonClass}`);
     const thumbImages = document.querySelectorAll(`#${thumbsContainerId} .${thumbImgClass}`);
     const thumbs = document.querySelectorAll(`#${thumbsContainerId} .${thumbClass}`);
     const thumbsHidden = [];
@@ -261,7 +261,7 @@ export class FmcThumbsUi {
 
     thumbImages.forEach((thumbImg, index) => {
       if (searchStr === '') {
-        if (hideUncropped && (!thumbButtons[index].style.getPropertyValue('--image-percent-x'))) {
+        if (hideUncropped && (!thumbButtonElements[index].style.getPropertyValue('--image-percent-x'))) {
           // hide thumbs if uncropped
           thumbsHidden.push(thumbs[index]);
         } else {
@@ -308,18 +308,22 @@ export class FmcThumbsUi {
   focusThumb(position) {
     FmcUi.log('FmcThumbsUi.focusThumb', position);
 
-    if (!this.thumbButtonElements.length) {
+    const {
+      thumbButtonElements
+    } = this;
+
+    if (!thumbButtonElements.length) {
       return;
     }
 
     const focussedElement = document.activeElement;
-    const thumbsButtonCurrentIndex = FmcUi.getElementIndex(focussedElement, this.thumbButtonElements);
+    const thumbsButtonCurrentIndex = FmcUi.getElementIndex(focussedElement, thumbButtonElements);
     let thumbsButtonNewIndex = -1;
 
     if (position === 'previous') {
-      thumbsButtonNewIndex = FmcThumbsUi.getPreviousIndex(this.thumbButtonElements, thumbsButtonCurrentIndex);
+      thumbsButtonNewIndex = FmcThumbsUi.getPreviousIndex(thumbButtonElements, thumbsButtonCurrentIndex);
     } else if (position === 'next') {
-      thumbsButtonNewIndex = FmcThumbsUi.getNextIndex(this.thumbButtonElements, thumbsButtonCurrentIndex);
+      thumbsButtonNewIndex = FmcThumbsUi.getNextIndex(thumbButtonElements, thumbsButtonCurrentIndex);
     } else if (position === 'selected') {
       thumbsButtonNewIndex = thumbsButtonCurrentIndex;
     }
@@ -327,7 +331,7 @@ export class FmcThumbsUi {
     if (thumbsButtonNewIndex > -1) {
       if (position !== 'selected') {
         // dispatchEvent doesn't apply :focus
-        this.thumbButtonElements[thumbsButtonNewIndex].focus();
+        thumbButtonElements[thumbsButtonNewIndex].focus();
       }
     }
   }
@@ -399,11 +403,12 @@ export class FmcThumbsUi {
       }
     });
 
+    const { thumbButtonElements } = this;
     const thumbImgs = document.querySelectorAll(`.${thumbImgClass}`);
 
     // add focalpoint overlays to thumbs
     setTimeout(() => {
-      this.thumbButtonElements.forEach(async (thumbButton, index) => {
+      thumbButtonElements.forEach(async (thumbButton, index) => {
         const thumbImg = thumbImgs[index];
         const { src } = thumbImg;
         const { Title } = await FmcCroppersUi.getImageTitle(src);
@@ -436,7 +441,12 @@ export class FmcThumbsUi {
    */
   clickSelectedThumb(selectedThumbIndex) {
     FmcUi.log('FmcThumbsUi.clickSelectedThumb', selectedThumbIndex);
-    const selectedThumb = this.thumbButtonElements[selectedThumbIndex - 1];
+
+    const {
+      thumbButtonElements
+    } = this;
+
+    const selectedThumb = thumbButtonElements[selectedThumbIndex - 1];
 
     selectedThumb.setAttribute('tabindex', '-1');
     selectedThumb.focus();
@@ -454,7 +464,11 @@ export class FmcThumbsUi {
   getClickedButton(event) {
     FmcUi.log('FmcThumbsUi.getClickedButton', event);
 
-    if (!this.thumbButtonElements.length) {
+    const {
+      thumbButtonElements
+    } = this;
+
+    if (!thumbButtonElements.length) {
       return null;
     }
 
@@ -462,7 +476,7 @@ export class FmcThumbsUi {
 
     return {
       clickedButton, // can be null
-      clickedButtonIndex: clickedButton ? (Array.from(this.thumbButtonElements).indexOf(clickedButton) + 1) : -1
+      clickedButtonIndex: clickedButton ? (Array.from(thumbButtonElements).indexOf(clickedButton) + 1) : -1
     };
   }
 
@@ -532,14 +546,15 @@ export class FmcThumbsUi {
   removeSelectedClass() {
     FmcUi.log('FmcThumbsUi.removeSelectedClass');
     const {
-      selectors
+      selectors,
+      thumbButtonElements
     } = this;
 
     const {
       selectedClass
     } = selectors;
 
-    this.thumbButtonElements.forEach(button => {
+    thumbButtonElements.forEach(button => {
       button.classList.remove(selectedClass);
     });
   }
