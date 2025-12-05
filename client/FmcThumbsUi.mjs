@@ -71,7 +71,7 @@ export class FmcThumbsUi {
   /**
    * thumbButtonElements
    * @summary DOM thumbButtonElements
-   * @type {object}
+   * @type {NodeList}
    * @memberof FmcThumbsUi
    */
   get thumbButtonElements() {
@@ -79,10 +79,7 @@ export class FmcThumbsUi {
   }
 
   set thumbButtonElements(thumbButtonElements) {
-    console.log('set thumbButtonElements', typeof thumbButtonElements);
-    this._thumbButtonElements = thumbButtonElements;
-    // TODO validation for NodeList
-    // this._thumbButtonElements = dtrtValidate.validate(thumbButtonElements, 'object', 'FmcThumbsUi.thumbButtonElements');
+    this._thumbButtonElements = dtrtValidate.validate(thumbButtonElements, 'nodelist', 'FmcThumbsUi.thumbButtonElements');
   }
 
   /* Instance methods */
