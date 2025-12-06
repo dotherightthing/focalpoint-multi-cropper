@@ -1419,6 +1419,7 @@ export class FmcUi {
   /**
    * @function emitEvent
    * @summary Emit a custom event
+   * @param {string} callerId - ID of caller eg FmcCroppersUi.writeImagePercentXYToImage
    * @param {string} elementId - ID of the element that will dispatch the event
    * @param {string} eventName - Event names are case-sensitive
    * @param {object} eventDetail - name-value pair
@@ -1427,9 +1428,8 @@ export class FmcUi {
    * @memberof FmcUi
    * @static
    */
-  static emitEvent(elementId, eventName, eventDetail = {}) {
-    FmcUi.log('FmcUi.emitEvent', elementId, eventName, eventDetail);
-
+  static emitEvent(callerId, elementId, eventName, eventDetail = {}) {
+    FmcUi.log(`📢 Custom event "${eventName}" emitted by ${callerId} on element with ID of "${elementId}"`, eventDetail);
     const element = document.getElementById(elementId);
 
     FmcUi.emitElementEvent('FmcUi.emitEvent', element, eventName, eventDetail);

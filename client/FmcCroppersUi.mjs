@@ -1313,7 +1313,7 @@ export class FmcCroppersUi {
             cropper.cropperInstance.replace(newFileName, true); // hasSameSize = true
           });
 
-          FmcUi.emitEvent(croppersId, 'imageRenamed', {
+          FmcUi.emitEvent('FmcCroppersUi.deleteImagePercentXYFromImage', croppersId, 'imageRenamed', {
             newFileName
           });
 
@@ -1378,7 +1378,7 @@ export class FmcCroppersUi {
 
     // TODO reinstate as needed:
     // const focalpointYInputId = focalpointYInput.element.getAttribute('id');
-    // FmcUi.emitEvent(focalpointYInputId, 'change', {
+    // FmcUi.emitEvent('FmcCroppersUi.reinstateImagePercentXYFromImage', focalpointYInputId, 'change', {
     //   focalpointReset: !(this.isDefaultFocalpoint({ imagePercentX, imagePercentY }))
     // });
 
@@ -1705,7 +1705,7 @@ export class FmcCroppersUi {
           });
 
           // TODO what does this do?
-          FmcUi.emitEvent(croppersId, 'imageRenamed', { newFileName: newFileNameWithPath });
+          FmcUi.emitEvent('FmcCroppersUi.writeImagePercentXYToImage', croppersId, 'imageRenamed', { newFileName: newFileNameWithPath });
 
           // TODO update to save to title or combine with setFocalpointSaveState
           resolve({
