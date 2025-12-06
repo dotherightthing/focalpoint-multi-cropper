@@ -863,8 +863,6 @@ export class FmcUi {
       await this.handleFolderWebsiteBrowse(null, restore);
       await this.handlePresetFileWebpageBrowse(null, restore);
 
-      fmcThumbsUiInstance.clickSelectedThumb(1);
-
       FmcUi.emitElementEvent('FmcUi.handlePresetLoad', window, 'updateStatus', {
         statusMessage: `Loaded preset ${name}`,
         statusType: 'success'
@@ -951,8 +949,6 @@ export class FmcUi {
     await window.FmcStore.setActivePresetName({ presetName: name });
 
     FmcUi.emitElementEvent('FmcUi.handlePresetSave', window, 'updatePresetNameActive', { value: name });
-
-    fmcThumbsUiInstance.clickSelectedThumb(1);
 
     FmcUi.emitElementEvent('FmcUi.handlePresetSave', window, 'updatePresets', {
       label: 'Select a preset',
