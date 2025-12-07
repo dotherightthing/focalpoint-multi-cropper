@@ -1110,6 +1110,7 @@ export class FmcUi {
    * @memberof FmcUi
    */
   handleWindowResize() {
+    // FIXME Resize can result in croppers being too narrow
     FmcUi.log('FmcUi.handleWindowResize');
     const {
       fmcThumbsUiInstance
@@ -1162,8 +1163,6 @@ export class FmcUi {
 
     try {
       const { options } = await window.FmcStore.getOptions(null);
-
-      FmcUi.log('options', options);
 
       const {
         focalpointAutoSave = 'off',

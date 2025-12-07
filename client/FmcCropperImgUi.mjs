@@ -103,8 +103,8 @@ export class FmcCropperImgUi {
     } = event;
 
     const {
-      addListener = false,
-      removeListener = false
+      addListener = false, // true when FmcCroppersUi.init
+      removeListener = false // true when FmcCroppersUi.destroy
     } = detail;
 
     if (addListener) {
