@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="86CBuWy7X21k7H376Bu2" name="Page-1">
+        <mxGraphModel dx="2320" dy="1085" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="flowchart TD&#xa;  subgraph FmcUi.loadOptions&#xa;    direction LR&#xa;      FmcUi--&gt;x[(FmcStore)]--&gt;getOptions&#xa;    end&#xa;    subgraph FmcUi.emitElementEvent&#xa;      direction LR&#xa;        options--&gt;updateFocalpointAutoSave&#xa;        options--&gt;updateFocalpointWriteFilename&#xa;        options--&gt;updateFocalpointWriteTitle&#xa;        options--&gt;updateThumbsAutoSelectFiltered&#xa;        options--&gt;updateThumbsFilterUncropped&#xa;        options--&gt;updateStatus&#xa;    end&#xa;    %% --- start graph ---&#xa;    renderer.js --&gt; FmcUi.loadOptions --&gt; A{options}&#xa;    A{options} --&gt;|Yes| FmcUi.emitElementEvent&#xa;    A{options} --&gt;|No| D{foobar}" style="shadow=0;dashed=0;align=left;strokeWidth=1;shape=mxgraph.mermaid.abstract.mermaid;labelBackgroundColor=#ffffff;noLabel=1;theme=default;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="20" width="770" height="540" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
