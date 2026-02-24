@@ -671,11 +671,8 @@ export class FmcCroppersUi {
       const {
         imagePercentX: savedImagePercentX, // string
         imagePercentY: savedImagePercentY, // string
-        source
+        source = ''
       } = this.getImagePercentXYFromSrc({ src, title: Title });
-
-      const msgLoadedFrom = (source.length) ? (` from ${source}`) : '';
-      const msgSavedTo = (source.length) ? (` to ${source}`) : '';
 
       const {
         panorama: savedPanorama = false
@@ -686,6 +683,9 @@ export class FmcCroppersUi {
         imagePercentY: imagePercentYUi,
         imageProportions: imageProportionsUi
       });
+
+      const msgLoadedFrom = (source.length) ? (` from ${source}`) : '';
+      const msgSavedTo = (source.length) ? (` to ${source}`) : '';
 
       const isSavedFocalpoint = (
         (imagePercentXUi === savedImagePercentX)
@@ -710,6 +710,8 @@ export class FmcCroppersUi {
           statusType = 'success';
         }
       } else {
+        // FIXME focalpoint is not saved after changing Y axis using input
+        // also not after clicking OK in the modal that appears after changing image
         statusMessage = 'Focalpoint changed but not saved' + msgSavedTo;
         state = 'dirty';
         statusType = 'warning';
@@ -739,7 +741,12 @@ export class FmcCroppersUi {
     FmcUi.log('FmcCroppersUi.getImagePercentXYFromSrc', { src, title });
 
     const regexp = /__\[([0-9]+)%,([0-9]+)%,?(P)?\]/g; // filename__[20%,30%].ext / filename__[20%,30%,P].ext
-    let imagePercentXY = {};
+
+    // defaults if no focalpoint
+    let imagePercentXY = {
+      imagePercentX: 50,
+      imagePercentY: 50
+    };
 
     [ src, title ].forEach(str => {
       const matches = str.matchAll(regexp);

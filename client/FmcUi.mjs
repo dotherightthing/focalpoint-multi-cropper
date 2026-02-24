@@ -471,25 +471,31 @@ export class FmcUi {
     } = elements;
 
     const {
-      detail = {}
+      detail = {},
+      isTrusted: userChanged,
+      target
     } = event;
 
     const {
       focalpointReset = false
     } = detail;
 
-    const focalpointX = focalpointXInput.element.value;
-    const focalpointY = focalpointYInput.element.value;
+    const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
+    let focalpointX;
+    let focalpointY;
 
-    // move cropbox
-    fmcCroppersUiInstance.displayImagePercentXY({
-      imagePercentX: focalpointX, // string
-      imagePercentY: focalpointY // string
-    });
+    if ((userChanged) || (target === focalpointYInput.element)) {
+      focalpointX = focalpointXInput.element.value;
+      focalpointY = focalpointYInput.element.value;
 
-    if ((event.isTrusted) || (event.target === focalpointYInput.element)) {
-      const thumbIndex = fmcThumbsUiInstance.getSelectedThumbIndex();
+      // move cropbox
+      fmcCroppersUiInstance.displayImagePercentXY({
+        imagePercentX: focalpointX, // string
+        imagePercentY: focalpointY // string
+      });
+    }
 
+    if (userChanged) {
       await this.autosaveFocalpoint(focalpointAutoSaveRadios.getState() === 'on');
 
       await fmcCroppersUiInstance.setFocalpointSaveState({
@@ -500,10 +506,10 @@ export class FmcUi {
         imagePercentYUi: focalpointY,
         imageProportionsUi: [ ...focalpointProportionsRadios ].filter(radio => radio.checked)[0].value
       });
-
-      focalpointXInput.element.dataset.thumbIndexPrevious = thumbIndex;
-      focalpointYInput.element.dataset.thumbIndexPrevious = thumbIndex;
     }
+
+    focalpointXInput.element.dataset.thumbIndexPrevious = thumbIndex;
+    focalpointYInput.element.dataset.thumbIndexPrevious = thumbIndex;
   }
 
   /**
@@ -1225,6 +1231,8 @@ export class FmcUi {
 
     // value is a string despite input being of type number
     if ((Number(focalpointXInput.element.value) === 50) && (Number(focalpointYInput.element.value) === 50)) {
+      // TODO check if focalpoint needs to be deleted before deleting?
+      // TODO are X and Y set to 50 by the image, or the init process or what?
       msgObj = await fmcCroppersUiInstance.deleteImagePercentXYFromImage();
     } else {
       msgObj = await fmcCroppersUiInstance.writeImagePercentXYToImage({
