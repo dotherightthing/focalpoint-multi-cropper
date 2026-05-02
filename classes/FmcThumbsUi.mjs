@@ -395,18 +395,21 @@ export class FmcThumbsUi {
     imagesData.forEach((loadedThumb, i) => {
       const {
         src,
+        altitude,
         dateTimeOriginal,
         filesize,
         latitude,
         longitude
       } = loadedThumb;
 
+      const altitudeStr = typeof altitude === 'number' ? ` &middot; ${altitude} m` : altitude;
       const latLongStr = ((latitude !== '') && (longitude !== '')) ? `${latitude},${longitude}` : '';
       const latLongIcon = (latLongStr !== '') ? '<div class="thumb-lat-long"><abbr title="Location">L</abbr></div>' : '';
 
       const {
-        dayTimeStr,
-        dateStr
+        dayStr,
+        dateStr,
+        timeStr
       } = this.formatDateTimeOriginal(dateTimeOriginal);
 
       html += `<li class="${thumbClass}">
@@ -417,8 +420,8 @@ export class FmcThumbsUi {
       <img src="${src}" class="${thumbImgClass}">
     </div>
     <p class="${thumbMetaClass}">
-      <span class="thumb-meta-day-time">${dayTimeStr}</span>
-      <span class="thumb-meta-date">${dateStr}</span>
+      <span class="thumb-meta-day-time">${timeStr}${altitudeStr}</span>
+      <span class="thumb-meta-date">${dayStr} &middot; ${dateStr}</span>
       <span class="thumb-meta-filesize">${filesize}</span>
     </p>  
   </button>
@@ -516,8 +519,9 @@ export class FmcThumbsUi {
    * @memberof FmcThumbsUi
    */
   formatDateTimeOriginal(dateTimeOriginal) {
-    let dayTimeStr = '-';
+    let dayStr = '-';
     let dateStr = '-';
+    let timeStr = '-';
 
     if (dateTimeOriginal !== '') {
       const [ date, time ] = dateTimeOriginal.split(' ');
@@ -531,13 +535,15 @@ export class FmcThumbsUi {
       const hours2 = dt.getHours().toString().padStart(2, '0');
       const minutes2 = dt.getMinutes().toString().padStart(2, '0');
 
-      dayTimeStr = `${day3} &middot; ${hours2}:${minutes2}`;
+      dayStr = day3;
       dateStr = `${date2}.${month2}.${year4}`;
+      timeStr = `${hours2}:${minutes2}`;
     }
 
     return {
-      dayTimeStr,
-      dateStr
+      dayStr,
+      dateStr,
+      timeStr
     };
   }
 

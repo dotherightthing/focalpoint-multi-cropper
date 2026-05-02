@@ -492,6 +492,7 @@ module.exports = class FmcFile {
 
         const {
           DateTimeOriginal = {},
+          GPSAltitude = '',
           GPSLatitude = '',
           GPSLongitude = ''
         } = tags; // object: { id: number, value: Array of strings, description: string }
@@ -499,6 +500,10 @@ module.exports = class FmcFile {
         const {
           description: dateTimeOriginalDescription = ''
         } = DateTimeOriginal;
+
+        const {
+          description: altitudeDescription = ''
+        } = GPSAltitude;
 
         const {
           description: latitudeDescription = ''
@@ -510,6 +515,7 @@ module.exports = class FmcFile {
 
         imageData = {
           src: image,
+          altitude: altitudeDescription.length ? altitudeDescription.split(' ')[0].toFixed() : '',
           dateTimeOriginal: dateTimeOriginalDescription,
           latitude: latitudeDescription,
           longitude: longitudeDescription
