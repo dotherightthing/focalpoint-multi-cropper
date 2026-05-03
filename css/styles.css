@@ -217,7 +217,8 @@ img {
   background-color: rgba(0, 0, 0, .4);
 }
 
-.thumb-lat-long abbr {
+.thumb-lat-long abbr,
+.thumb-meta-location abbr {
   text-decoration: none;
 }
 
@@ -276,9 +277,14 @@ img {
   font-size: .95em;
 }
 
+.thumb-meta-location {
+  opacity: .85;
+  font-size: .9em;
+}
+
 .thumb-meta-filesize {
   opacity: .8;
-  font-size: .9em;
+  font-size: .85em;
 }
 
 /* .image-meta */

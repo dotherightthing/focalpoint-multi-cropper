@@ -397,12 +397,13 @@ export class FmcThumbsUi {
         src,
         altitude,
         dateTimeOriginal,
+        direction,
         filesize,
         latitude,
         longitude
       } = loadedThumb;
 
-      const altitudeStr = typeof altitude === 'number' ? ` &middot; ${altitude} m` : altitude;
+      const altitudeStr = altitude.length ? `${altitude} m` : altitude;
       const latLongStr = ((latitude !== '') && (longitude !== '')) ? `${latitude},${longitude}` : '';
       const latLongIcon = (latLongStr !== '') ? '<div class="thumb-lat-long"><abbr title="Location">L</abbr></div>' : '';
 
@@ -420,8 +421,8 @@ export class FmcThumbsUi {
       <img src="${src}" class="${thumbImgClass}">
     </div>
     <p class="${thumbMetaClass}">
-      <span class="thumb-meta-day-time">${timeStr}${altitudeStr}</span>
-      <span class="thumb-meta-date">${dayStr} &middot; ${dateStr}</span>
+      <span class="thumb-meta-day-time">${dayStr} ${dateStr} &middot; ${timeStr}</span>
+      <span class="thumb-meta-location">${altitudeStr} &middot; ${direction}</span>
       <span class="thumb-meta-filesize">${filesize}</span>
     </p>  
   </button>
@@ -528,15 +529,14 @@ export class FmcThumbsUi {
       const validDate = [ date.replace(':', '-'), time ].join(' ');
       const timeStamp = Date.parse(validDate);
       const dt = new Date(timeStamp);
-      const day3 = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ][dt.getDay()];
+      const day3 = [ 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun' ][dt.getDay()];
       const date2 = dt.getDate().toString().padStart(2, '0');
       const month2 = (dt.getMonth() + 1).toString().padStart(2, '0');
-      const year4 = dt.getFullYear().toString();
-      const hours2 = dt.getHours().toString().padStart(2, '0');
+      const hours2 = dt.getHours().toString();
       const minutes2 = dt.getMinutes().toString().padStart(2, '0');
 
       dayStr = day3;
-      dateStr = `${date2}.${month2}.${year4}`;
+      dateStr = `${date2}.${month2}`;
       timeStr = `${hours2}:${minutes2}`;
     }
 

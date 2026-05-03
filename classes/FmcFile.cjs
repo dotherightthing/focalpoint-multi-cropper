@@ -2,6 +2,7 @@
  * @file FmcFile.js
  */
 
+const a2d = require('angle-to-direction');
 const commandExists = require('command-exists');
 const ExifReader = require('exifreader');
 const fs = require('fs');
@@ -493,6 +494,7 @@ module.exports = class FmcFile {
         const {
           DateTimeOriginal = {},
           GPSAltitude = '',
+          GPSImgDirection = '', // Rational: { numerator: 123, denominator: 1 }, description: '123°' }
           GPSLatitude = '',
           GPSLongitude = ''
         } = tags; // object: { id: number, value: Array of strings, description: string }
@@ -506,6 +508,10 @@ module.exports = class FmcFile {
         } = GPSAltitude;
 
         const {
+          description: directionDescription = ''
+        } = GPSImgDirection;
+
+        const {
           description: latitudeDescription = ''
         } = GPSLatitude;
 
@@ -515,8 +521,9 @@ module.exports = class FmcFile {
 
         imageData = {
           src: image,
-          altitude: altitudeDescription.length ? altitudeDescription.split(' ')[0].toFixed() : '',
+          altitude: altitudeDescription.length ? Number(altitudeDescription.split(' ')[0]).toFixed() : '',
           dateTimeOriginal: dateTimeOriginalDescription,
+          direction: directionDescription.length ? a2d.degreeAbbr(Number(directionDescription)) : '',
           latitude: latitudeDescription,
           longitude: longitudeDescription
         };
